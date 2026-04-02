@@ -35,36 +35,51 @@
         <img alt="Welcome to JA RELIEF" 
              style="image-rendering: -webkit-optimize-contrast; height: 100%; width: 100%; object-fit: cover; position: absolute; inset: 0;"
              src="https://lh3.googleusercontent.com/aida-public/AB6AXuCHVeY0v-xMR05qTZjEx6Nya0IiuunHVdIqcc_bwybak0cU4FfnRegue00XEYuziCzqkTE089QKL5zIFHRgRTPbof3sHf7bJUJoaPX_-YgPqBG7m-0J7uQf14fRGwh0wFJpN_-QQFU7V09v_XwU4o3Vo0R2ZLmKu_jeYgx9Wwb2Xrw9R-ax_GH97I9_uQumR1G8Gj9A8OzS3PrDODnoEaId-2JaSWiRy8_AssPRHfdIruJcU0-I-1-bLa6dFktGzc_o1awi0spQzVc"/>
-        <div class="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent"></div>
-        <div class="relative z-10 space-y-2">
-            <span class="bg-[#ffbb16] text-[#7c5800] px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest">Active Operations</span>
-            <h2 class="text-5xl font-black text-white leading-tight font-['Manrope']">Welcome to <span class="text-[#ffbb16]">JA RELIEF</span></h2>
-            <p class="text-white/80 text-lg font-medium max-w-lg">Monitoring disaster recovery across 14 parishes. Stay vigilant, stay updated.</p>
+        <div class="absolute inset-0 bg-gradient-to-r from-black/70 to-transparent"></div>
+        <div class="relative z-10 space-y-3">
+            <span class="bg-[#ffae00] text-[#191c1e] px-4 py-1.5 rounded-full text-[11px] font-black uppercase tracking-widest shadow-lg">Active Operations</span>
+            <h2 class="text-6xl font-black text-white leading-tight font-['Manrope']">Welcome to <span class="text-[#ffae00]">JA RELIEF</span></h2>
+            <p class="text-white/90 text-xl font-medium max-w-2xl">Monitoring disaster recovery across 14 parishes. Stay vigilant, stay updated.</p>
         </div>
     </section>
 
     <!-- Quick Alerts & Emergency Post -->
     <section class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <div class="lg:col-span-2 bg-[#191c1e] rounded-3xl p-8 text-white space-y-6 shadow-xl border border-white/5 relative overflow-hidden">
-            <div class="absolute top-0 right-0 w-64 h-64 bg-[#005c37] rounded-full blur-[100px] opacity-20 -mr-32 -mt-32"></div>
-            <div class="flex items-center gap-3 relative z-10">
-                <span class="material-symbols-outlined text-[#ffdad6]" data-icon="error">error</span>
-                <h3 class="text-xl font-bold font-['Manrope']">Post Emergency Alert</h3>
+        <div class="lg:col-span-2 bg-[#f4f7f5] rounded-3xl p-8 text-[#191c1e] space-y-6 shadow-sm border border-[#becabf]/20 relative overflow-hidden">
+            <div class="flex items-center justify-between relative z-10">
+                <h3 class="text-2xl font-black font-['Manrope'] tracking-tight">Post New Emergency Alert</h3>
+                <span class="material-symbols-outlined text-[#005c37] text-2xl font-bold">campaign</span>
             </div>
             
-            <form [formGroup]="updateForm" (ngSubmit)="onSubmit()" class="space-y-4 relative z-10">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <input class="bg-white/5 border border-white/10 rounded-2xl p-4 text-sm font-medium focus:ring-2 focus:ring-[#ffbb16] outline-none" placeholder="Alert Heading..." type="text" formControlName="title">
-                    <select class="bg-white/5 border border-white/10 rounded-2xl p-4 text-sm font-medium focus:ring-2 focus:ring-[#ffbb16] outline-none" formControlName="status">
-                        <option value="danger">Danger (High Priority)</option>
-                        <option value="warning">Warning (Medium)</option>
-                        <option value="info">Information (Logistics)</option>
+            <form [formGroup]="updateForm" (ngSubmit)="onSubmit()" class="space-y-6 relative z-10">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-black uppercase tracking-widest text-[#3e4941] pl-1">Alert Title</label>
+                        <input class="w-full bg-white border border-[#becabf]/30 rounded-2xl p-4 text-sm font-medium focus:ring-2 focus:ring-[#005c37] outline-none transition-all" placeholder="e.g., Flash Flood Warning - Parish of St. Mary" type="text" formControlName="title">
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-black uppercase tracking-widest text-[#3e4941] pl-1">Source</label>
+                        <input class="w-full bg-white border border-[#becabf]/30 rounded-2xl p-4 text-sm font-medium focus:ring-2 focus:ring-[#005c37] outline-none transition-all" placeholder="Meteorological Service Jamaica" type="text" formControlName="source">
+                    </div>
+                </div>
+
+                <div class="space-y-2">
+                    <label class="text-[10px] font-black uppercase tracking-widest text-[#3e4941] pl-1">Alert Level</label>
+                    <select class="w-full bg-white border border-[#becabf]/30 rounded-2xl p-4 text-sm font-medium focus:ring-2 focus:ring-[#005c37] outline-none appearance-none transition-all" formControlName="status">
+                        <option value="info">Information-Blue (Advisory)</option>
+                        <option value="warning">Warning-Orange (Be Alert)</option>
+                        <option value="danger">Danger-Red (Extreme Priority)</option>
                     </select>
                 </div>
-                <textarea class="bg-white/5 border border-white/10 rounded-2xl p-4 text-sm font-medium w-full h-24 focus:ring-2 focus:ring-[#ffbb16] outline-none" placeholder="Operation details..." formControlName="content"></textarea>
-                <div class="flex justify-end">
-                    <button class="bg-[#ffbb16] text-[#7c5800] px-8 py-3 rounded-2xl font-black text-sm uppercase tracking-widest hover:scale-105 transition-transform flex items-center gap-2">
-                        <span class="material-symbols-outlined">send</span> Broadcast Alert
+
+                <div class="space-y-2">
+                    <label class="text-[10px] font-black uppercase tracking-widest text-[#3e4941] pl-1">Content</label>
+                    <textarea class="bg-white border border-[#becabf]/30 rounded-2xl p-4 text-sm font-medium w-full h-32 focus:ring-2 focus:ring-[#005c37] outline-none transition-all resize-none" placeholder="Describe the situation and required actions..." formControlName="content"></textarea>
+                </div>
+
+                <div class="flex justify-start">
+                    <button class="bg-[#005c37] text-white px-10 py-4 rounded-2xl font-black text-sm uppercase tracking-widest shadow-xl shadow-[#005c37]/20 hover:bg-[#004d2e] hover:-translate-y-1 transition-all active:scale-95">
+                        Post Update
                     </button>
                 </div>
             </form>
