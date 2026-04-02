@@ -17,7 +17,7 @@ export class AppComponent implements OnInit {
       filter(event => event instanceof NavigationEnd)
     ).subscribe((event: any) => {
       const url = event.urlAfterRedirects;
-      this.isDashboard = url.includes('/dashboard') || url.includes('/admin');
+      this.isDashboard = url.includes('/dashboard');
     });
   }
 
