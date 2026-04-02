@@ -1,0 +1,56 @@
+<section class="login-wrapper">
+    <div class="login-card" [class.admin-mode]="isAdminMode">
+        <div class="mode-selector" role="tablist" aria-label="Login Mode">
+            <button type="button" class="mode-btn" [class.active]="!isAdminMode"
+                (click)="!isAdminMode ? null : toggleMode()"
+                role="tab" [attr.aria-selected]="!isAdminMode"
+                aria-label="User Login Mode">User</button>
+            <button type="button" class="mode-btn" [class.active]="isAdminMode"
+                (click)="isAdminMode ? null : toggleMode()"
+                role="tab" [attr.aria-selected]="isAdminMode"
+                aria-label="Admin Login Mode">Admin</button>
+        </div>
+
+        <h2 *ngIf="!isAdminMode">Welcome Back</h2>
+        <h2 *ngIf="isAdminMode">Administrator Portal</h2>
+
+        <p *ngIf="!isAdminMode">Please enter your credentials to access your dashboard.</p>
+        <p *ngIf="isAdminMode">Authorized access only. Please sign in to the management console.</p>
+
+        <div *ngIf="loginError" class="error-banner" role="alert" aria-live="polite">
+            {{ errorMessage }}
+        </div>
+
+
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" aria-label="Login form">
+            <div class="form-group">
+                <label for="idNumber">{{ isAdminMode ? 'Admin ID' : 'ID Number' }} *</label>
+                <input id="idNumber" type="text" formControlName="idNumber"
+                    [placeholder]="isAdminMode ? 'Enter Admin ID' : 'Enter your ID number'" 
+                    aria-required="true" />
+                <div class="error" *ngIf="loginForm.get('idNumber')?.invalid && loginForm.get('idNumber')?.touched" role="alert">
+                    {{ isAdminMode ? 'Admin ID' : 'ID Number' }} is required.
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password *</label>
+                <input id="password" type="password" formControlName="password" placeholder="Enter your password" 
+                    aria-required="true" />
+                <div class="error" *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" role="alert">
+                    Password is required.
+                </div>
+            </div>
+
+            <button type="submit" class="submit-btn" [disabled]="isLoading" [class.admin-btn]="isAdminMode"
+                [attr.aria-label]="isAdminMode ? 'Authenticate Admin' : 'Login to account'">
+                <span *ngIf="!isLoading">{{ isAdminMode ? 'Authenticate' : 'Login' }}</span>
+                <span *ngIf="isLoading" aria-hidden="true">Authenticating...</span>
+            </button>
+
+            <div class="links" *ngIf="!isAdminMode">
+                <p>Don't have an account? <a routerLink="/register">Register here</a></p>
+            </div>
+        </form>
+    </div>
+</section>

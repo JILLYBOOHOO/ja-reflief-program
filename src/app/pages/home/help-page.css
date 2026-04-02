@@ -1,0 +1,212 @@
+/* ===== HELP PAGE SPECIFIC STYLES ===== */
+
+/* Emergency Alert */
+.emergency-alert {
+    background: linear-gradient(135deg, #ff4444, #cc0000);
+    color: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    text-align: center;
+    margin-bottom: 2rem;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(255, 68, 68, 0.7);
+    }
+
+    70% {
+        box-shadow: 0 0 0 10px rgba(255, 68, 68, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(255, 68, 68, 0);
+    }
+}
+
+.emergency-contact {
+    font-size: 1.5rem;
+    margin: 1rem 0;
+}
+
+/* Quick Actions */
+.quick-actions .action-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin: 2rem 0;
+}
+
+@media (min-width: 768px) {
+    .quick-actions .action-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .quick-actions .action-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+.action-card {
+    background: white;
+    border-radius: 8px;
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
+
+.action-card:hover {
+    transform: translateY(-5px);
+}
+
+.action-card.emergency {
+    border-top: 5px solid #ff4444;
+}
+
+.action-card.medical {
+    border-top: 5px solid #44aaff;
+}
+
+.action-card.shelter {
+    border-top: 5px solid #44aa44;
+}
+
+.action-card.supplies {
+    border-top: 5px solid #ffaa44;
+}
+
+.action-button {
+    display: inline-block;
+    background: #007A33;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: bold;
+    margin-top: 1rem;
+    transition: background 0.3s;
+}
+
+.action-button:hover {
+    background: #005522;
+}
+
+/* Contact List */
+.contact-list {
+    list-style: none;
+    padding: 0;
+}
+
+.contact-list li {
+    padding: 0.5rem;
+    border-bottom: 1px solid #eee;
+}
+
+/* Forms */
+.help-form {
+    background: #f9f9f9;
+    padding: 2rem;
+    border-radius: 8px;
+    margin: 2rem 0;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #007A33;
+}
+
+.submit-button {
+    background: #007A33;
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    transition: background 0.3s;
+}
+
+.submit-button:hover {
+    background: #005522;
+}
+
+/* Safety Tips */
+.tips-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    margin: 2rem 0;
+}
+
+@media (min-width: 768px) {
+    .tips-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.tip {
+    background: #fff8e1;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border-left: 4px solid #FFD700;
+}
+
+.tip h3 {
+    color: #333;
+    margin-top: 0;
+}
+
+/* Updates */
+.update-feed {
+    background: #e8f4f8;
+    padding: 1.5rem;
+    border-radius: 8px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.update {
+    padding: 1rem;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 0.5rem;
+}
+
+.update:last-child {
+    border-bottom: none;
+}
+
+/* Footer */
+.footer {
+    background: #333;
+    color: white;
+    padding: 2rem;
+    text-align: center;
+    margin-top: 3rem;
+}

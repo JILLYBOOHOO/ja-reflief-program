@@ -1,0 +1,131 @@
+<div class="register-header">
+    <h1>Register for Aid</h1>
+    <p>Please fill out the form below to register for disaster assistance.</p>
+
+    <button type="button" class="voice-toggle-btn" [class.enabled]="isVoiceEnabled" (click)="toggleVoice()">
+        <span class="icon">{{ isVoiceEnabled ? '🔊' : '🔇' }}</span>
+        <span class="text">{{ isVoiceEnabled ? 'Voice Guidance Enabled (SyncVoice)' : 'Enable Voice Guidance
+            (SyncVoice)' }}</span>
+    </button>
+</div>
+
+<form class="register-form" [formGroup]="survivorForm" (ngSubmit)="submit()">
+
+    <div class="form-group">
+        <label for="fullName">Full Name *</label>
+        <input id="fullName" type="text" formControlName="fullName" autocomplete="name"
+            placeholder="Enter your full name" aria-required="true" aria-label="Enter your full legal name"
+            (focus)="speakField('Full Name', 'Please enter your complete legal name as it appears on your ID.')" />
+    </div>
+
+    <div class="form-group">
+        <label for="phone">Contact Number *</label>
+        <input id="phone" type="tel" formControlName="contact" autocomplete="tel" placeholder="876-123-4567"
+            aria-required="true" aria-label="10-digit Jamaican contact number"
+            (focus)="speakField('Contact Number', 'Enter your 10 digit Jamaican phone number.')" />
+    </div>
+
+    <div class="form-checkbox">
+        <input type="checkbox" id="docsDestroyed" formControlName="provisional"
+            aria-label="Mark if your IDs were destroyed or lost during the disaster"
+            (focus)="speakField('Documents Destroyed', 'Check this box if your official IDs were lost or destroyed in the disaster.')" />
+        <label for="docsDestroyed">
+            ID destroyed or lost – Request provisional access
+        </label>
+    </div>
+
+    <div *ngIf="!survivorForm.get('provisional')?.value">
+        <div class="form-group">
+            <label for="idType">ID Type *</label>
+            <select id="idType" formControlName="idType"
+                (focus)="speakField('ID Type', 'Select the type of ID you are providing.')">
+                <option value="">Select ID Type</option>
+                <option>National ID</option>
+                <option>Passport</option>
+                <option>Driver’s License</option>
+                <option>TRN</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="idNumber">ID Number *</label>
+            <input id="idNumber" type="text" formControlName="idNumber" placeholder="Enter ID Number"
+                (focus)="speakField('ID Number', 'Enter the number exactly as it appears on your document.')" />
+        </div>
+
+
+    </div>
+
+    <div class="form-group">
+        <label for="parish">Parish *</label>
+        <select id="parish" formControlName="parish"
+            (focus)="speakField('Parish', 'Select the parish where you currently reside.')">
+            <option value="">--Select Parish--</option>
+            <option *ngFor="let p of parishesList" [value]="p">{{ p }}</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="address">Address *</label>
+        <input id="address" type="text" formControlName="address" placeholder="Street, Community, City"
+            (focus)="speakField('Address', 'Enter your current physical address or temporary location.')" />
+    </div>
+
+    <div class="form-group">
+        <label for="dob">Date of Birth *</label>
+        <input id="dob" type="date" formControlName="dob" [max]="today"
+            (focus)="speakField('Date of Birth', 'Select your date of birth from the calendar.')" />
+    </div>
+
+    <fieldset class="form-group">
+        <legend>Damage Level *</legend>
+        <div class="radio-group" role="radiogroup">
+            <label (focusin)="speakField('Low Damage', 'Select this if the damage is minor.')">
+                <input type="radio" value="Low" formControlName="damageLevel" /> Low
+            </label>
+            <label (focusin)="speakField('Medium Damage', 'Select this for moderate property damage.')">
+                <input type="radio" value="Medium" formControlName="damageLevel" /> Medium
+            </label>
+            <label
+                (focusin)="speakField('High Damage', 'Select this if your property or situation is severely impacted.')">
+                <input type="radio" value="High" formControlName="damageLevel" /> High
+            </label>
+        </div>
+    </fieldset>
+
+    <div class="form-group">
+        <label for="password">Create Password *</label>
+        <input id="password" type="password" formControlName="password" placeholder="Min 6 characters"
+            (focus)="speakField('Password', 'Create a password to access your dashboard later. Minimum 6 characters.')" />
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="submit-btn"
+            (focus)="speakField('Register Button', 'Click to submit your registration form.')">
+            Complete Registration
+        </button>
+    </div>
+</form>
+
+<!-- Modern Success Modal Overlay -->
+<div *ngIf="showSuccessModal" class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-emerald-950/60 backdrop-blur-md animate-in fade-in duration-300">
+    <div class="bg-white rounded-[32px] shadow-2xl max-w-md w-full p-10 text-center scale-up-center border border-emerald-100">
+        <div class="w-24 h-24 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-8 animate-bounce">
+            <span class="material-symbols-outlined text-emerald-600 text-6xl">check_circle</span>
+        </div>
+        
+        <h2 class="text-3xl font-black text-emerald-900 mb-4">Registration Successful!</h2>
+        <p class="text-lg text-emerald-800/70 mb-8 leading-relaxed">
+            Welcome to the JA Relief community. We are preparing your secure dashboard and virtual ID card.
+        </p>
+
+        <div class="flex items-center justify-center gap-3 text-emerald-600 font-bold">
+            <div class="w-2 h-2 bg-emerald-600 rounded-full animate-ping"></div>
+            <span>Redirecting you now...</span>
+        </div>
+
+        <div class="mt-8 pt-8 border-t border-emerald-50">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/0/0a/Flag_of_Jamaica.svg" alt="Jamaica" class="h-6 mx-auto opacity-40">
+        </div>
+    </div>
+</div>

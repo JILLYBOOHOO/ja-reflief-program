@@ -1,0 +1,242 @@
+.register-header {
+    text-align: center;
+    margin-bottom: 4rem;
+    padding-top: 2rem;
+}
+
+.register-header h1 {
+    font-size: 4rem;
+    font-weight: 800;
+    color: #1a2c3d;
+    margin-bottom: 1rem;
+}
+
+.register-header p {
+    font-size: 1.8rem;
+    color: #4a5568;
+    max-width: 800px;
+    margin: 0 auto 2rem;
+}
+
+.voice-toggle-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin: 2rem auto;
+    padding: 20px 48px;
+    background: white;
+    border: 3px solid #3498db;
+    border-radius: 60px;
+    color: #3498db;
+    font-weight: 800;
+    font-size: 1.6rem;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 8px 25px rgba(52, 152, 219, 0.1);
+}
+
+.voice-toggle-btn.enabled {
+    background: #3498db;
+    color: white;
+    box-shadow: 0 8px 30px rgba(52, 152, 219, 0.3);
+}
+
+.voice-toggle-btn .icon {
+    font-size: 2.5rem;
+}
+
+
+.register-form {
+    max-width: 1000px;
+    margin: 4rem auto;
+    padding: 5rem;
+    background: var(--card-bg, #fff);
+    border: 2px solid #e1e8f5;
+    border-radius: 32px;
+    color: var(--text-color, #333);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.12);
+}
+
+.form-group {
+    margin-bottom: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    clear: both;
+}
+
+label {
+    display: block;
+    font-weight: 800;
+    margin-bottom: 1.2rem;
+    font-size: 1.8rem;
+    color: #1a2c3d;
+}
+
+/* Primary Inputs - ULTRA LARGE */
+input[type="text"],
+input[type="tel"],
+input[type="password"],
+input[type="date"],
+select {
+    width: 100%;
+    min-height: 84px;
+    padding: 0 32px;
+    font-size: 1.8rem;
+    border-radius: 16px;
+    border: 3px solid #cbd5e0;
+    background-color: #fff;
+    color: #1a2c3d;
+    transition: all 0.3s;
+    box-sizing: border-box;
+    display: block;
+}
+
+input:focus,
+select:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 8px rgba(52, 152, 219, 0.2);
+    border-width: 4px;
+}
+
+/* Checkbox Layout - ULTRA LARGE */
+.form-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin: 3.5rem 0;
+    padding: 30px 40px;
+    background: #ebf4ff;
+    border-radius: 20px;
+    border: 3px solid #bfd8ff;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.form-checkbox input[type="checkbox"] {
+    width: 44px;
+    height: 44px;
+    cursor: pointer;
+    margin: 0;
+    flex-shrink: 0;
+    accent-color: #3498db;
+}
+
+.form-checkbox label {
+    margin: 0;
+    font-size: 1.6rem;
+    font-weight: 700;
+    cursor: pointer;
+    color: #1a2c3d;
+    flex: 1;
+    line-height: 1.5;
+}
+
+/* Fieldset for Radios - ULTRA LARGE */
+fieldset.form-group {
+    border: none;
+    padding: 0;
+    margin: 3.5rem 0;
+}
+
+fieldset.form-group legend {
+    font-weight: 800;
+    font-size: 1.8rem;
+    margin-bottom: 1.8rem;
+    color: #1a2c3d;
+}
+
+.radio-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+}
+
+.radio-group label {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 0;
+    font-size: 1.6rem;
+    font-weight: 700;
+    cursor: pointer;
+    padding: 18px 40px;
+    border: 4px solid #e2e8f0;
+    border-radius: 80px;
+    transition: all 0.25s;
+    background: white;
+}
+
+.radio-group label:hover {
+    border-color: #3498db;
+    background: #f7fbff;
+}
+
+.radio-group input[type="radio"] {
+    width: 30px;
+    height: 30px;
+    margin: 0;
+    cursor: pointer;
+    accent-color: #3498db;
+}
+
+/* Button - ULTRA LARGE */
+.submit-btn {
+    background-color: #1a252f;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    min-height: 100px;
+    width: 100%;
+    font-weight: 900;
+    font-size: 2.2rem;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    margin-top: 3rem;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+}
+
+.submit-btn:hover {
+    background-color: #000;
+    transform: translateY(-5px);
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.25);
+}
+
+.submit-btn:active {
+    transform: translateY(0);
+}
+
+@keyframes scale-up-center {
+    0% { transform: scale(0.5); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.scale-up-center {
+    animation: scale-up-center 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+}
+
+@media (max-width: 1000px) {
+    .register-form {
+        padding: 3rem;
+        margin: 2rem;
+        max-width: 95%;
+    }
+}
+
+@media (max-width: 600px) {
+    label, legend, input, select {
+        font-size: 1.4rem;
+    }
+    
+    .radio-group label {
+        width: 100%;
+        font-size: 1.4rem;
+        padding: 14px 24px;
+    }
+    
+    .submit-btn {
+        font-size: 1.8rem;
+        min-height: 80px;
+    }
+}

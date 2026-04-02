@@ -1,0 +1,63 @@
+<header class="header">
+    <h1>Welcome to JA RELIEF</h1>
+
+    <nav role="navigation" aria-label="Main Navigation">
+        <a routerLink="/" aria-label="Go to Home Page"><img src="assets/cirlce.ja.png" class="btn-icon" alt="" aria-hidden="true">Home</a>
+        <a routerLink="/donate" aria-label="Donate to JA Relief"><img src="assets/cirlce.ja.png" class="btn-icon"
+                alt="" aria-hidden="true">Donate</a>
+
+        <!-- Show Dashboard & Logout when logged in -->
+        <ng-container *ngIf="authService.currentUser$ | async; else notLoggedIn">
+            <a routerLink="/dashboard" aria-label="Go to Dashboard"><img src="assets/cirlce.ja.png" class="btn-icon"
+                    alt="" aria-hidden="true">Dashboard</a>
+            <a (click)="logout()" style="cursor: pointer;" aria-label="Logout from account"><img
+                    src="assets/cirlce.ja.png" class="btn-icon" alt="" aria-hidden="true">Logout</a>
+        </ng-container>
+
+        <!-- Show Login when NOT logged in -->
+        <ng-template #notLoggedIn>
+            <a routerLink="/login" aria-label="Login to your account"><img src="assets/cirlce.ja.png" class="btn-icon"
+                    alt="" aria-hidden="true">Login</a>
+            <a routerLink="/login" class="admin-login-link" aria-label="Admin Login"><img src="assets/cirlce.ja.png"
+                    class="btn-icon" alt="" aria-hidden="true">Admin Login</a>
+        </ng-template>
+
+        <div class="toggle-group">
+            <button (click)="toggleVoice()" class="theme-toggle-btn" [class.active]="isListening"
+                [attr.aria-label]="isListening ? 'Stop voice navigation' : 'Start voice navigation'"
+                [title]="isListening ? 'Stop Voice Commands' : 'Start Voice Commands'">
+                <img src="assets/cirlce.ja.png" class="btn-icon toggle-icon" alt="" aria-hidden="true">
+                <!-- Mic icon -->
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" />
+                    <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+                    <line x1="12" y1="19" x2="12" y2="23" />
+                    <line x1="8" y1="23" x2="16" y2="23" />
+                </svg>
+            </button>
+
+            <button (click)="toggleDarkMode()" class="theme-toggle-btn" [attr.aria-pressed]="isDarkMode"
+                aria-label="Toggle Dark Mode" [title]="isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'">
+                <img src="assets/cirlce.ja.png" class="btn-icon toggle-icon" alt="" aria-hidden="true">
+                <!-- Sun icon (light mode) -->
+                <svg *ngIf="isDarkMode" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <circle cx="12" cy="12" r="5" />
+                    <line x1="12" y1="1" x2="12" y2="3" />
+                    <line x1="12" y1="21" x2="12" y2="23" />
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                    <line x1="1" y1="12" x2="3" y2="12" />
+                    <line x1="21" y1="12" x2="23" y2="12" />
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                </svg>
+                <!-- Moon icon (dark mode) -->
+                <svg *ngIf="!isDarkMode" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                </svg>
+            </button>
+        </div>
+    </nav>
+</header>

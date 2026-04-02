@@ -1,0 +1,17 @@
+<section class="help">
+    <h2 tabindex="0">I Need Help</h2>
+
+    <p>
+        If you are affected by the hurricane and do not have internet access,
+        you can text <strong>HELP</strong> to JA RELIEF to get connected.
+    </p>
+
+    <button type="button" class="btn primary" (click)="simulateSms()" aria-label="Simulate sending HELP text message to JA RELIEF">
+        📲 Simulate Text HELP
+    </button>
+
+    <p *ngIf="showLink" class="link">
+        Connection link received:
+        <a routerLink="/wifi-access" aria-label="Access emergency connection portal">Click here to get online</a>
+    </p>
+</section>

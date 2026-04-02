@@ -1,0 +1,236 @@
+<!-- Fixed TopNavBar -->
+<nav class="fixed top-0 w-full z-50 header-gradient shadow-lg">
+    <div class="flex justify-between items-center w-full px-8 py-3 mx-auto">
+        <div class="text-2xl font-bold tracking-tight text-white font-['Manrope']">
+            Welcome to JA RELIEF
+        </div>
+        <div class="hidden md:flex items-center space-x-3 font-['Manrope']">
+            <a class="flex items-center gap-2 px-4 py-2 bg-[#f9d423] text-black font-bold rounded-lg border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:translate-y-[1px] hover:shadow-none transition-all"
+                routerLink="/">
+                <span class="text-sm">🇯🇲</span> Home
+            </a>
+            <a class="flex items-center gap-2 px-4 py-2 bg-[#008731] text-white font-bold rounded-lg border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:translate-y-[1px] hover:shadow-none transition-all"
+                routerLink="/donate">
+                <span class="text-sm">🇯🇲</span> Donate
+            </a>
+            <a class="flex items-center gap-2 px-4 py-2 bg-[#f9d423] text-black font-bold rounded-lg border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:translate-y-[1px] hover:shadow-none transition-all"
+                routerLink="/dashboard">
+                <span class="text-sm">🇯🇲</span> Dashboard
+            </a>
+            <a (click)="logout()"
+                class="flex items-center gap-2 px-4 py-2 bg-[#f9d423] text-black font-bold rounded-lg border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:translate-y-[1px] hover:shadow-none transition-all cursor-pointer">
+                <span class="text-sm">🇯🇲</span> Logout
+            </a>
+            <div class="flex items-center gap-2 ml-2">
+                <button
+                    class="w-10 h-10 rounded-full bg-[#004d1a] border border-white/20 flex items-center justify-center text-white">
+                    <span class="material-symbols-outlined text-sm">mic</span>
+                </button>
+                <button
+                    class="w-10 h-10 rounded-full bg-[#004d1a] border border-white/20 flex items-center justify-center text-white">
+                    <span class="material-symbols-outlined text-sm">dark_mode</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<main class="pt-24 pb-20 px-8 max-w-[calc(100%-22rem)] mr-auto">
+    <!-- Virtual ID Card Section -->
+    <div class="id-card-perspective mb-16 flex flex-col items-center">
+        <!-- Virtual ID Card Container -->
+        <div (click)="flipCard()"
+            class="relative w-full max-w-lg aspect-[1.58/1] bg-gradient-to-br from-[#0b3d1c] via-[#006b25] to-[#0b3d1c] rounded-2xl shadow-2xl p-8 text-white font-['Manrope'] overflow-hidden border border-white/10 cursor-pointer transition-transform duration-700 transform-style-3d"
+            [class.rotate-y-180]="isCardFlipped">
+            
+            <ng-container *ngIf="!isCardFlipped; else backSide">
+                <!-- FRONT SIDE -->
+                <!-- Background Decorative Circles -->
+                <div class="absolute -right-20 -top-20 w-64 h-64 bg-white/5 rounded-full"></div>
+                <div class="absolute -left-10 -bottom-10 w-48 h-48 bg-white/5 rounded-full"></div>
+                <!-- Header -->
+                <div class="flex justify-between items-start relative z-10">
+                    <div>
+                        <p class="text-[10px] uppercase tracking-[0.2em] font-bold opacity-80">JA Relief Survivor ID</p>
+                        <div
+                            class="mt-4 w-12 h-9 bg-gradient-to-br from-yellow-300 via-yellow-500 to-yellow-200 rounded-md shadow-inner border border-black/10">
+                        </div>
+                    </div>
+                    <span class="material-symbols-outlined text-3xl opacity-80 rotate-90">contactless</span>
+                </div>
+                <!-- Card Number -->
+                <div class="mt-8 relative z-10">
+                    <p class="text-2xl tracking-[0.25em] font-medium drop-shadow-md">{{ cardNumber }}</p>
+                </div>
+                <!-- Balance -->
+                <div class="mt-4 relative z-10">
+                    <p class="text-[10px] uppercase tracking-widest opacity-60">Available Balance</p>
+                    <p class="text-xl font-bold ml-1">$50,000.00 JMD</p>
+                </div>
+                <!-- Footer Info -->
+                <div class="mt-auto flex justify-between items-end relative z-10">
+                    <div class="space-y-1">
+                        <p class="text-[10px] uppercase tracking-widest opacity-60 ml-0.5">Card Holder</p>
+                        <p class="text-lg font-bold">{{ currentUser?.name || 'Leon Davis' }}</p>
+                        <p class="text-xs font-medium opacity-80">ID: {{ currentUser?.idNumber || '876409321' }}</p>
+                    </div>
+                    <div class="flex flex-col items-end">
+                        <img alt="JA Flag" class="w-8 h-5 rounded-sm mb-1 opacity-80"
+                            src="https://upload.wikimedia.org/wikipedia/commons/0/0a/Flag_of_Jamaica.svg" />
+                        <p class="text-[8px] opacity-40">Tap card to flip</p>
+                    </div>
+                </div>
+            </ng-container>
+
+            <ng-template #backSide>
+                <!-- BACK SIDE -->
+                <div class="flex flex-col h-full relative z-10 back-unmirror">
+                    <div class="w-full h-12 bg-black/90 -mx-8 mt-2 shadow-inner"></div>
+                    <div class="mt-8 flex items-center gap-4">
+                        <div class="flex-grow h-12 bg-white/20 rounded flex items-center px-4 italic text-sm border border-white/10">
+                            Authorized Signature
+                        </div>
+                        <div class="bg-white text-black px-4 py-2 rounded-lg font-black tracking-widest text-lg shadow-lg">
+                            {{ cvvCode }}
+                        </div>
+                    </div>
+                    <div class="mt-auto pt-6 border-t border-white/5">
+                        <p class="text-[9px] leading-relaxed opacity-60 italic text-center px-4">
+                            Notice: This virtual card is only authorized for use at local relief-compliant MCCs, grocery stores, pharmacies, and hardware medical facilities. For assistance call 1-888-JA-RELIEF.
+                        </p>
+                    </div>
+                </div>
+            </ng-template>
+        </div>
+        <!-- Terms of Use Notice -->
+        <p class="mt-6 max-w-lg text-center text-xs text-on-surface-variant/70 italic px-4">
+            Notice: Card only authorized to be used at authorized MCCs, supermarkets, medical offices, pharmacies, and
+            hardware stores.
+        </p>
+    </div>
+
+    <!-- Bento Grid Supplies -->
+    <form [formGroup]="pantryForm" (ngSubmit)="submitPantryRequest()">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <ng-container *ngFor="let cat of categorizedPantryItems; let i = index">
+                <!-- Visual Context between categories 2 and 3 -->
+                <div *ngIf="i === 2" class="relative overflow-hidden rounded-xl h-64 lg:col-span-2 shadow-md">
+                    <img class="w-full h-full object-cover"
+                        alt="vibrant outdoor scene in Jamaica with lush tropical foliage and bright warm sunlight hitting palm leaves"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuCs3ZUyPIIWwqkfQxpNN_YXRyqlHDJy5jtB0RXgkpPO86MhohgltratO1w0VoaFNrgwBCfNmFNesLw6343E1ItS6Wlp8oeBppcK0MCMA3O7cqWurTn6ZYB704mCPg6yWwLluk6X1McjtVqhmwM02kJzZxico2eOTqeyGNVJUiauV0GrqpMCOMmqWrjrey2WEn_qStzV00NccV5I-npgx1WKqfkgNWwNmc2c0M35GDjPPCS2OmGB9Hswtp5Ry2Y_xqGS32ERdXbEH8kB" />
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-emerald-950/80 via-emerald-950/20 to-transparent flex items-end p-8">
+                        <div class="text-white">
+                            <h3 class="font-headline text-xl font-bold">Community Support Centers</h3>
+                            <p class="text-sm opacity-90">Locations updated every 6 hours across all parishes.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Category Section -->
+                <section
+                    class="bg-surface-container-lowest p-8 rounded-xl shadow-sm hover:bg-surface-bright transition-all group border border-emerald-100/50">
+                    <div class="flex items-center justify-between mb-8">
+                        <div class="flex items-center space-x-4">
+                            <div class="p-3 bg-surface-container-low rounded-xl group-hover:bg-primary/10 transition-colors">
+                                <span class="material-symbols-outlined text-primary text-3xl">{{ cat.icon }}</span>
+                            </div>
+                            <h2 class="font-headline text-3xl font-bold tracking-tight text-emerald-900">{{ cat.category }}</h2>
+                        </div>
+                        <span class="text-sm font-label uppercase tracking-widest text-tertiary">{{ cat.priority }}</span>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <label *ngFor="let item of cat.items"
+                            class="flex items-center p-4 bg-surface-container-low rounded-xl cursor-pointer hover:bg-surface-container transition-colors">
+                            <input [formControlName]="item.name"
+                                class="w-5 h-5 rounded-md border-none bg-surface-container-highest text-primary focus:ring-primary mr-3"
+                                type="checkbox" />
+                            <span class="text-lg font-bold flex items-center gap-3">
+                                {{ item.icon }} {{ item.name }}
+                            </span>
+                        </label>
+                    </div>
+                </section>
+            </ng-container>
+
+            <!-- Other / Item not listed -->
+            <section
+                class="lg:col-span-2 bg-surface-container-lowest p-8 rounded-xl shadow-sm hover:bg-surface-bright transition-all border border-emerald-100/50">
+                <div class="flex items-center space-x-4 mb-4">
+                    <div class="p-3 bg-surface-container-low rounded-xl group-hover:bg-primary/10 transition-colors">
+                        <span class="material-symbols-outlined text-primary text-4xl">edit_note</span>
+                    </div>
+                    <h2 class="font-headline text-3xl font-bold tracking-tight text-emerald-900">Other / Specific Needs</h2>
+                </div>
+                <textarea formControlName="otherItems"
+                    class="w-full p-6 rounded-xl border border-emerald-100 bg-surface-container-low focus:ring-primary focus:border-primary text-lg min-h-[120px]"
+                    placeholder="e.g. Specific medication, dietary requirements, or any other essentials not listed above..."></textarea>
+            </section>
+        </div>
+    </form>
+</main>
+
+<!-- SideNavBar (Request Summary) -->
+<aside
+    class="fixed right-0 top-16 h-[calc(100vh-4rem)] w-96 rounded-l-3xl bg-slate-100/95 dark:bg-slate-900/90 backdrop-blur-xl shadow-2xl flex flex-col p-8 space-y-6 border-l border-emerald-100/20">
+    <div class="pt-4">
+        <h2 class="text-2xl font-black text-emerald-900 dark:text-white font-['Work_Sans']">Request Summary</h2>
+        <p class="text-base leading-relaxed text-slate-600 dark:text-slate-400">Tracking your items</p>
+    </div>
+    <div class="flex-grow overflow-y-auto space-y-4 pr-2">
+        <ng-container *ngFor="let cat of categorizedPantryItems">
+            <div *ngIf="getSelectedItemsCountForCategory(cat.category) > 0"
+                class="flex items-center p-5 space-x-4 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-900 dark:text-emerald-100 font-bold rounded-2xl border border-emerald-200/50">
+                <span class="material-symbols-outlined text-2xl font-bold">{{ cat.icon }}</span>
+                <div class="flex flex-col">
+                    <span class="text-base">{{ cat.category }}</span>
+                    <span class="text-sm font-normal opacity-70 italic">{{ getSelectedItemsCountForCategory(cat.category) }} Item Selected</span>
+                </div>
+            </div>
+            
+            <div *ngIf="getSelectedItemsCountForCategory(cat.category) === 0"
+                class="flex items-center p-4 space-x-3 text-slate-600 dark:text-slate-400 hover:text-emerald-700 hover:translate-x-1 transition-transform">
+                <span class="material-symbols-outlined">{{ cat.icon }}</span>
+                <div class="flex flex-col">
+                    <span class="text-sm">{{ cat.category }}</span>
+                    <span class="text-xs font-normal opacity-70">Nothing Selected</span>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+    <div class="space-y-6 pt-6 border-t border-emerald-200/30">
+        <div class="flex justify-between items-center text-lg font-black px-2">
+            <span>Total Items</span>
+            <span class="text-primary text-2xl">{{ selectedItemsCount }}</span>
+        </div>
+        <button (click)="submitPantryRequest()"
+            class="w-full py-5 rounded-full signature-gradient text-white font-headline font-black text-xl text-center shadow-xl shadow-primary-container/20 active:scale-95 transition-all">
+            Submit Request
+        </button>
+    </div>
+</aside>
+
+<!-- Footer -->
+<footer class="w-full py-12 mt-auto border-t border-emerald-100/20 bg-emerald-50 dark:bg-emerald-950">
+    <div class="flex flex-col md:flex-row justify-between items-center px-12 max-w-7xl mx-auto space-y-8 md:space-y-0">
+        <div class="flex flex-col items-center md:items-start space-y-2">
+            <div class="font-['Manrope'] font-black text-emerald-900 text-lg">JA RELIEF</div>
+            <div class="font-['Work_Sans'] text-xs tracking-wide uppercase text-emerald-700/60">
+                © 2024 JA RELIEF. Resilient Together.
+            </div>
+        </div>
+        <div class="flex space-x-12 font-['Work_Sans'] text-xs tracking-wide uppercase">
+            <a class="text-emerald-700/60 hover:text-yellow-600 transition-colors" href="#">About Us</a>
+            <a class="text-emerald-700/60 hover:text-yellow-600 transition-colors" href="#">Contact</a>
+            <a class="text-emerald-900 font-bold hover:text-yellow-600 transition-colors" href="#">Privacy Policy</a>
+        </div>
+        <div class="flex space-x-6">
+            <span class="material-symbols-outlined text-emerald-900/40 hover:text-primary transition-colors cursor-pointer"
+                data-icon="public">public</span>
+            <span class="material-symbols-outlined text-emerald-900/40 hover:text-primary transition-colors cursor-pointer"
+                data-icon="mail">mail</span>
+            <span class="material-symbols-outlined text-emerald-900/40 hover:text-primary transition-colors cursor-pointer"
+                data-icon="share">share</span>
+        </div>
+    </div>
+</footer>

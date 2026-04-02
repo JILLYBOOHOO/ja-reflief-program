@@ -1,0 +1,179 @@
+/* ===== MOBILE-FIRST BASE (PHONE FIRST!) ===== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+}
+
+body {
+    width: 100%;
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+}
+
+/* ===== HEADER - MOBILE FIRST (PHONE) ===== */
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.5rem 1rem;
+    color: white;
+    background-image: linear-gradient(135deg, #000, #059605, #FFD700);
+    width: 100%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    position: relative;
+    z-index: 100;
+}
+
+.header h1 {
+    margin: 1.5rem 0 0.5rem 0;
+    font-size: 2.5rem;
+    text-align: center;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    width: 100%;
+}
+
+.header nav {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 1rem;
+}
+
+.header nav a {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    padding: 0 15px !important;
+    height: 50px !important;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 800;
+    border: 4px ridge #000 !important;
+    box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.8) !important;
+    background: #FED100 !important; /* Home/Login Gold */
+    color: #000 !important;
+    font-size: 1.1rem !important;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    transition: all 0.2s ease;
+    gap: 10px !important;
+    width: 100% !important;
+    max-width: 200px;
+    margin: 0 auto;
+}
+
+.header nav a[routerLink="/donate"] {
+    background: #009B3A !important; /* Green */
+    color: #fff !important;
+    box-shadow: 6px 6px 0px #000 !important;
+}
+
+.header nav a.admin-login-link {
+    background: #000 !important;
+    color: #fff !important;
+    box-shadow: 6px 6px 0px #FED100 !important; /* Gold shadow */
+    width: 100% !important;
+    max-width: 280px !important;
+}
+
+.btn-icon {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+}
+
+/* Tablets (768px and up) */
+@media (min-width: 768px) {
+    .header {
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 1rem 3rem;
+    }
+
+    .header nav {
+        flex-direction: row;
+        width: auto;
+    }
+
+    .header h1 {
+        text-align: left;
+        width: auto;
+        margin: 0;
+    }
+
+    .header nav a {
+        width: 160px !important;
+        margin: 0;
+    }
+
+    .admin-login-link {
+        width: 220px !important;
+    }
+}
+
+/* Theme Toggles (Modern Style) */
+.toggle-group {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+@media (min-width: 768px) {
+    .toggle-group {
+        margin-top: 0;
+        margin-left: 1.5rem;
+    }
+}
+
+.theme-toggle-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #39FF14 0%, #000000 100%) !important;
+    color: #fff !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px ridge #000 !important;
+    cursor: pointer;
+    position: relative;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+    transition: all 0.2s ease;
+}
+
+.theme-toggle-btn:hover {
+    transform: scale(1.1);
+    filter: brightness(1.2);
+}
+
+.theme-toggle-btn.active {
+    background: #ff4d4d !important; /* Red when mic is active */
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(255, 77, 77, 0.7); }
+    70% { box-shadow: 0 0 0 10px rgba(255, 77, 77, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(255, 77, 77, 0); }
+}
+
+
+.toggle-icon {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    top: 5px;
+    left: 5px;
+}
+
+.theme-toggle-btn svg {
+    width: 20px;
+    height: 20px;
+}

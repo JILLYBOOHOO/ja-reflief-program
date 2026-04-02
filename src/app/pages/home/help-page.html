@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Help | JA RELIEF</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <header class="header">
+        <a class="skip-link" href="#main">Skip to content</a>
+        <h1 tabindex="0">JA RELIEF</h1>
+        <nav>
+            <a routerLink="/">Home</a>
+            <a routerLink="/help" class="router-link-active">I Need Help</a>
+            <a routerLink="/donate">Donate</a>
+            <a routerLink="/info-page">Information Page</a>
+        </nav>
+    </header>
+
+    <main class="main-content" id="main">
+        <!-- ===== HERO SECTION ===== -->
+        <section class="hero emergency-alert">
+            <h1 class="page-title">⚠️ IMMEDIATE ASSISTANCE</h1>
+            <p class="emergency-contact">
+                <strong>Emergency Services:</strong> Dial 119
+            </p>
+        </section>
+
+        <!-- ===== QUICK ACTIONS ===== -->
+        <section class="quick-actions">
+            <h2>Get Help Quickly</h2>
+            <div class="action-grid">
+                <div class="action-card emergency">
+                    <h3>🚨 Emergency</h3>
+                    <p>Life-threatening situations</p>
+                    <a href="tel:119" class="action-button">Call 119 Now</a>
+                </div>
+
+                <div class="action-card medical">
+                    <h3>🏥 Medical</h3>
+                    <p>Medical assistance needed</p>
+                    <a href="tel:110" class="action-button">Call Ambulance</a>
+                </div>
+
+                <div class="action-card shelter">
+                    <h3>🏠 Shelter</h3>
+                    <p>Need emergency housing</p>
+                    <a href="#shelters" class="action-button">Find Shelters</a>
+                </div>
+
+                <div class="action-card supplies">
+                    <h3>📦 Supplies</h3>
+                    <p>Food, water, essentials</p>
+                    <a href="#distribution" class="action-button">Get Supplies</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== ESSENTIAL INFORMATION ===== -->
+        <section class="essential-info">
+            <h2>Essential Information</h2>
+
+            <div class="info-section">
+                <h3>📞 Emergency Contacts</h3>
+                <ul class="contact-list">
+                    <li><strong>Police/Fire/Ambulance:</strong> 119</li>
+                    <li><strong>Office of Disaster Preparedness (ODPEM):</strong> 1-888-225-5637</li>
+                    <li><strong>Red Cross Jamaica:</strong> 876-984-7860</li>
+                    <li><strong>Ministry of Health:</strong> 876-633-7771</li>
+                    <li><strong>Power Outages (JPS):</strong> 1-888-225-5577</li>
+                    <li><strong>Water Issues (NWC):</strong> 1-888-275-6329</li>
+                </ul>
+            </div>
+
+            <div class="info-section">
+                <h3>🏠 Emergency Shelters</h3>
+                <p>Open shelters in your area:</p>
+                <!-- Update with actual shelter info -->
+                <div class="shelter-list">
+                    <div class="shelter-item">
+                        <h4>Kingston National Arena</h4>
+                        <p>📍 64 Mountain View Avenue, Kingston</p>
+                        <p>👥 Capacity: 500 people</p>
+                        <p>✅ Food, Water, Medical Available</p>
+                    </div>
+                    <!-- Add more shelters -->
+                </div>
+            </div>
+
+            <div class="info-section">
+                <h3>📍 Supply Distribution Centers</h3>
+                <ul>
+                    <li>National Stadium, Independence Park</li>
+                    <li>Montego Bay Civic Centre</li>
+                    <li>Mandeville Regional Hospital</li>
+                    <li>Ocho Rios Bay Beach</li>
+                </ul>
+                <p><strong>Open:</strong> 7:00 AM - 7:00 PM Daily</p>
+            </div>
+        </section>
+
+        <!-- ===== HELP REQUEST FORM ===== -->
+        <section class="help-form">
+            <h2>📝 Request Assistance</h2>
+            <p>Can't call? Fill out this form for non-emergency help:</p>
+
+            <form id="assistance-form">
+                <div class="form-group">
+                    <label for="name">Full Name *</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone Number *</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="location">Location (Parish/Town) *</label>
+                    <input type="text" id="location" name="location" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="assistance-type">Type of Assistance Needed *</label>
+                    <select id="assistance-type" name="assistance-type" required>
+                        <option value="">Select...</option>
+                        <option value="medical">Medical Assistance</option>
+                        <option value="shelter">Emergency Shelter</option>
+                        <option value="food">Food & Water</option>
+                        <option value="evacuation">Evacuation Help</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="people">Number of People Needing Help</label>
+                    <input type="number" id="people" name="people" min="1" value="1">
+                </div>
+
+                <div class="form-group">
+                    <label for="details">Additional Details</label>
+                    <textarea id="details" name="details" rows="3"></textarea>
+                </div>
+
+                <button type="submit" class="submit-button">Submit Help Request</button>
+                <p class="form-note"><small>* Emergency requests should call 119 immediately</small></p>
+            </form>
+        </section>
+
+        <!-- ===== SAFETY TIPS ===== -->
+        <section class="safety-tips">
+            <h2>⚠️ Safety Tips During Emergency</h2>
+            <div class="tips-grid">
+                <div class="tip">
+                    <h3>🌧️ During Flooding</h3>
+                    <ul>
+                        <li>Move to higher ground immediately</li>
+                        <li>Avoid walking/driving through flood waters</li>
+                        <li>Turn off electricity at main switch</li>
+                    </ul>
+                </div>
+
+                <div class="tip">
+                    <h3>🌀 During Hurricane</h3>
+                    <ul>
+                        <li>Stay indoors away from windows</li>
+                        <li>Keep emergency kit accessible</li>
+                        <li>Listen to battery-powered radio for updates</li>
+                    </ul>
+                </div>
+
+                <div class="tip">
+                    <h3>🏚️ If Trapped</h3>
+                    <ul>
+                        <li>Text 119 if you can't call</li>
+                        <li>Bang on pipes or walls</li>
+                        <li>Use whistle if available</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== UPDATES ===== -->
+        <section class="updates">
+            <h2>📢 Latest Updates</h2>
+            <div class="update-feed">
+                <!-- Update with real information -->
+                <div class="update">
+                    <p><strong>Dec 15, 10:30 AM:</strong> National Arena shelter at capacity. Alternate shelter open at
+                        Sabina Park.</p>
+                </div>
+                <div class="update">
+                    <p><strong>Dec 15, 9:00 AM:</strong> Water distribution in Spanish Town delayed until 11 AM.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>© 2026 JA RELIEF | Disaster Assistance</p>
+        <p>Emergency: 119 | Non-emergency: 1-888-JA-HELP</p>
+    </footer>
+
+    <script>
+        // Form submission handling
+        document.getElementById('assistance-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            alert('Help request submitted! Emergency services will contact you soon. For immediate danger, call 119.');
+            this.reset();
+        });
+
+        // Auto-update time
+        function updateTime() {
+            const timeElement = document.getElementById('current-time');
+            if (timeElement) {
+                timeElement.textContent = new Date().toLocaleTimeString('en-JM');
+            }
+        }
+        setInterval(updateTime, 1000);
+        updateTime();
+    </script>
+</body>
+
+</html>

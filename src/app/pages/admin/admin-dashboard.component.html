@@ -1,0 +1,391 @@
+<div class="bg-[#f8f9fb] text-[#191c1e] w-full min-h-screen font-['Inter']">
+<!-- Top Header Image -->
+<div class="w-full">
+<img alt="JA RELIEF Welcome Header" class="w-full h-auto block" src="https://lh3.googleusercontent.com/aida/ADBb0ugO_XMGSVmaxLP5_43dDlPyh3OrvqsFLOLsABnmiaUorltYZsjqnbix4djJx9Xh_w6xBg5tn7A5JrmG0wfzf9dnmhjmFRNQ_6gbJwiMwqY6SgTysVYq5b06y640KmOsO9ML7y3WOk_F3OcsAKbtSDkZT2xFKGWaalhFUddQa87jbhTy8YEGmJTe_pmB4iQcErgHe4TuYmshPgz6m7keo9ze4t6wfVnZAJ0L_pCpSu9YDvesAPFe4Dpt0cl28LxAyNunYbGtv9_xKg"/>
+</div>
+<div class="flex">
+<!-- SideNavBar -->
+<aside class="hidden lg:flex flex-col h-[calc(100vh-8rem)] p-6 border-r border-slate-100 dark:border-white/5 bg-[#f8f9fb] dark:bg-[#121212] w-64 sticky top-0">
+<div class="mb-8">
+<h2 class="text-lg font-bold text-[#005c37] font-['Inter']">Command Center</h2>
+<p class="text-xs text-slate-500 uppercase tracking-widest">Relief Operations</p>
+</div>
+<nav class="flex flex-col gap-2 flex-grow">
+<a class="flex items-center gap-3 px-4 py-3 bg-[#005c37] text-white rounded-xl shadow-lg font-medium text-sm transition-transform active:scale-95" href="javascript:void(0)">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+                    Dashboard
+                </a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 hover:bg-slate-100 rounded-xl font-medium text-sm transition-transform hover:translate-x-1" href="javascript:void(0)">
+<span class="material-symbols-outlined" data-icon="insights">insights</span>
+                    Analytics
+                </a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 hover:bg-slate-100 rounded-xl font-medium text-sm transition-transform hover:translate-x-1" href="javascript:void(0)">
+<span class="material-symbols-outlined" data-icon="emergency_home">emergency_home</span>
+                    Emergency Logs
+                </a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 hover:bg-slate-100 rounded-xl font-medium text-sm transition-transform hover:translate-x-1" href="javascript:void(0)">
+<span class="material-symbols-outlined" data-icon="record_voice_over">record_voice_over</span>
+                    Survivor Requests
+                </a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 hover:bg-slate-100 rounded-xl font-medium text-sm transition-transform hover:translate-x-1 cursor-pointer" (click)="logout()">
+<span class="material-symbols-outlined" data-icon="settings">logout</span>
+                    Logout
+                </a>
+</nav>
+<button class="mt-auto bg-[#005c37] text-white py-4 rounded-xl font-bold flex items-center justify-center gap-2 shadow-xl hover:bg-[#007749] transition-all">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+                New Emergency Log
+            </button>
+</aside>
+<!-- Main Content -->
+<main class="flex-grow p-8 bg-[#f8f9fb] overflow-x-hidden">
+<div class="max-w-7xl mx-auto space-y-8">
+<!-- Hero Dashboard Metrics -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="bg-white p-8 rounded-3xl shadow-sm border border-[#becabf]/30 flex flex-col justify-between h-48">
+<span class="text-[#3e4941] font-medium tracking-tight">Active Weather Warnings</span>
+<div class="flex items-end justify-between">
+<span class="text-5xl font-black text-[#005c37]">04</span>
+<span class="material-symbols-outlined text-4xl text-[#7c5800]" data-icon="thunderstorm">thunderstorm</span>
+</div>
+</div>
+<div class="bg-white p-8 rounded-3xl shadow-sm border border-[#becabf]/30 flex flex-col justify-between h-48">
+<span class="text-[#3e4941] font-medium tracking-tight">Survivor Requests</span>
+<div class="flex items-end justify-between">
+<span class="text-5xl font-black text-[#005c37]">128</span>
+<span class="material-symbols-outlined text-4xl text-[#005c37]" data-icon="record_voice_over">record_voice_over</span>
+</div>
+</div>
+<div class="bg-white p-8 rounded-3xl shadow-sm border border-[#becabf]/30 flex flex-col justify-between h-48">
+<span class="text-[#3e4941] font-medium tracking-tight">Active Personnel</span>
+<div class="flex items-end justify-between">
+<span class="text-5xl font-black text-[#005c37]">842</span>
+<span class="material-symbols-outlined text-4xl text-[#7c5800]" data-icon="group">group</span>
+</div>
+</div>
+</section>
+<!-- Alerts Management Section -->
+<section class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+<!-- New Alert Form -->
+<div class="lg:col-span-2 bg-white p-8 rounded-3xl border border-[#becabf]/30 shadow-sm space-y-6">
+<div class="flex items-center justify-between mb-2">
+<h2 class="text-2xl font-extrabold text-[#191c1e] tracking-tight font-['Manrope']">Post New Emergency Alert</h2>
+<span class="material-symbols-outlined text-[#007749]" data-icon="campaign">campaign</span>
+</div>
+<form [formGroup]="updateForm" (ngSubmit)="onSubmitUpdate()" class="space-y-6">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="space-y-2">
+<label class="text-xs font-bold uppercase tracking-widest text-[#3e4941]">Alert Title</label>
+<input formControlName="title" class="w-full bg-[#f2f4f6] border-none rounded-xl px-4 py-3 focus:ring-2 focus:ring-[#005c37] transition-all text-[#191c1e]" placeholder="e.g., Flash Flood Warning - Parish of St. Mary" type="text"/>
+</div>
+<div class="space-y-2">
+<label class="text-xs font-bold uppercase tracking-widest text-[#3e4941]">Source</label>
+<input formControlName="source" class="w-full bg-[#f2f4f6] border-none rounded-xl px-4 py-3 focus:ring-2 focus:ring-[#005c37] transition-all text-[#191c1e]" placeholder="Meteorological Service Jamaica" type="text"/>
+</div>
+</div>
+<div class="space-y-2">
+<label class="text-xs font-bold uppercase tracking-widest text-[#3e4941]">Alert Level</label>
+<select formControlName="status" class="w-full bg-[#f2f4f6] border-none rounded-xl px-4 py-3 focus:ring-2 focus:ring-[#005c37] appearance-none transition-all text-[#191c1e]">
+<option class="text-blue-600" value="info">Information-Blue (Advisory)</option>
+<option class="text-yellow-600" value="warning">Warning-Yellow (Watch)</option>
+<option class="text-red-600" value="danger">Danger-Red (Immediate Action)</option>
+</select>
+</div>
+<div class="space-y-2">
+<label class="text-xs font-bold uppercase tracking-widest text-[#3e4941]">Content</label>
+<textarea formControlName="content" class="w-full bg-[#f2f4f6] border-none rounded-xl px-4 py-3 focus:ring-2 focus:ring-[#005c37] transition-all text-[#191c1e]" placeholder="Describe the situation and required actions..." rows="4"></textarea>
+</div>
+<button type="submit" [disabled]="updateForm.invalid" class="w-full md:w-auto px-12 py-4 bg-[#005c37] text-white font-bold rounded-xl shadow-lg hover:bg-[#007749] transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed">
+                                Post Update
+                            </button>
+</form>
+</div>
+<!-- Edit Existing Alerts -->
+<div class="bg-[#f2f4f6] p-8 rounded-3xl space-y-6">
+<div class="flex items-center justify-between">
+<h2 class="text-xl font-bold text-[#191c1e] tracking-tight font-['Manrope']">Edit Existing Alerts</h2>
+<span class="text-xs font-bold text-[#005c37] cursor-pointer hover:underline">View All</span>
+</div>
+<div class="space-y-4">
+    <!-- Dynamic Updates -->
+    <div *ngFor="let update of updates" class="p-4 bg-white rounded-2xl border border-[#becabf]/20 flex justify-between items-start">
+        <div class="space-y-1">
+            <div class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full" [ngClass]="{'bg-red-600': update.status === 'danger', 'bg-[#ffbb16]': update.status === 'warning', 'bg-blue-500': update.status === 'info'}"></span>
+                <span class="text-xs font-bold uppercase" [ngClass]="{'text-red-600': update.status === 'danger', 'text-[#7c5800]': update.status === 'warning', 'text-blue-500': update.status === 'info'}">{{ update.status === 'danger' ? 'Danger' : update.status === 'warning' ? 'Warning' : 'Information' }}</span>
+            </div>
+            <p class="text-sm font-bold text-[#191c1e] leading-tight">{{ update.title }}</p>
+            <p class="text-[10px] text-[#3e4941]">Source: {{ update.source }} | {{ update.time }}</p>
+        </div>
+        <button (click)="deleteUpdate(update.id)" class="text-red-600 hover:bg-red-50 p-2 rounded-lg transition-colors">
+            <span class="material-symbols-outlined" data-icon="delete">delete</span>
+        </button>
+    </div>
+
+    <!-- Hardcoded Fallbacks -->
+    <ng-container *ngIf="updates.length === 0">
+        <div class="p-4 bg-white rounded-2xl border border-[#becabf]/20 flex justify-between items-start">
+        <div class="space-y-1">
+        <div class="flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-[#ba1a1a]"></span>
+        <span class="text-xs font-bold text-[#ba1a1a] uppercase">Danger</span>
+        </div>
+        <p class="text-sm font-bold text-[#191c1e] leading-tight">Hurricane Beryl Recovery Zone 4</p>
+        <p class="text-[10px] text-[#3e4941]">Updated 12 mins ago</p>
+        </div>
+        <button class="text-[#005c37] hover:bg-[#005c37]/5 p-2 rounded-lg transition-colors">
+        <span class="material-symbols-outlined" data-icon="edit_square">edit_square</span>
+        </button>
+        </div>
+        
+        <div class="p-4 bg-white rounded-2xl border border-[#becabf]/20 flex justify-between items-start">
+        <div class="space-y-1">
+        <div class="flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-[#ffbb16]"></span>
+        <span class="text-xs font-bold text-[#7c5800] uppercase">Warning</span>
+        </div>
+        <p class="text-sm font-bold text-[#191c1e] leading-tight">Portmore Power Grid Maintenance</p>
+        <p class="text-[10px] text-[#3e4941]">Updated 2 hours ago</p>
+        </div>
+        <button class="text-[#005c37] hover:bg-[#005c37]/5 p-2 rounded-lg transition-colors">
+        <span class="material-symbols-outlined" data-icon="edit_square">edit_square</span>
+        </button>
+        </div>
+        
+        <div class="p-4 bg-white rounded-2xl border border-[#becabf]/20 flex justify-between items-start">
+        <div class="space-y-1">
+        <div class="flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-blue-500"></span>
+        <span class="text-xs font-bold text-blue-500 uppercase">Information</span>
+        </div>
+        <p class="text-sm font-bold text-[#191c1e] leading-tight">Water Distribution Centers - Kingston</p>
+        <p class="text-[10px] text-[#3e4941]">Updated 5 hours ago</p>
+        </div>
+        <button class="text-[#005c37] hover:bg-[#005c37]/5 p-2 rounded-lg transition-colors">
+        <span class="material-symbols-outlined" data-icon="edit_square">edit_square</span>
+        </button>
+        </div>
+    </ng-container>
+</div>
+</div>
+</section>
+<!-- Pantry & Donations Sections -->
+<section class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+<!-- Pantry Inventory -->
+<div class="bg-white p-8 rounded-3xl border border-[#becabf]/30 shadow-sm space-y-6">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[#005c37]" data-icon="inventory_2">inventory_2</span>
+<h2 class="text-xl font-bold text-[#191c1e] tracking-tight font-['Manrope']">Pantry Inventory</h2>
+</div>
+<button class="text-xs font-bold text-[#005c37] hover:underline">Manage Stock</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr class="text-xs font-bold uppercase tracking-widest text-[#3e4941] border-b border-[#becabf]/20">
+<th class="py-4">Item</th>
+<th class="py-4 text-center">Stock Level</th>
+<th class="py-4 text-center">Status</th>
+<th class="py-4 text-right">Restocked</th>
+</tr>
+</thead>
+<tbody class="text-sm font-medium">
+<tr class="border-b border-[#becabf]/10">
+<td class="py-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-slate-400 text-lg" data-icon="water_drop">water_drop</span>
+                        Bottled Water
+                    </td>
+<td class="py-4 text-center font-bold">1,250 cases</td>
+<td class="py-4 text-center">
+<span class="bg-[#96f6bd] text-[#005231] px-3 py-1 rounded-full text-[10px] font-black uppercase">Healthy</span>
+</td>
+<td class="py-4 text-right text-xs text-[#3e4941]">2 hrs ago</td>
+</tr>
+<tr class="border-b border-[#becabf]/10">
+<td class="py-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-slate-400 text-lg" data-icon="breakfast_dining">breakfast_dining</span>
+                        Canned Food
+                    </td>
+<td class="py-4 text-center font-bold">450 cases</td>
+<td class="py-4 text-center">
+<span class="bg-[#ffdea6] text-[#271900] px-3 py-1 rounded-full text-[10px] font-black uppercase">Healthy</span>
+</td>
+<td class="py-4 text-right text-xs text-[#3e4941]">5 hrs ago</td>
+</tr>
+<tr>
+<td class="py-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-slate-400 text-lg" data-icon="medical_services">medical_services</span>
+                        First Aid Kits
+                    </td>
+<td class="py-4 text-center font-bold">85 units</td>
+<td class="py-4 text-center">
+<span class="bg-[#ffdad6] text-[#ba1a1a] px-3 py-1 rounded-full text-[10px] font-black uppercase">Low Stock</span>
+</td>
+<td class="py-4 text-right text-xs text-[#3e4941]">1 day ago</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Monetary Donations -->
+<div class="bg-white p-8 rounded-3xl border border-[#becabf]/30 shadow-sm space-y-6 flex flex-col">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[#7c5800]" data-icon="payments">payments</span>
+<h2 class="text-xl font-bold text-[#191c1e] tracking-tight font-['Manrope']">Monetary Donations</h2>
+</div>
+<span class="text-xs font-bold text-[#007749] px-2 py-1 bg-[#005c37]/5 rounded-lg">+14% vs Last Month</span>
+</div>
+<div class="flex-grow flex flex-col justify-center">
+<p class="text-xs font-bold uppercase tracking-widest text-[#3e4941] mb-1">Total Contributions</p>
+<h3 class="text-4xl font-black text-[#191c1e] font-['Manrope']">$12,450,200 <span class="text-lg font-bold text-[#3e4941]">JMD</span></h3>
+<div class="mt-8 flex items-end gap-2 h-24">
+<div class="flex-grow bg-[#005c37]/10 rounded-t-lg h-1/2 group relative">
+<div class="absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] font-bold text-[#005c37] opacity-0 group-hover:opacity-100 transition-opacity">Mon</div>
+</div>
+<div class="flex-grow bg-[#005c37]/20 rounded-t-lg h-3/4 group relative"></div>
+<div class="flex-grow bg-[#005c37]/10 rounded-t-lg h-2/3 group relative"></div>
+<div class="flex-grow bg-[#ffbb16] rounded-t-lg h-full group relative">
+<div class="absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] font-bold text-[#7c5800] opacity-100 transition-opacity">Today</div>
+</div>
+<div class="flex-grow bg-[#005c37]/10 rounded-t-lg h-1/3 group relative"></div>
+<div class="flex-grow bg-[#005c37]/15 rounded-t-lg h-1/2 group relative"></div>
+<div class="flex-grow bg-[#005c37]/20 rounded-t-lg h-3/5 group relative"></div>
+</div>
+<div class="flex justify-between mt-2 text-[10px] font-bold text-[#3e4941] uppercase tracking-tighter">
+<span>Last 7 Days Activity</span>
+<span>Updated live</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Weather Control & Survivor Requests -->
+<section class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+<!-- Weather Control -->
+<div class="bg-[#005c37] rounded-3xl p-8 text-white relative overflow-hidden shadow-2xl">
+<div class="relative z-10 space-y-6">
+<div class="flex items-center justify-between">
+<h3 class="text-2xl font-extrabold tracking-tight font-['Manrope']">Weather Control</h3>
+<span class="bg-white/20 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-tighter">Live Monitor</span>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-6xl text-[#ffbb16]" data-icon="cloud_sync">cloud_sync</span>
+<div>
+<p class="text-3xl font-black font-['Manrope']">28°C</p>
+<p class="text-sm text-white/80">Partly Cloudy • Wind 12km/h SE</p>
+</div>
+</div>
+<div class="grid grid-cols-4 gap-2">
+<button (click)="setWeather('rainy')" [ngClass]="currentWeather === 'rainy' ? 'bg-[#ffbb16] text-[#005c37]' : 'bg-white/10 hover:bg-white/20 text-white'" class="p-3 rounded-xl flex flex-col items-center gap-1 transition-all">
+<span class="material-symbols-outlined" data-icon="rainy">rainy</span>
+<span class="text-[10px] font-bold uppercase">Precip</span>
+</button>
+<button (click)="setWeather('stormy')" [ngClass]="currentWeather === 'stormy' ? 'bg-[#ffbb16] text-[#005c37]' : 'bg-white/10 hover:bg-white/20 text-white'" class="p-3 rounded-xl flex flex-col items-center gap-1 transition-all">
+<span class="material-symbols-outlined" data-icon="air">air</span>
+<span class="text-[10px] font-bold uppercase">Wind</span>
+</button>
+<button (click)="setWeather('thunder')" [ngClass]="currentWeather === 'thunder' ? 'bg-[#ffbb16] text-[#005c37]' : 'bg-white/10 hover:bg-white/20 text-white'" class="p-3 rounded-xl flex flex-col items-center gap-1 transition-all">
+<span class="material-symbols-outlined" data-icon="water_drop">water_drop</span>
+<span class="text-[10px] font-bold uppercase">Humid</span>
+</button>
+<button (click)="setWeather('sunny')" [ngClass]="currentWeather === 'sunny' ? 'bg-[#ffbb16] text-[#005c37]' : 'bg-white/10 hover:bg-white/20 text-white'" class="p-3 rounded-xl flex flex-col items-center gap-1 transition-all">
+<span class="material-symbols-outlined" data-icon="visibility">visibility</span>
+<span class="text-[10px] font-bold uppercase">Visib</span>
+</button>
+</div>
+</div>
+<div class="absolute -right-20 -bottom-20 w-64 h-64 bg-[#007749] rounded-full blur-3xl opacity-50"></div>
+</div>
+<!-- Survivor Requests -->
+<div class="bg-white p-8 rounded-3xl border border-[#becabf]/30 shadow-sm space-y-6">
+<div class="flex items-center justify-between">
+<h3 class="text-xl font-bold text-[#191c1e] tracking-tight font-['Manrope']">Recent Survivor Requests</h3>
+<button class="bg-[#f2f4f6] text-[#005c37] px-4 py-2 rounded-xl text-xs font-bold hover:bg-[#005c37]/5 transition-colors">View Map</button>
+</div>
+<div class="divide-y divide-[#becabf]/20">
+    <!-- Dynamic Requests -->
+    <div *ngFor="let req of allRequests" class="py-4 flex items-center justify-between">
+        <div class="flex items-center gap-4">
+            <div class="w-10 h-10 rounded-full bg-[#ffdad6] flex items-center justify-center text-[#ba1a1a]">
+                <span class="material-symbols-outlined">person</span>
+            </div>
+            <div>
+                <p class="text-sm font-bold">{{ req.requesterName }}</p>
+                <p class="text-xs text-[#3e4941]">{{ req.location }}</p>
+                <div class="flex gap-1 flex-wrap mt-1">
+                    <span *ngFor="let item of req.items" class="text-[10px] bg-[#e6e8ea] px-2 py-0.5 rounded">{{ item.name }} ({{ item.quantity }})</span>
+                </div>
+            </div>
+        </div>
+        <div class="flex flex-col gap-1 items-end">
+            <button *ngFor="let item of req.items" (click)="item.status === 'pending' ? markAsReceived(req, item) : null" class="px-3 py-1 rounded-full text-[10px] font-black uppercase transition-all" [ngClass]="{'bg-[#ffdad6] text-[#ba1a1a] cursor-pointer hover:bg-red-200': item.status === 'pending', 'bg-[#96f6bd] text-[#005231] cursor-default': item.status !== 'pending'}">
+                {{ item.status === 'pending' ? 'Receive ' + item.name : 'Received' }}
+            </button>
+        </div>
+    </div>
+
+    <!-- Hardcoded Fallbacks -->
+    <ng-container *ngIf="allRequests.length === 0">
+        <div class="py-4 flex items-center justify-between">
+        <div class="flex items-center gap-4">
+        <div class="w-10 h-10 rounded-full bg-[#ffdad6] flex items-center justify-center text-[#ba1a1a]">
+        <span class="material-symbols-outlined" data-icon="medical_services">medical_services</span>
+        </div>
+        <div>
+        <p class="text-sm font-bold">Medical Supplies Needed</p>
+        <p class="text-xs text-[#3e4941]">St. Elizabeth • 24 mins ago</p>
+        </div>
+        </div>
+        <span class="bg-[#ffdad6] text-[#ba1a1a] px-3 py-1 rounded-full text-[10px] font-black uppercase">Urgent</span>
+        </div>
+        
+        <div class="py-4 flex items-center justify-between">
+        <div class="flex items-center gap-4">
+        <div class="w-10 h-10 rounded-full bg-[#96f6bd] flex items-center justify-center text-[#005c37]">
+        <span class="material-symbols-outlined" data-icon="water_bottle">water_bottle</span>
+        </div>
+        <div>
+        <p class="text-sm font-bold">Potable Water Request</p>
+        <p class="text-xs text-[#3e4941]">Manchester • 1 hour ago</p>
+        </div>
+        </div>
+        <span class="bg-[#96f6bd] text-[#005231] px-3 py-1 rounded-full text-[10px] font-black uppercase">Pending</span>
+        </div>
+        
+        <div class="py-4 flex items-center justify-between">
+        <div class="flex items-center gap-4">
+        <div class="w-10 h-10 rounded-full bg-[#ffdea6] flex items-center justify-center text-[#7c5800]">
+        <span class="material-symbols-outlined" data-icon="roofing">roofing</span>
+        </div>
+        <div>
+        <p class="text-sm font-bold">Shelter Assistance</p>
+        <p class="text-xs text-[#3e4941]">Clarendon • 3 hours ago</p>
+        </div>
+        </div>
+        <span class="bg-[#e6e8ea] text-[#3e4941] px-3 py-1 rounded-full text-[10px] font-black uppercase">Assigned</span>
+        </div>
+    </ng-container>
+</div>
+</div>
+</section>
+<!-- Map Overlay -->
+<section class="h-[400px] rounded-3xl overflow-hidden shadow-sm relative border border-[#becabf]/30">
+<img alt="Stylized dark topographic map of Jamaica with glowing green and yellow relief operation hotspots and medical supply routes" class="w-full h-full object-cover grayscale opacity-80" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAHVeY0v-xMR05qTZjEx6Nya0IiuunHVdIqcc_bwybak0cU4FfnRegue00XEYuziCzqkTE089QKL5zIFHRgRTPbof3sHf7bJUJoaPX_-YgPqBG7m-0J7uQf14fRGwh0wFJpN_-QQFU7V09v_XwU4o3Vo0R2ZLmKu_jeYgx9Wwb2Xrw9R-ax_GH97I9_uQumR1G8Gj9A8OzS3PrDODnoEaId-2JaSWiRy8_AssPRHfdIruJcU0-I-1-bLa6dFktGzc_o1awi0spQzVc"/>
+<div class="absolute inset-0 bg-gradient-to-t from-[#005c37]/20 to-transparent"></div>
+<div class="absolute top-6 left-6 glass-effect p-4 rounded-2xl shadow-xl border border-white/20">
+<p class="text-xs font-bold text-[#005c37] uppercase tracking-widest mb-2">Live Incident Map</p>
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 bg-[#ba1a1a] rounded-full animate-pulse"></span>
+<span class="text-sm font-bold text-[#191c1e]">12 Unresolved High-Priority Events</span>
+</div>
+</div>
+</section>
+</div>
+</main>
+</div>
+<!-- Bottom Footer Image -->
+<div class="w-full">
+<img alt="JA RELIEF Footer" class="w-full h-auto block" src="https://lh3.googleusercontent.com/aida/ADBb0ui3shuBDDne29PLAH_JsrcFbvk5neLcVizCKWCfoMcMoL0qRqC0EsgD_6ONr4Ed6wB_rtNHI_8bm4uOhRqfb6_SVLD3-4sNxPjes0LD9_83-QdULwhzJgRkO6s1AGe45B8jKnX7T6wvnb3RuS5CgcI606lh6IjjbmzHLMpIiROSDgGOvepsSYWliBMgyIoI9UxSblqyzdZwvh9rPIpvlsKVgi_IkoZD9DRbk9riiyJ5ftezNci0FTxrVqVXVO_5xrW4kdw7OUFKDQ"/>
+</div>
+</div>

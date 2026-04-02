@@ -1,0 +1,156 @@
+<section class="info-page">
+    <!-- Weather Animation Layer -->
+    <div class="weather-animation-container" [ngClass]="'weather-' + currentWeather">
+        <ng-container *ngIf="currentWeather === 'rainy' || currentWeather === 'stormy'">
+            <div *ngFor="let drop of [1,2,3,4,5,6,7,8,9,10]" class="rain-drop" [style.left.%]="drop * 10"
+                [style.animation-delay.s]="drop * 0.1"></div>
+        </ng-container>
+    </div>
+
+    <div class="container">
+        <header class="info-header">
+            <h1>JA Relief – Emergency Information</h1>
+            <p class="subtitle">Stay informed, stay prepared, stay safe.</p>
+        </header>
+
+        <!-- 1. Real-time Disaster Alert Panel -->
+        <div class="alert-panel card">
+            <div class="card-header">
+                <h2>⚠️ Real-time Disaster Alerts</h2>
+                <div class="alert-sources">
+                    <span>Source: ODPEM & Jamaica Meteorological Service</span>
+                </div>
+            </div>
+            <div class="alert-list">
+                <div *ngFor="let alert of updates" class="alert-item" [ngClass]="alert.status">
+                    <div class="alert-meta">
+                        <span class="source">{{ alert.source }}</span>
+                        <span class="time">{{ alert.time }}</span>
+                    </div>
+                    <strong>{{ alert.title }}</strong>
+                    <p>{{ alert.content }}</p>
+                </div>
+                <p *ngIf="updates.length === 0">No active alerts at this time.</p>
+            </div>
+        </div>
+
+        <!-- 2. Emergency Contacts -->
+        <div class="contacts-grid">
+            <div class="contact-card card" *ngFor="let contact of emergencyContacts">
+                <div class="contact-icon">{{ contact.icon }}</div>
+                <h3>{{ contact.name }}</h3>
+                <a [href]="contact.link" class="contact-number">{{ contact.number }}</a>
+            </div>
+        </div>
+
+        <!-- 3. What To Do In An Emergency -->
+        <div class="protocols-section">
+            <h2>🛡️ What To Do In An Emergency</h2>
+            <div class="protocols-grid">
+                <div class="protocol-card card">
+                    <div class="protocol-header">
+                        <span class="protocol-icon">🔥</span>
+                        <h3>If There Is a Fire</h3>
+                    </div>
+                    <ul>
+                        <li>Stay calm and leave the building immediately.</li>
+                        <li>Use stairs instead of elevators.</li>
+                        <li>Stay low if there is smoke.</li>
+                        <li>Call emergency services (110).</li>
+                        <li>Use a fire extinguisher only if the fire is small and safe to control.</li>
+                    </ul>
+                </div>
+
+                <div class="protocol-card card">
+                    <div class="protocol-header">
+                        <span class="protocol-icon">🌍</span>
+                        <h3>If There Is an Earthquake</h3>
+                    </div>
+                    <ul>
+                        <li><strong>Drop</strong> to the ground.</li>
+                        <li><strong>Cover</strong> your head and neck.</li>
+                        <li><strong>Hold on</strong> until the shaking stops.</li>
+                        <li>Stay away from windows and heavy objects.</li>
+                        <li>Move to an open area after the shaking stops.</li>
+                    </ul>
+                </div>
+
+                <div class="protocol-card card">
+                    <div class="protocol-header">
+                        <span class="protocol-icon">🌧️</span>
+                        <h3>During Flooding</h3>
+                    </div>
+                    <ul>
+                        <li>Move to higher ground immediately.</li>
+                        <li>Do not walk or drive through flood water.</li>
+                        <li>Follow evacuation instructions from authorities.</li>
+                        <li>Stay informed through emergency alerts.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. Important Services List -->
+        <div class="services-section">
+            <h2>🏥 Important Services & Locations</h2>
+            <div class="services-grid">
+                <!-- Hospitals -->
+                <div class="service-category card">
+                    <h3>Hospitals & Clinics</h3>
+                    <div class="location-list">
+                        <div class="location-item" *ngFor="let h of hospitals">
+                            <strong>{{ h.name }}</strong>
+                            <p>{{ h.address }}</p>
+                            <a [href]="h.mapLink" target="_blank" class="map-link">📍 View on Map</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Shelters -->
+                <div class="service-category card">
+                    <h3>Emergency Shelters</h3>
+                    <div class="location-list">
+                        <div class="location-item" *ngFor="let s of shelters">
+                            <strong>{{ s.name }} ({{ s.parish }})</strong>
+                            <p>{{ s.address }}</p>
+                            <a [href]="s.mapLink" target="_blank" class="map-link">📍 View on Map</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. Disaster Alerts and Warnings Explanation -->
+        <div class="info-block card">
+            <h2>1️⃣ Disaster Alerts and Warnings</h2>
+            <p>JA Relief provides updates about dangerous conditions such as:</p>
+            <div class="alert-tags">
+                <span>Flood warnings</span>
+                <span>Flash flood warnings</span>
+                <span>Heavy rainfall alerts</span>
+                <span>Storm and hurricane warnings</span>
+                <span>Earthquake alerts</span>
+                <span>Landslides</span>
+            </div>
+            <p class="note">These alerts help people prepare and stay safe during emergencies.</p>
+        </div>
+
+        <!-- 6. Flood-Prone Areas -->
+        <div class="info-block card">
+            <h2>2️⃣ Flood-Prone Areas</h2>
+            <p>Some areas are more likely to flood during heavy rain. The platform will show:</p>
+            <ul>
+                <li>Flood-risk zones</li>
+                <li>Communities that frequently experience flooding</li>
+                <li>Nearby evacuation routes</li>
+                <li>Safe areas and shelters</li>
+            </ul>
+            <p class="note">This helps residents avoid dangerous locations during storms.</p>
+        </div>
+
+        <footer class="info-footer">
+            <p>Source Information from ODPEM and JIS.</p>
+            <a routerLink="/" class="back-btn">Back to Home</a>
+        </footer>
+    </div>
+</section>
