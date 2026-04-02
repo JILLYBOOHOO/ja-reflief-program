@@ -1,7 +1,7 @@
 <section class="info-page">
     <!-- Weather Animation Layer -->
     <div class="weather-animation-container" [ngClass]="'weather-' + currentWeather">
-        <ng-container *ngIf="currentWeather === 'rainy' || currentWeather === 'stormy'">
+        <ng-container *ngIf="currentWeather === 'rainy_heavy' || currentWeather === 'thunderstorm' || currentWeather === 'flood'">
             <div *ngFor="let drop of [1,2,3,4,5,6,7,8,9,10]" class="rain-drop" [style.left.%]="drop * 10"
                 [style.animation-delay.s]="drop * 0.1"></div>
         </ng-container>
