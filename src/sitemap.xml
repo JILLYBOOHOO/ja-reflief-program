@@ -31,8 +31,13 @@
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://ja-relief.web.app/info</loc>
+    <loc>https://ja-relief.web.app/information</loc>
     <lastmod>2026-03-31</lastmod>
     <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://ja-relief.web.app/maintenance</loc>
+    <lastmod>2026-04-05</lastmod>
+    <priority>0.3</priority>
   </url>
 </urlset>

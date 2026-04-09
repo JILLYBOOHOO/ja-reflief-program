@@ -4,7 +4,7 @@
   background: #000;
   color: #fff;
   padding: 8px 0;
-  border-bottom: 3px solid #FED100;
+  border-bottom: 3px solid #39FF14;
   z-index: 90;
 }
 
@@ -55,9 +55,9 @@
 }
 
 .btn-group button.active {
-  background: #FED100;
+  background: #39FF14;
   color: #000;
-  border-color: #FED100;
+  border-color: #39FF14;
 }
 
 .divider {
@@ -82,18 +82,19 @@
 }
 
 .voice-nav-indicator.is-active {
-  background: #009B3A;
-  border-color: #009B3A;
+  background: #39FF14;
+  border-color: #39FF14;
+  color: #000;
   animation: breathe 2s infinite ease-in-out;
 }
 
 .page-guide-btn {
-  border-color: #FED100;
-  color: #FED100;
+  border-color: #39FF14;
+  color: #39FF14;
 }
 
 .page-guide-btn:hover {
-  background: #FED100;
+  background: #39FF14;
   color: #000;
 }
 
@@ -108,9 +109,28 @@
 
 @media (max-width: 768px) {
     .container {
+        flex-direction: column;
+        gap: 12px;
+        padding: 12px 10px;
+    }
+    .left-section {
+        width: 100%;
         justify-content: center;
+    }
+    .accessibility-controls {
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 10px;
     }
     .label {
         display: none;
+    }
+    .divider {
+        display: none;
+    }
+    .voice-nav-indicator {
+        padding: 4px 10px;
+        font-size: 0.7rem;
     }
 }

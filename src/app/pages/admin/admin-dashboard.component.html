@@ -16,51 +16,93 @@
     <main class="flex-grow p-8 bg-[#f8f9fb] overflow-x-hidden w-full">
         <div class="max-w-7xl mx-auto space-y-8">
             
-            <!-- Hero Dashboard Metrics -->
+            <!-- Hero Dashboard Metrics (High Contrast Jamaican Palette) -->
             <section class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="bg-white p-8 rounded-3xl shadow-sm border border-[#becabf]/15 flex flex-col justify-between h-48">
-                    <span class="text-[#3e4941] font-medium tracking-tight">Active Weather Warnings</span>
+                <div class="bg-gradient-to-br from-[#005c37] to-[#007749] p-8 rounded-[2.5rem] shadow-2xl shadow-[#005c37]/20 flex flex-col justify-between h-52 border-b-8 border-[#ffbb16]/30">
+                    <span class="text-white/80 font-black uppercase tracking-[0.2em] text-xs">Active Weather Warnings</span>
                     <div class="flex items-end justify-between">
-                        <span class="text-5xl font-black text-[#005c37]">04</span>
-                        <span class="material-symbols-outlined text-4xl text-[#7c5800]">thunderstorm</span>
+                        <span class="text-7xl font-black text-white leading-none tracking-tighter">04</span>
+                        <span class="material-symbols-outlined text-white/20 text-6xl">warning</span>
                     </div>
                 </div>
-                <div class="bg-white p-8 rounded-3xl shadow-sm border border-[#becabf]/15 flex flex-col justify-between h-48">
-                    <span class="text-[#3e4941] font-medium tracking-tight">Total Survivor Requests</span>
+                <div class="bg-gradient-to-br from-[#ffbb16] to-[#ff9800] p-8 rounded-[2.5rem] shadow-2xl shadow-[#ffbb16]/20 flex flex-col justify-between h-52 border-b-8 border-[#005c37]/30">
+                    <span class="text-[#005c37]/80 font-black uppercase tracking-[0.2em] text-xs">Total Survivor Requests</span>
                     <div class="flex items-end justify-between">
-                        <span class="text-5xl font-black text-[#005c37]">{{ allRequests.length }}</span>
-                        <span class="material-symbols-outlined text-4xl text-[#005c37]">record_voice_over</span>
+                        <span class="text-7xl font-black text-[#005c37] leading-none tracking-tighter">{{ allRequests.length }}</span>
+                        <span class="material-symbols-outlined text-[#005c37]/20 text-6xl">emergency</span>
                     </div>
                 </div>
-                <div class="bg-white p-8 rounded-3xl shadow-sm border border-[#becabf]/15 flex flex-col justify-between h-48">
-                    <span class="text-[#3e4941] font-medium tracking-tight">Active Personnel</span>
+                <div class="bg-gradient-to-br from-[#191c1e] to-black p-8 rounded-[2.5rem] shadow-2xl shadow-black/20 flex flex-col justify-between h-52 border-b-8 border-[#ffbb16]/20">
+                    <span class="text-white/80 font-black uppercase tracking-[0.2em] text-xs">Active Personnel</span>
                     <div class="flex items-end justify-between">
-                        <span class="text-5xl font-black text-[#005c37]">842</span>
-                        <span class="material-symbols-outlined text-4xl text-[#7c5800]">group</span>
+                        <span class="text-7xl font-black text-[#ffbb16] leading-none tracking-tighter">842</span>
+                        <span class="material-symbols-outlined text-white/10 text-6xl">groups</span>
                     </div>
                 </div>
             </section>
 
-            <!-- Donation Metrics -->
-            <section class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="bg-white p-8 rounded-3xl shadow-sm border border-[#becabf]/15 flex flex-col justify-between h-48">
-                    <div class="flex flex-col">
-                        <span class="text-[#3e4941] font-medium tracking-tight">Monetary Donation</span>
-                        <p class="text-[10px] text-[#005c37] font-bold uppercase tracking-widest mt-1">Live Balance Tracking</p>
+            <!-- Platform Analytics -->
+            <section class="grid grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-white p-6 rounded-3xl shadow-sm border border-[#becabf]/15 flex flex-col gap-3">
+                    <div class="flex items-center justify-between">
+                        <span class="text-[10px] font-black uppercase tracking-widest text-[#3e4941]">Total Visitors</span>
+                        <span class="text-xl">👁️</span>
                     </div>
-                    <div class="flex items-end justify-between">
-                        <span class="text-4xl font-black text-[#005c37]">${{ stats.monetary.total | number:'1.0-0' }} <small class="text-xs uppercase">JMD</small></span>
-                        <span class="material-symbols-outlined text-4xl text-[#7c5800]">payments</span>
+                    <span class="text-4xl font-black text-[#005c37]">{{ analytics.visitors | number }}</span>
+                    <span class="text-[10px] font-bold text-[#007749] bg-[#005c37]/5 px-2 py-1 rounded-lg w-fit">↑ {{ analytics.visitorsToday }} today</span>
+                </div>
+                <div class="bg-white p-6 rounded-3xl shadow-sm border border-[#becabf]/15 flex flex-col gap-3">
+                    <div class="flex items-center justify-between">
+                        <span class="text-[10px] font-black uppercase tracking-widest text-[#3e4941]">Registered Users</span>
+                        <span class="text-xl">👤</span>
+                    </div>
+                    <span class="text-4xl font-black text-[#005c37]">{{ analytics.registered | number }}</span>
+                    <span class="text-[10px] font-bold text-[#007749] bg-[#005c37]/5 px-2 py-1 rounded-lg w-fit">↑ {{ analytics.registeredToday }} new today</span>
+                </div>
+                <div class="bg-white p-6 rounded-3xl shadow-sm border border-[#becabf]/15 flex flex-col gap-3">
+                    <div class="flex items-center justify-between">
+                        <span class="text-[10px] font-black uppercase tracking-widest text-[#3e4941]">Total Donations</span>
+                        <span class="text-xl">💚</span>
+                    </div>
+                    <span class="text-4xl font-black text-[#005c37]">{{ analytics.donations | number }}</span>
+                    <span class="text-[10px] font-bold text-[#007749] bg-[#005c37]/5 px-2 py-1 rounded-lg w-fit">{{ analytics.donationsMonetary }} monetary · {{ analytics.donationsInKind }} in-kind</span>
+                </div>
+                <div class="bg-white p-6 rounded-3xl shadow-sm border border-[#becabf]/15 flex flex-col gap-3">
+                    <div class="flex items-center justify-between">
+                        <span class="text-[10px] font-black uppercase tracking-widest text-[#3e4941]">Failed Logins</span>
+                        <span class="text-xl">🔒</span>
+                    </div>
+                    <span class="text-4xl font-black" [ngClass]="analytics.failedLogins > 10 ? 'text-red-600' : 'text-[#191c1e]'">{{ analytics.failedLogins }}</span>
+                    <span class="text-[10px] font-bold px-2 py-1 rounded-lg w-fit" [ngClass]="analytics.failedLogins > 10 ? 'text-red-700 bg-red-50' : 'text-[#3e4941] bg-[#f2f4f6]'">{{ analytics.failedLogins > 10 ? '⚠ High — Review IPs' : 'Within normal range' }}</span>
+                </div>
+            </section>
+
+            <!-- Donation Metrics (High Contrast refined) -->
+            <section class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-white dark:bg-[#0a110a] p-8 rounded-[2.5rem] shadow-xl border-t-8 border-[#005c37] flex flex-col justify-between h-52 relative overflow-hidden">
+                    <div class="flex flex-col relative z-20">
+                        <span class="text-[#3e4941] dark:text-white/60 font-black uppercase tracking-widest text-[10px]">Monetary Donation</span>
+                        <p class="text-4xl font-black text-[#005c37] dark:text-[#39FF14] mt-1 uppercase tracking-tighter leading-none">${{ stats.monetary.total | number:'1.0-0' }} <small class="text-xs">JMD</small></p>
+                    </div>
+                    <div class="flex items-end justify-between relative z-20">
+                        <p class="text-[10px] text-[#005c37]/60 dark:text-[#39FF14]/60 font-black uppercase tracking-[0.3em]">Live Balance Tracking</p>
+                    </div>
+                    <!-- Styled Ghost Text (Replaces Payments icon) -->
+                    <div class="absolute -right-4 -bottom-6 select-none pointer-events-none">
+                        <span class="text-8xl font-black text-slate-100 dark:text-white/5 uppercase tracking-tighter">Donations</span>
                     </div>
                 </div>
-                <div class="bg-white p-8 rounded-3xl shadow-sm border border-[#becabf]/15 flex flex-col justify-between h-48">
-                    <div class="flex flex-col">
-                        <span class="text-[#3e4941] font-medium tracking-tight">Donation In Kind</span>
-                        <p class="text-[10px] text-[#005c37] font-bold uppercase tracking-widest mt-1">Active Pledges & Supplies</p>
+                <div class="bg-white dark:bg-[#0a110a] p-8 rounded-[2.5rem] shadow-xl border-t-8 border-[#ffbb16] flex flex-col justify-between h-52 relative overflow-hidden">
+                    <div class="flex flex-col relative z-20">
+                        <span class="text-[#3e4941] dark:text-white/60 font-black uppercase tracking-widest text-[10px]">Donation In Kind</span>
+                        <p class="text-6xl font-black text-[#ff9800] dark:text-[#ffbb16] mt-1 uppercase tracking-tighter leading-none">{{ stats.pledges.length }}</p>
                     </div>
-                    <div class="flex items-end justify-between">
-                        <span class="text-5xl font-black text-[#005c37]">{{ stats.pledges.length }}</span>
-                        <span class="material-symbols-outlined text-4xl text-[#005c37]">inventory_2</span>
+                    <div class="flex items-end justify-between relative z-20">
+                        <p class="text-[10px] text-[#7c5800]/60 dark:text-[#ffbb16]/60 font-black uppercase tracking-[0.3em]">Active Pledges & Supplies</p>
+                    </div>
+                    <!-- Styled Ghost Text -->
+                    <div class="absolute -right-4 -bottom-6 select-none pointer-events-none">
+                        <span class="text-8xl font-black text-slate-100 dark:text-white/5 uppercase tracking-tighter">Supplies</span>
                     </div>
                 </div>
             </section>
@@ -103,26 +145,27 @@
                 </div>
 
                 <!-- Edit Existing Alerts -->
-                <div class="bg-[#f2f4f6] p-8 rounded-3xl space-y-6">
+                <div class="admin-side-section bg-[#f2f4f6] p-8 rounded-3xl space-y-6">
                     <div class="flex items-center justify-between">
                         <h2 class="text-xl font-bold text-[#005c37] tracking-tight">Existing Alerts</h2>
                     </div>
                     <div class="space-y-4 max-h-[300px] overflow-y-auto pr-2">
-                        <div *ngFor="let update of updates" class="p-4 bg-white rounded-2xl border border-[#becabf]/10 flex justify-between items-start group">
-                            <div class="space-y-1">
+                        <div *ngFor="let update of updates" class="p-4 bg-white rounded-2xl border border-[#becabf]/10 flex justify-between items-start gap-2">
+                            <div class="space-y-1 min-w-0 flex-1">
                                 <div class="flex items-center gap-2">
-                                    <span class="w-2 h-2 rounded-full" [ngClass]="{'bg-error': update.status === 'danger', 'bg-[#ffbb16]': update.status === 'warning', 'bg-blue-500': update.status === 'info'}"></span>
+                                    <span class="w-2 h-2 rounded-full flex-shrink-0" [ngClass]="{'bg-error': update.status === 'danger', 'bg-[#ffbb16]': update.status === 'warning', 'bg-blue-500': update.status === 'info'}"></span>
                                     <span class="text-xs font-bold uppercase" [ngClass]="{'text-error': update.status === 'danger', 'text-secondary': update.status === 'warning', 'text-blue-500': update.status === 'info'}">{{ update.status }}</span>
                                 </div>
                                 <p class="text-sm font-bold text-[#191c1e] leading-tight">{{ update.title }}</p>
                                 <p class="text-[10px] text-[#3e4941]">{{ update.time }}</p>
                             </div>
-                            <div class="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                                <button (click)="openEditModal(update)" class="text-[#005c37] hover:bg-[#005c37]/5 p-1.5 rounded-lg">
-                                    <span class="material-symbols-outlined text-lg">edit_square</span>
+                            <!-- Always-visible Edit & Delete buttons -->
+                            <div class="flex flex-col gap-1 flex-shrink-0">
+                                <button (click)="openEditModal(update)" title="Edit Alert" class="btn-edit-alert">
+                                    ✏️ Edit
                                 </button>
-                                <button (click)="deleteUpdate(update.id)" class="text-error hover:bg-error/5 p-1.5 rounded-lg">
-                                    <span class="material-symbols-outlined text-lg">delete</span>
+                                <button (click)="deleteUpdate(update.id)" title="Delete Alert" class="btn-delete-alert">
+                                    🗑 Delete
                                 </button>
                             </div>
                         </div>
@@ -132,29 +175,30 @@
                     <div class="pt-8 border-t border-[#becabf]/20">
                         <div class="flex items-center justify-between mb-4">
                             <h2 class="text-xl font-bold text-[#005c37] tracking-tight">Danger Zone Reports</h2>
-                            <span class="bg-error-container text-error px-2 py-1 rounded-lg text-[10px] font-black uppercase tracking-widest">{{ hazardReports.length }} New</span>
+                            <span class="admin-badge-urgent px-2 py-1 rounded-lg text-[10px] font-black uppercase tracking-widest">{{ hazardReports.length }} New</span>
                         </div>
                         <div class="space-y-4 max-h-[400px] overflow-y-auto pr-2">
-                            <div *ngFor="let report of hazardReports" class="p-4 bg-white rounded-2xl border border-[#becabf]/15 shadow-sm space-y-3 group">
+                            <div *ngFor="let report of hazardReports" class="p-4 bg-white rounded-2xl border border-[#becabf]/15 shadow-sm group cursor-pointer">
                                 <div class="flex justify-between items-start">
                                     <div class="space-y-1">
                                         <p class="text-sm font-bold text-[#191c1e]">{{ report.description }}</p>
-                                        <div class="flex items-center gap-2 text-[10px] text-[#3e4941] uppercase tracking-widest font-bold">
-                                            <span class="material-symbols-outlined text-xs">location_on</span>
-                                            {{ report.location }}
+                                        <div class="flex items-center gap-1 text-[10px] text-[#3e4941] font-bold">
+                                            <span>📍</span>
+                                            <span class="uppercase tracking-widest">{{ report.location }}</span>
                                         </div>
                                     </div>
-                                    <span class="px-2 py-1 rounded-lg text-[10px] font-bold uppercase tracking-widest translate-y-[-2px]" 
+                                    <span class="px-2 py-1 rounded-lg text-[10px] font-bold uppercase tracking-widest flex-shrink-0 ml-2"
                                           [ngClass]="{'bg-[#96f6bd] text-[#005231]': report.status === 'Verified', 'bg-[#ffdea6] text-[#7c5800]': report.status === 'Under Review', 'bg-error-container text-error': report.status === 'Reported'}">
                                         {{ report.status }}
                                     </span>
                                 </div>
-                                <div class="flex gap-2 opacity-0 group-hover:opacity-100 transition-all duration-300">
-                                    <button (click)="updateHazardStatus(report.id!, 'Verified')" class="flex-1 py-1.5 bg-[#005c37] text-white text-[10px] font-black rounded-lg uppercase tracking-widest hover:bg-[#007749] transition-all">Verify</button>
-                                    <button (click)="updateHazardStatus(report.id!, 'Under Review')" class="flex-1 py-1.5 bg-[#ffbb16] text-[#005c37] text-[10px] font-black rounded-lg uppercase tracking-widest hover:bg-[#ffdea6] transition-all">Under Review</button>
+                                <!-- Hover-only action buttons (CSS driven reveal) -->
+                                <div class="hazard-actions">
+                                    <button (click)="updateHazardStatus(report.id!, 'Verified')" class="btn-verify">✓ Verify</button>
+                                    <button (click)="updateHazardStatus(report.id!, 'Under Review')" class="btn-under-review">⏳ Under Review</button>
                                 </div>
                             </div>
-                            <div *ngIf="hazardReports.length === 0" class="text-center py-6 text-[#3e4941] text-xs italic">
+                            <div *ngIf="hazardReports.length === 0" class="text-center py-6 text-slate-800 dark:text-white text-xs italic">
                                 No active hazard reports.
                             </div>
                         </div>
@@ -168,9 +212,9 @@
                 <div id="inkind-section" class="bg-white p-8 rounded-3xl border border-[#becabf]/15 shadow-sm space-y-6">
                     <div class="flex items-center justify-between">
                         <div class="flex items-center gap-3">
-                            <span class="material-symbols-outlined text-[#005c37]">inventory_2</span>
                             <h2 class="text-xl font-bold text-[#191c1e] tracking-tight">Recent In-Kind Pledges</h2>
                         </div>
+                        <span class="text-xs font-bold text-[#007749] px-2 py-1 bg-[#005c37]/5 rounded-lg">{{ livePledges.length }} Active</span>
                     </div>
                     <div class="overflow-x-auto">
                         <table class="w-full text-left">
@@ -179,20 +223,23 @@
                                     <th class="py-4">Donor</th>
                                     <th class="py-4">Items</th>
                                     <th class="py-4 text-center">Center</th>
-                                    <th class="py-4 text-right">Date</th>
+                                    <th class="py-4 text-right">Time</th>
                                 </tr>
                             </thead>
                             <tbody class="text-sm font-medium">
-                                <tr *ngFor="let pledge of stats.pledges" class="border-b border-[#becabf]/5">
+                                <tr *ngFor="let pledge of livePledges" class="border-b border-[#becabf]/5">
                                     <td class="py-4">
                                         <div class="font-bold text-[#191c1e]">{{ pledge.donorName }}</div>
                                         <div class="text-[10px] text-[#3e4941]">{{ pledge.donorPhone }}</div>
                                     </td>
-                                    <td class="py-4 text-xs">{{ pledge.items }}</td>
+                                    <td class="py-4 text-xs">{{ pledge.items.join(', ') }}</td>
                                     <td class="py-4 text-center">
                                         <span class="bg-[#96f6bd] text-[#005231] px-3 py-1 rounded-full text-[10px] font-black uppercase">{{ pledge.center }}</span>
                                     </td>
                                     <td class="py-4 text-right text-xs text-[#3e4941]">{{ pledge.createdAt | date:'shortTime' }}</td>
+                                </tr>
+                                <tr *ngIf="livePledges.length === 0">
+                                    <td colspan="4" class="py-8 text-center text-xs italic text-[#3e4941]">No in-kind pledges yet. Donations from the Donate page will appear here instantly.</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -203,7 +250,6 @@
                 <div id="monetary-section" class="bg-white p-8 rounded-3xl border border-[#becabf]/15 shadow-sm space-y-6 flex flex-col">
                     <div class="flex items-center justify-between">
                         <div class="flex items-center gap-3">
-                            <span class="material-symbols-outlined text-[#7c5800]">payments</span>
                             <h2 class="text-xl font-bold text-[#191c1e] tracking-tight">Monetary Donations</h2>
                         </div>
                         <span class="text-xs font-bold text-[#007749] px-2 py-1 bg-[#005c37]/5 rounded-lg">+14% vs Last Month</span>
@@ -224,17 +270,98 @@
                 </div>
             </section>
 
+            <!-- Pantry & Inventory - Compact Searchable Table -->
+            <section class="bg-white p-6 rounded-3xl border border-[#becabf]/15 shadow-sm space-y-4">
+
+                <!-- Header Row -->
+                <div class="flex flex-wrap items-center justify-between gap-3">
+                    <div>
+                        <h2 class="text-xl font-bold text-[#191c1e] tracking-tight">Strategic Pantry Inventory</h2>
+                        <p class="text-[10px] text-[#3e4941] mt-0.5 uppercase tracking-widest">{{ filteredPantryItems.length }} items shown · {{ totalPantryUnits }} total units</p>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <button (click)="openScanner()" class="bg-[#191c1e] text-white hover:bg-black px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest flex items-center gap-2 shadow-lg transition-transform active:scale-95">
+                            <span class="text-sm">📷</span> Scan QR
+                        </button>
+                        <span class="bg-[#005c37] text-white px-3 py-2 rounded-xl text-[10px] font-black uppercase">{{ totalPantryUnits }} Units</span>
+                    </div>
+                </div>
+
+                <!-- Search & Filter Controls -->
+                <div class="flex flex-wrap items-center gap-3">
+                    <!-- Search -->
+                    <div class="relative flex-grow min-w-[200px]">
+                        <span class="absolute left-3 top-1/2 -translate-y-1/2 text-[#3e4941] text-sm">🔍</span>
+                        <input
+                            type="text"
+                            [(ngModel)]="pantrySearch"
+                            (ngModelChange)="onPantrySearch()"
+                            placeholder="Search items..."
+                            class="w-full pl-9 pr-4 py-2 text-xs font-bold bg-[#f2f4f6] border-none rounded-xl focus:ring-2 focus:ring-[#005c37] transition-all text-[#191c1e] placeholder-[#3e4941]/50"
+                        />
+                    </div>
+                    <!-- Filter Pills -->
+                    <div class="flex flex-wrap gap-2">
+                        <button
+                            *ngFor="let cat of pantryFilterCategories"
+                            (click)="setPantryFilter(cat)"
+                            class="px-3 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all"
+                            [ngClass]="pantryFilter === cat
+                                ? 'bg-[#005c37] text-white shadow-md'
+                                : 'bg-[#f2f4f6] text-[#3e4941] hover:bg-[#005c37]/10 hover:text-[#005c37]'"
+                        >{{ cat === 'all' ? 'All' : cat }}</button>
+                    </div>
+                </div>
+
+                <!-- Compact Table with fixed-height scroll -->
+                <div class="overflow-x-auto overflow-y-auto max-h-[420px] rounded-xl border border-[#becabf]/15">
+                    <table class="w-full text-left text-xs">
+                        <thead class="sticky top-0 bg-white z-10">
+                            <tr class="text-[10px] font-black uppercase tracking-widest text-[#3e4941] border-b-2 border-[#becabf]/20">
+                                <th class="py-2 px-3 w-6">#</th>
+                                <th class="py-2 px-3">Item</th>
+                                <th class="py-2 px-3">Category</th>
+                                <th class="py-2 px-3 text-right">Qty</th>
+                                <th class="py-2 px-3 text-right">Unit</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of filteredPantryItems; let i = index"
+                                class="border-b border-[#becabf]/10 hover:bg-[#f2f4f6] transition-colors group">
+                                <td class="py-1.5 px-3 text-[10px] font-bold text-[#3e4941]/50">{{ i + 1 }}</td>
+                                <td class="py-1.5 px-3">
+                                    <div class="flex items-center gap-1.5">
+                                        <span class="text-sm">{{ item.emoji }}</span>
+                                        <span class="font-bold text-[#191c1e]">{{ item.name }}</span>
+                                    </div>
+                                </td>
+                                <td class="py-1.5 px-3">
+                                    <span class="px-2 py-0.5 bg-[#005c37]/8 text-[#005c37] rounded-lg font-bold text-[10px]">{{ item.category }}</span>
+                                </td>
+                                <td class="py-1.5 px-3 text-right font-black text-[#191c1e]">{{ item.quantity }}</td>
+                                <td class="py-1.5 px-3 text-right font-bold text-[#3e4941] uppercase text-[10px]">{{ item.unit }}</td>
+                            </tr>
+                            <tr *ngIf="filteredPantryItems.length === 0">
+                                <td colspan="5" class="py-8 text-center text-xs text-[#3e4941] italic">No items match your search.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
             <!-- Weather Control & Survivor Requests -->
             <section class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <!-- Weather Control -->
                 <div class="bg-[#005c37] rounded-3xl p-8 text-white relative overflow-hidden shadow-2xl">
                     <div class="relative z-10 space-y-6">
                         <div class="flex items-center justify-between">
-                            <h3 class="text-2xl font-extrabold tracking-tight">Weather Control</h3>
+                            <h3 class="text-2xl font-extrabold tracking-tight text-white">Weather Control</h3>
                             <span class="bg-white/20 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-tighter">Live Monitor</span>
                         </div>
                         <div class="flex items-center gap-4">
-                            <span class="material-symbols-outlined text-6xl text-[#ffbb16]">cloud_sync</span>
+                            <div class="w-12 h-12 rounded-full bg-[#ffbb16]/20 flex items-center justify-center">
+                                <span class="material-symbols-outlined text-4xl text-[#ffbb16]"></span>
+                            </div>
                             <div>
                                 <p class="text-3xl font-black">28°C</p>
                                 <p class="text-sm text-white/80">Partly Cloudy • Wind 12km/h SE</p>
@@ -242,19 +369,19 @@
                         </div>
                         <div class="grid grid-cols-4 gap-2">
                             <button (click)="setWeather('rainy')" class="bg-white/10 hover:bg-white/20 p-3 rounded-xl flex flex-col items-center gap-1 transition-all">
-                                <span class="material-symbols-outlined">rainy</span>
+                                <span class="material-symbols-outlined"></span>
                                 <span class="text-[10px] font-bold uppercase">Precip</span>
                             </button>
                             <button (click)="setWeather('sunny')" class="bg-[#ffbb16] text-[#005c37] p-3 rounded-xl flex flex-col items-center gap-1 transition-all">
-                                <span class="material-symbols-outlined">air</span>
+                                <span class="material-symbols-outlined"></span>
                                 <span class="text-[10px] font-bold uppercase">Wind</span>
                             </button>
                             <button (click)="setWeather('stormy')" class="bg-white/10 hover:bg-white/20 p-3 rounded-xl flex flex-col items-center gap-1 transition-all">
-                                <span class="material-symbols-outlined">water_drop</span>
+                                <span class="material-symbols-outlined"></span>
                                 <span class="text-[10px] font-bold uppercase">Humid</span>
                             </button>
                             <button class="bg-white/10 hover:bg-white/20 p-3 rounded-xl flex flex-col items-center gap-1 transition-all">
-                                <span class="material-symbols-outlined">visibility</span>
+                                <span class="material-symbols-outlined"></span>
                                 <span class="text-[10px] font-bold uppercase">Visib</span>
                             </button>
                         </div>
@@ -262,24 +389,53 @@
                     <div class="absolute -right-20 -bottom-20 w-64 h-64 bg-[#007749] rounded-full blur-3xl opacity-50"></div>
                 </div>
 
-                <!-- Recent Survivor Requests -->
+                <!-- Relief Logistics Fulfillment Queue -->
                 <div class="bg-white p-8 rounded-3xl border border-[#becabf]/15 shadow-sm space-y-6">
                     <div class="flex items-center justify-between">
-                        <h3 class="text-xl font-bold text-[#191c1e] tracking-tight">Recent Survivor Requests</h3>
-                        <button routerLink="/donate" class="bg-[#f2f4f6] text-[#005c37] px-4 py-2 rounded-xl text-xs font-bold hover:bg-[#005c37]/5 transition-colors">View Map</button>
+                        <div class="flex items-center gap-3">
+                            <h3 class="text-xl font-bold text-[#191c1e] tracking-tight">Relief Logistics Fulfillment</h3>
+                            <span class="bg-jamaica-green/10 text-jamaica-green px-2 py-1 rounded-lg text-[10px] font-black uppercase tracking-widest">{{ pantryRequests.length }} Total</span>
+                        </div>
                     </div>
-                    <div class="divide-y divide-[#becabf]/10">
-                        <div *ngFor="let request of allRequests.slice(0, 3)" class="py-4 flex items-center justify-between">
-                            <div class="flex items-center gap-4">
-                                <div class="w-10 h-10 rounded-full bg-[#ffdad6] flex items-center justify-center text-[#ba1a1a]">
-                                    <span class="material-symbols-outlined">emergency</span>
-                                </div>
+                    <div class="divide-y divide-[#becabf]/10 max-h-[400px] overflow-y-auto pr-2">
+                        <div *ngFor="let req of pantryRequests" class="py-6 space-y-4">
+                            <div class="flex items-center justify-between">
                                 <div>
-                                    <p class="text-sm font-bold text-[#191c1e]">{{ request.requesterName }}</p>
-                                    <p class="text-xs text-[#3e4941]">{{ request.location }} • {{ request.timestamp | date:'shortTime' }}</p>
+                                    <p class="text-sm font-black text-[#191c1e] uppercase tracking-tight">{{ req.requesterName }}</p>
+                                    <p class="text-[10px] font-bold text-[#3e4941] uppercase tracking-widest">{{ req.createdAt | date:'short' }}</p>
                                 </div>
+                                <span class="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest shadow-sm border border-black/5"
+                                      [ngClass]="{
+                                        'bg-[#ffdea6] text-[#7c5800]': req.status === 'Request Made',
+                                        'bg-[#96f6bd] text-[#005231]': req.status === 'Packing',
+                                        'bg-[#005c37] text-white': req.status === 'Out for Delivery'
+                                      }">
+                                    {{ req.status }}
+                                </span>
                             </div>
-                            <span class="bg-[#ffdad6] text-[#ba1a1a] px-3 py-1 rounded-full text-[10px] font-black uppercase">Urgent</span>
+                            
+                            <!-- Action Buttons -->
+                            <div class="flex gap-2">
+                                <button *ngIf="req.status === 'Request Made'" 
+                                        (click)="updatePantryStatus(req.id, 'Packing')"
+                                        class="flex-1 py-2 bg-jamaica-green text-white text-[10px] font-black uppercase rounded-xl hover:bg-black transition-all shadow-lg active:scale-95">
+                                    Start Packing
+                                </button>
+                                <button *ngIf="req.status === 'Packing'" 
+                                        (click)="updatePantryStatus(req.id, 'Out for Delivery')"
+                                        class="flex-1 py-2 bg-[#ffbb16] text-[#005c37] text-[10px] font-black uppercase rounded-xl hover:bg-black transition-all shadow-lg active:scale-95">
+                                    Dispatch Vehicle
+                                </button>
+                                <button *ngIf="req.status === 'Out for Delivery'" 
+                                        (click)="updatePantryStatus(req.id, 'Delivered')"
+                                        class="flex-1 py-2 bg-black text-white text-[10px] font-black uppercase rounded-xl hover:bg-zinc-800 transition-all shadow-lg active:scale-95">
+                                    Mark Delivered
+                                </button>
+                            </div>
+                        </div>
+                        <div *ngIf="pantryRequests.length === 0" class="text-center py-12">
+                            <span class="material-symbols-outlined text-4xl text-slate-200 mb-2">inventory</span>
+                            <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">No active pantry requests</p>
                         </div>
                     </div>
                 </div>
@@ -287,7 +443,7 @@
 
             <!-- Map Overlay -->
             <section class="h-[400px] rounded-3xl overflow-hidden shadow-sm relative border border-[#becabf]/15">
-                <img alt="Strategic map" class="w-full h-full object-cover grayscale opacity-80" src="assets/images/jamaica-map-node.png"/>
+                <img alt="Strategic map" class="w-full h-full object-cover grayscale opacity-80" src="assets/images/jamaica-flat-map.png"/>
                 <div class="absolute inset-0 bg-gradient-to-t from-[#005c37]/20 to-transparent"></div>
                 <div class="absolute top-6 left-6 glass-effect p-4 rounded-2xl shadow-xl border border-white/20">
                     <p class="text-xs font-bold text-[#005c37] uppercase tracking-widest mb-2">Live Incident Map</p>
@@ -346,7 +502,35 @@
     </div>
 </div>
 
-<!-- Bottom Footer -->
-<div class="w-full bg-[#f8f9fb] py-8 border-t border-slate-100 flex justify-center">
-    <p class="text-xs font-bold text-[#3e4941] uppercase tracking-widest">© 2026 JA RELIEF | Strategic Command Center</p>
+<!-- QR Scanner Modal -->
+<div *ngIf="isScannerOpen" class="fixed inset-0 z-[3000] flex items-center justify-center p-4 bg-black/90 backdrop-blur-md">
+    <div class="bg-[#1a1c1e] w-full max-w-md rounded-[2.5rem] shadow-2xl overflow-hidden border-2 border-[#39FF14] animate-in fade-in zoom-in duration-300">
+        <div class="p-8 text-center relative flex flex-col items-center">
+            <button (click)="closeScanner()" class="absolute top-6 right-6 text-white/50 hover:text-white transition-colors bg-white/10 rounded-full w-8 h-8 flex items-center justify-center">
+                <span class="material-symbols-outlined text-sm">close</span>
+            </button>
+            <h3 class="text-2xl font-black text-white mb-2 tracking-tight">Incoming Supply Verification</h3>
+            <p class="text-xs font-bold text-[#39FF14] uppercase tracking-widest mb-8">{{ scannerStatus }}</p>
+            
+            <!-- Target Box Animation -->
+            <div class="relative w-48 h-48 mb-8">
+                <!-- Frame corners -->
+                <div class="absolute top-0 left-0 w-8 h-8 border-t-4 border-l-4 border-[#39FF14] rounded-tl-lg"></div>
+                <div class="absolute top-0 right-0 w-8 h-8 border-t-4 border-r-4 border-[#39FF14] rounded-tr-lg"></div>
+                <div class="absolute bottom-0 left-0 w-8 h-8 border-b-4 border-l-4 border-[#39FF14] rounded-bl-lg"></div>
+                <div class="absolute bottom-0 right-0 w-8 h-8 border-b-4 border-r-4 border-[#39FF14] rounded-br-lg"></div>
+                
+                <!-- Scanning Laser Line -->
+                <div class="absolute left-0 right-0 h-0.5 bg-[#39FF14] shadow-[0_0_8px_#39FF14] animate-[scan_2s_ease-in-out_infinite]"></div>
+                
+                <!-- Visual center dot -->
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <div class="w-1 h-1 rounded-full bg-[#39FF14]/50"></div>
+                </div>
+            </div>
+
+            <p class="text-sm font-bold text-white/60">Position the donor's QR code within the frame to verify items automatically.</p>
+        </div>
+    </div>
 </div>
+

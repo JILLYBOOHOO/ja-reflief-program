@@ -22,18 +22,28 @@ export class ErrorInterceptor implements HttpInterceptor {
           this.authService.logout();
         }
         
-        let error = err.statusText;
-        if (err.error?.errors && Array.isArray(err.error.errors)) {
-          error = err.error.errors.map((e: any) => e.msg).join(', ');
-        } else if (err.error?.message) {
-          error = err.error.message;
-        } else if (err.error?.error) {
-          error = err.error.error;
+        // Handle connection issues (status 0)
+        if (err.status === 0) {
+          return throwError(() => 'Unable to connect to the JA RELIEF server. Please ensure the backend is running or check your internet connection.');
         }
+
+        let error = err.statusText || 'Server Error';
+        
+        // Handle structured JSON errors from backend
+        if (err.error) {
+          if (err.error.error) {
+            error = err.error.error;
+          } else if (err.error.message) {
+            error = err.error.message;
+          } else if (err.error.errors && Array.isArray(err.error.errors)) {
+            error = err.error.errors.map((e: any) => e.msg).join(', ');
+          }
+        }
+
         console.error('HTTP Error Interceptor:', error);
         return throwError(() => error);
       }
-      return throwError(() => 'Something went wrong. Please try again later.');
+      return throwError(() => 'An unexpected system error occurred. Please try again later.');
     }));
   }
 }

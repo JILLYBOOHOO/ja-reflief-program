@@ -9,6 +9,8 @@ export class SpeechService {
     private recognition: any;
     private isListeningSource = new BehaviorSubject<boolean>(false);
     isListening$ = this.isListeningSource.asObservable();
+    private isReadingSource = new BehaviorSubject<boolean>(false);
+    isReading$ = this.isReadingSource.asObservable();
     private lastProcessedIndex = -1;
 
     constructor(private router: Router, private zone: NgZone) {
@@ -99,13 +101,13 @@ export class SpeechService {
         }
     }
 
-    toggleListening(): void {
+    toggleListening(feedback: string = 'Listening'): void {
         if (!this.recognition) return;
 
         if (this.isListeningSource.observed && (this.recognition as any).started) {
             this.stopListening();
         } else {
-            this.startListening();
+            this.startListening(feedback);
         }
     }
 
@@ -125,12 +127,12 @@ export class SpeechService {
         this.stopListening();
     }
 
-    private startListening(): void {
+    private startListening(feedback: string = 'Listening'): void {
         try {
             if ((this.recognition as any).started) return;
             this.lastProcessedIndex = -1; // Reset to prevent processing old results
             this.recognition.start();
-            if (!this.isFieldInputMode) this.speak('Voice navigation enabled.');
+            if (!this.isFieldInputMode) this.speak(feedback);
         } catch (e) {
             console.error('Speech recognition error:', e);
         }
@@ -141,7 +143,7 @@ export class SpeechService {
             this.recognition.abort();
         }
         if (!this.isFieldInputMode) window.speechSynthesis.cancel();
-        if (!this.isFieldInputMode) this.speak('Voice navigation disabled.');
+        if (!this.isFieldInputMode) this.speak('Stopped');
     }
 
     private handleCommand(command: string): void {
@@ -214,5 +216,28 @@ export class SpeechService {
                 this.speak('Sorry, I did not recognize that command. Please try home, donate, or help.');
             }
         });
+    }
+
+    toggleReadPage(): void {
+        if (this.isReadingSource.value) {
+            window.speechSynthesis.cancel();
+            this.isReadingSource.next(false);
+            this.speak('Stopped reading');
+        } else {
+            const mainContent = document.getElementById('main') || document.body;
+            const text = (mainContent.innerText || mainContent.textContent || '').substring(0, 15000); // safety cap
+            if (text) {
+                this.isReadingSource.next(true);
+                this.speak('Reading. ');
+                
+                const utterance = new SpeechSynthesisUtterance(text);
+                const voice = this.getNaturalVoice();
+                if (voice) utterance.voice = voice;
+                utterance.rate = 1.0; utterance.pitch = 1.1;
+                utterance.onend = () => this.zone.run(() => this.isReadingSource.next(false));
+                utterance.onerror = () => this.zone.run(() => this.isReadingSource.next(false));
+                window.speechSynthesis.speak(utterance);
+            }
+        }
     }
 }

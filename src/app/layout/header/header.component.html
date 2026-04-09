@@ -1,61 +1,56 @@
 <header class="header">
     <h1>Welcome to JA RELIEF</h1>
 
-    <nav role="navigation" aria-label="Main Navigation">
-        <a routerLink="/" aria-label="Go to Home Page"><span class="material-symbols-outlined btn-icon" aria-hidden="true">home</span>Home</a>
-        <a routerLink="/donate" aria-label="Donate to JA Relief"><span class="material-symbols-outlined btn-icon" aria-hidden="true">volunteer_activism</span>Donate</a>
+    <nav role="navigation" aria-label="Main Navigation" class="flex flex-wrap items-center gap-3">
+        <a routerLink="/" aria-label="Go to Home Page" class="nav-home">
+            <span class="icon-home" aria-hidden="true"></span>
+            Home
+        </a>
 
-        <!-- Show Dashboard & Logout when logged in -->
-        <ng-container *ngIf="authService.currentUser$ | async as user; else notLoggedIn">
-            <a [routerLink]="user.role === 'admin' ? '/admin' : '/dashboard'" [attr.aria-label]="user.role === 'admin' ? 'Go to Admin Portal' : 'Go to Dashboard'">
-                <span class="material-symbols-outlined btn-icon" aria-hidden="true">dashboard</span>
-                {{ user.role === 'admin' ? 'Admin Portal' : 'Dashboard' }}
+        <!-- AUTHENTICATED STATE -->
+        <ng-container *ngIf="currentUser as user; else notLoggedIn">
+            <div class="user-welcome-badge">
+                <span class="welcome-label">HEY WELCOME</span>
+                <span class="user-name">{{ user.name || 'Katie' }}</span>
+            </div>
+            
+            <a *ngIf="user.role === 'admin' || user.role === 'survivor' || user.role === 'donor'" 
+               [routerLink]="user.role === 'admin' ? '/admin' : (user.role === 'donor' ? '/donor-dashboard' : '/dashboard')" 
+               class="nav-link dashboard-link">
+                <span class="icon-dashboard" aria-hidden="true"></span>
+                <span>{{ user.role === 'admin' ? 'Admin Portal' : 'Dashboard' }}</span>
             </a>
-            <a (click)="logout()" style="cursor: pointer;" aria-label="Logout from account"><span class="material-symbols-outlined btn-icon" aria-hidden="true">logout</span>Logout</a>
+            
+            <a (click)="logout()" class="logout-link" role="button" aria-label="Logout from account">
+                <span class="icon-logout" aria-hidden="true"></span>
+                <span>Logout</span>
+            </a>
         </ng-container>
 
-        <!-- Show Login when NOT logged in -->
+        <!-- PUBLIC STATE (Unauthenticated) -->
         <ng-template #notLoggedIn>
-            <a routerLink="/login" aria-label="Login to your account"><span class="material-symbols-outlined btn-icon" aria-hidden="true">login</span>Login</a>
-            <a routerLink="/login" class="admin-login-link" aria-label="Admin Login"><span class="material-symbols-outlined btn-icon" aria-hidden="true">admin_panel_settings</span>Admin Login</a>
+            <a routerLink="/donate" aria-label="Donate to JA Relief" class="donate-nav-btn">
+                <span class="material-symbols-outlined text-base" aria-hidden="true">volunteer_activism</span>
+                Donate
+            </a>
+            <a routerLink="/login" class="nav-login">
+                <span class="icon-login" aria-hidden="true"></span>
+                Login
+            </a>
+            <a routerLink="/login" class="admin-login-link">
+                <span class="icon-admin" aria-hidden="true"></span>
+                Admin Login
+            </a>
         </ng-template>
 
-        <div class="toggle-group">
-            <button (click)="toggleVoice()" class="theme-toggle-btn" [class.active]="isListening"
-                [attr.aria-label]="isListening ? 'Stop voice navigation' : 'Start voice navigation'"
-                [title]="isListening ? 'Stop Voice Commands' : 'Start Voice Commands'">
-                <span class="material-symbols-outlined btn-icon toggle-icon" aria-hidden="true">mic</span>
-                <!-- Mic icon -->
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                    <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" />
-                    <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
-                    <line x1="12" y1="19" x2="12" y2="23" />
-                    <line x1="8" y1="23" x2="16" y2="23" />
-                </svg>
-            </button>
-
-            <button (click)="toggleDarkMode()" class="theme-toggle-btn" [attr.aria-pressed]="isDarkMode"
-                aria-label="Toggle Dark Mode" [title]="isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'">
-                <span class="material-symbols-outlined btn-icon toggle-icon" aria-hidden="true">{{ isDarkMode ? 'light_mode' : 'dark_mode' }}</span>
-                <!-- Sun icon (light mode) -->
-                <svg *ngIf="isDarkMode" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <circle cx="12" cy="12" r="5" />
-                    <line x1="12" y1="1" x2="12" y2="3" />
-                    <line x1="12" y1="21" x2="12" y2="23" />
-                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
-                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-                    <line x1="1" y1="12" x2="3" y2="12" />
-                    <line x1="21" y1="12" x2="23" y2="12" />
-                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
-                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
-                </svg>
-                <!-- Moon icon (dark mode) -->
-                <svg *ngIf="!isDarkMode" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-                </svg>
-            </button>
-        </div>
+        <!-- Global Accessibility Toggles (Directly in nav) -->
+        <button (click)="toggleVoice()" class="theme-toggle-btn ml-auto" [class.active]="isListening">
+            <span [class]="isListening ? 'icon-typing' : 'icon-voice'" aria-hidden="true"></span>
+            <span class="btn-text">{{ isListening ? 'Typing' : 'Voice Typing' }}</span>
+        </button>
+        <button (click)="toggleDarkMode()" class="theme-toggle-btn">
+            <span [class]="isDarkMode ? 'icon-light' : 'icon-dark'" aria-hidden="true"></span>
+            <span class="btn-text">{{ isDarkMode ? 'Light Mode' : 'Dark Mode' }}</span>
+        </button>
     </nav>
 </header>

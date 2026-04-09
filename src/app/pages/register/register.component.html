@@ -9,6 +9,7 @@
     </button>
 </div>
 
+
 <form class="register-form" [formGroup]="survivorForm" (ngSubmit)="submit()">
 
     <div class="form-group">
@@ -19,6 +20,18 @@
                 (focus)="speakField('Full Name', 'Please enter your complete legal name as it appears on your ID.')" />
             <button type="button" class="voice-mic-btn" [class.active]="activeVoiceField === 'fullName'" (click)="listenToField('fullName')" aria-label="Use voice to input full name">
                 <span class="material-symbols-outlined">{{ activeVoiceField === 'fullName' ? 'mic' : 'mic_none' }}</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="email">Email Address *</label>
+        <div class="voice-input-wrapper">
+            <input id="email" type="email" formControlName="email" autocomplete="email" placeholder="alex@gmail.com"
+                aria-required="true" aria-label="Enter your email address"
+                (focus)="speakField('Email Address', 'Enter the email address you wish to use for secure login and Google access.')" />
+            <button type="button" class="voice-mic-btn" [class.active]="activeVoiceField === 'email'" (click)="listenToField('email')" aria-label="Use voice to input email">
+                <span class="material-symbols-outlined">{{ activeVoiceField === 'email' ? 'mic' : 'mic_none' }}</span>
             </button>
         </div>
     </div>
@@ -85,7 +98,7 @@
     <div class="form-group">
         <label for="address">Address *</label>
         <div class="voice-input-wrapper">
-            <input id="address" type="text" formControlName="address" placeholder="Street, Community, City"
+            <input id="address" type="text" formControlName="address" autocomplete="street-address" placeholder="Street, Community, City"
                 (focus)="speakField('Address', 'Enter your current physical address or temporary location.')" />
             <button type="button" class="voice-mic-btn" [class.active]="activeVoiceField === 'address'" (click)="listenToField('address')" aria-label="Use voice to input address">
                 <span class="material-symbols-outlined">{{ activeVoiceField === 'address' ? 'mic' : 'mic_none' }}</span>
@@ -95,8 +108,11 @@
 
     <div class="form-group">
         <label for="dob">Date of Birth *</label>
-        <input id="dob" type="date" formControlName="dob" [max]="today"
+        <input id="dob" type="date" formControlName="dob" [max]="today" autocomplete="bday"
             (focus)="speakField('Date of Birth', 'Select your date of birth from the calendar.')" />
+        <div *ngIf="survivorForm.get('dob')?.errors?.['tooYoung'] && survivorForm.get('dob')?.touched" class="field-error-msg">
+            Invalid Date: You must specify a birth year before 2018.
+        </div>
     </div>
 
     <fieldset class="form-group" id="damageLevel">
@@ -140,9 +156,15 @@
             </div>
         </div>
 
-        <div class="form-group">
-            <label for="emergencyContact">Emergency Contact (Name & Phone)</label>
-            <input id="emergencyContact" type="text" formControlName="emergencyContact" placeholder="e.g. Althea Campbell (876-555-0123)" (focus)="speakField('Emergency Contact')"/>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="form-group">
+                <label for="emergencyContact">Emergency Contact Person</label>
+                <input id="emergencyContact" type="text" formControlName="emergencyContact" placeholder="e.g. Althea Campbell" (focus)="speakField('Emergency Contact Name')"/>
+            </div>
+            <div class="form-group">
+                <label for="emergencyContactPhone">Emergency Contact Phone</label>
+                <input id="emergencyContactPhone" type="tel" formControlName="emergencyContactPhone" placeholder="876-###-####" (focus)="speakField('Emergency Contact Phone')"/>
+            </div>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -208,6 +230,12 @@
         <div *ngIf="survivorForm.get('password')?.errors?.['simplePassword'] && survivorForm.get('password')?.touched" class="field-error-msg">
             Password is too simple. Do not use common sequences or repetitive characters.
         </div>
+    </div>
+
+    <!-- Honeypot Field (Invisible to humans) -->
+    <div class="hp-field" aria-hidden="true">
+        <label for="website">Website</label>
+        <input id="website" type="text" formControlName="website" tabindex="-1" autocomplete="off" />
     </div>
 
     <div class="form-group" style="display: flex; gap: 1rem;">

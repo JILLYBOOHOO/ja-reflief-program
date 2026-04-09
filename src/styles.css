@@ -2,24 +2,20 @@
 :root {
     --bg-color: #ffffff;
     --text-color: #333333;
-    --card-bg: #f8f9fa;
-    --card-border: #e1e4e8;
-    --primary-color: #007bff;
-    --primary-hover: #0056b3;
 }
 
 body.dark-theme {
-    --bg-color: #0c0d0c;
-    --text-color: #f1f3f1;
-    --card-bg: #1a1c1a;
-    --card-border: #3e4a3c;
-    --primary-color: #62df74;
-    --primary-hover: #4bb45a;
-    --surface-container: #1e211e;
-    --surface-container-high: #242924;
-    --outline: #8c938c;
-    --inverse-surface: #f8faf8;
-    --on-surface: #f1f3f1;
+    --bg-color: #000000; /* Pure black */
+    --text-color: #ffffff; /* pure white */
+    --card-bg: #000000;
+    --card-border: #39FF14; /* Neon Green */
+    --primary-color: #39FF14; /* Neon Green */
+    --primary-hover: #32CD32;
+    --surface-container: #000000;
+    --surface-container-high: #111111;
+    --outline: #39FF14;
+    --inverse-surface: #ffffff;
+    --on-surface: #ffffff;
 }
 
 body.dark-theme .register-form,
@@ -34,9 +30,15 @@ body.dark-theme .bg-white {
 body.dark-theme input,
 body.dark-theme textarea,
 body.dark-theme select {
-    background-color: #1a1c1a !important;
-    color: #f1f3f1 !important;
-    border-color: #3e4a3c !important;
+    background-color: #000000 !important;
+    color: #ffffff !important;
+    border: 1px solid #39FF14 !important;
+}
+
+body.dark-theme input[type="checkbox"] {
+    accent-color: #39FF14 !important;
+    border: 2px solid #39FF14 !important;
+    background-color: #000000 !important;
 }
 
 body.dark-theme .text-jamaica-black {
@@ -47,13 +49,45 @@ body.dark-theme .bg-slate-100 {
     background-color: #242924 !important;
 }
 
-body.dark-theme .border-slate-200 {
-    border-color: #3e4a3c !important;
+body.dark-theme .border-slate-200,
+body.dark-theme .border-slate-100,
+body.dark-theme .border-red-100,
+body.dark-theme .border-emerald-100,
+body.dark-theme .border-zinc-100 {
+    border-color: #39FF14 !important;
 }
 
-/* Dark mode: Emergency Medical Section (Registration Page) - High Contrast Yellow */
+body.dark-theme .bg-slate-100,
+body.dark-theme .bg-slate-50,
+body.dark-theme .bg-red-50,
+body.dark-theme .bg-emerald-50,
+body.dark-theme .bg-zinc-50 {
+    background-color: #000000 !important;
+}
+
+body.dark-theme .text-slate-600,
+body.dark-theme .text-slate-700,
+body.dark-theme .text-slate-800,
+body.dark-theme .text-red-700,
+body.dark-theme .text-red-900,
+body.dark-theme .text-emerald-700,
+body.dark-theme .text-emerald-900,
+body.dark-theme .text-zinc-700,
+body.dark-theme .text-zinc-800 {
+    color: #ffffff !important;
+    opacity: 1 !important;
+}
+
+body.dark-theme .text-red-600,
+body.dark-theme .text-emerald-600,
+body.dark-theme .text-primary,
+body.dark-theme .material-symbols-outlined {
+    color: #39FF14 !important;
+}
+
+/* Dark mode: Emergency Medical Section (Registration Page) - High Contrast Neon Green */
 body.dark-theme .text-emerald-900 {
-    color: #FED100 !important; /* Jamaica Gold - high contrast */
+    color: #39FF14 !important; /* Neon Green */
 }
 body.dark-theme .text-emerald-800\/70 {
     color: rgba(254, 209, 0, 0.85) !important;
@@ -61,8 +95,9 @@ body.dark-theme .text-emerald-800\/70 {
 body.dark-theme .text-emerald-700\/60 {
     color: rgba(254, 209, 0, 0.75) !important;
 }
-body.dark-theme .text-emerald-600 {
-    color: #FED100 !important; /* Jamaica Gold */
+body.dark-theme .text-emerald-600,
+body.dark-theme .text-red-600 {
+    color: #39FF14 !important; /* Neon Green */
 }
 body.dark-theme .border-emerald-100 {
     border-color: #3e4a3c !important;
@@ -77,7 +112,7 @@ body.dark-theme .bg-emerald-100 {
     background-color: #1a2e1a !important;
 }
 body.dark-theme .text-black {
-    color: #FED100 !important; /* Jamaica Gold */
+    color: #39FF14 !important; /* Neon Green */
 }
 body.dark-theme .text-zinc-800 {
     color: #f5f5f5 !important;
@@ -87,6 +122,42 @@ body.dark-theme .text-zinc-500 {
 }
 
 /* High Contrast Dark Mode for Donation/Dashboard Cards */
+body.dark-theme #tour-step-1.v-card-main,
+body.dark-theme .medical-header-main {
+    background: #004d1a !important; /* Base dark green from image */
+    border: 2px solid #39FF14 !important;
+}
+
+body.dark-theme #tour-step-1.v-card-main {
+    box-shadow: 0 0 35px rgba(57, 255, 20, 0.3) !important;
+}
+
+body.dark-theme #tour-step-1.v-card-main,
+body.dark-theme .medical-header-main {
+    background: #00220a !important; /* Deep forest black-green for high contrast */
+    border: 2px solid #39FF14 !important;
+}
+
+body.dark-theme #tour-step-1.v-card-main {
+    box-shadow: 0 0 45px rgba(57, 255, 20, 0.25) !important; /* Subtle outer glow */
+}
+
+body.dark-theme .dark-pattern-overlay {
+    opacity: 1 !important; /* Full visibility of pattern colors */
+    background: 
+        linear-gradient(135deg, #008731 0%, #FFD31A 100%), /* Green to Yellow base gradient */
+        conic-gradient(at 50% 25%, #0000 75%, rgba(255, 255, 255, 0.1) 0), /* Subtle chevron texture layer 1 */
+        conic-gradient(at 50% 25%, #0000 75%, rgba(255, 255, 255, 0.1) 0) 25px 50px !important; /* Subtle chevron texture layer 2 offset */
+    background-size: 100% 100%, 50px 100px, 50px 100px !important;
+    background-blend-mode: overlay !important; /* Blends chevrons into the gradient beautifully */
+    z-index: 1;
+}
+
+/* Hide decorative circles in dark mode for focus on chevron pattern */
+body.dark-theme #tour-step-1 .rounded-full {
+    display: none !important;
+}
+
 body.dark-theme .bg-surface-container,
 body.dark-theme .bg-surface-container-low,
 body.dark-theme .bg-surface-container-lowest,
@@ -97,14 +168,27 @@ body.dark-theme .bg-surface-container-highest {
     border-color: #333333 !important;
 }
 
-body.dark-theme .bg-white {
-    background-color: #0c0d0c !important; /* Very dark green/black */
-    color: #ffffff !important;
+body.dark-theme .bg-white,
+body.dark-theme [id="tour-step-1"],
+body.dark-theme [id="tour-step-2"] header,
+body.dark-theme .bg-gradient-to-br,
+body.dark-theme .bg-\[\#006b25\],
+body.dark-theme .bg-\[\#0b3d1c\],
+body.dark-theme .signature-gradient,
+body.dark-theme .medical-header-main {
+    background-color: #000000 !important;
+    background: #000000 !important;
+    background-image: none !important;
+    border: 2px solid #39FF14 !important;
+}
+
+body.dark-theme .signature-gradient::after {
+    display: none !important;
 }
 
 body.dark-theme .item-card {
-    background-color: #111111 !important;
-    border-color: #333333 !important;
+    background-color: #000000 !important;
+    border-color: #39FF14 !important;
 }
 
 body.dark-theme .item-card:hover {
@@ -120,7 +204,7 @@ body.dark-theme h1,
 body.dark-theme h2,
 body.dark-theme h3,
 body.dark-theme h4 {
-    color: #FED100 !important; /* Jamaica Gold for all headers in dark mode for maximum visibility */
+    color: #39FF14 !important; /* Neon Green */
 }
 
 body.dark-theme .bg-surface {
@@ -129,23 +213,28 @@ body.dark-theme .bg-surface {
 }
 
 body.dark-theme .text-on-surface {
-    color: #f1f3f1 !important;
+    color: #ffffff !important;
 }
 
 /* Specifically for Donation Page "Step" labels that might use labels */
 body.dark-theme .amount-selector label,
 body.dark-theme .top-donor-info h3,
 body.dark-theme .payment-methods-section h3 {
-    color: #FED100 !important;
+    color: #39FF14 !important;
 }
 
-body.dark-theme .mission-text {
+body.dark-theme .mission-text,
+body.dark-theme .text-xs,
+body.dark-theme .text-sm,
+body.dark-theme .text-base,
+body.dark-theme .text-lg,
+body.dark-theme .text-xl {
     color: #ffffff !important;
 }
 
 /* Accessibility Focus States */
 :focus-visible {
-    outline: 4px solid var(--jamaica-gold, #fed100);
+    outline: 4px solid #39FF14;
     outline-offset: 4px;
 }
 
@@ -170,22 +259,22 @@ body.dark-theme .mission-text {
 }
 
 body.dark-theme .driver-popover {
-    background-color: #1a1a1a !important;
+    background-color: #000000 !important;
     color: #ffffff !important;
-    border: 2px solid #FED100 !important;
+    border: 3px solid #39FF14 !important;
 }
 
 body.dark-theme .driver-popover-title {
-    color: #FED100 !important;
+    color: #39FF14 !important;
 }
 
 body.dark-theme .driver-popover-description {
-    color: #f1f3f1 !important;
+    color: #ffffff !important;
 }
 
 /* Enhanced Focus Highlight for Active Guide Elements */
 .driver-active-element {
-    outline: 8px solid #FED100 !important;
+    outline: 8px solid #39FF14 !important;
     outline-offset: 8px !important;
     transition: outline-offset 0.3s ease !important;
     z-index: 100002 !important;
@@ -193,9 +282,9 @@ body.dark-theme .driver-popover-description {
 
 /* Pulse animation for the active element to draw attention */
 @keyframes pulse-focus {
-    0% { outline-color: #FED100; outline-offset: 8px; }
+    0% { outline-color: #39FF14; outline-offset: 8px; }
     50% { outline-color: #ffffff; outline-offset: 12px; }
-    100% { outline-color: #FED100; outline-offset: 8px; }
+    100% { outline-color: #39FF14; outline-offset: 8px; }
 }
 
 .driver-active-element {
@@ -214,12 +303,16 @@ body.dark-theme .driver-popover-description {
 }
 
 html, body {
-    background-color: var(--bg-color);
+    background-color: var(--bg-color) !important;
     color: var(--text-color);
     transition: background-color 0.3s ease, color 0.3s ease;
     margin: 0;
     padding: 0;
-    overflow-x: hidden; /* Prevent horizontal scroll */
+    min-height: 100vh;
+}
+
+body.dark-theme {
+    background-color: #000000 !important;
 }
 
 img, video {
@@ -303,18 +396,18 @@ img, video {
 
 /* Tour Highlight Animation */
 .tour-highlight {
-    outline: 6px solid #FED100 !important;
+    outline: 6px solid #39FF14 !important;
     outline-offset: 8px !important;
     border-radius: 16px !important;
-    box-shadow: 0 0 40px rgba(254, 209, 0, 0.6) !important;
+    box-shadow: 0 0 40px rgba(57, 255, 20, 0.6) !important;
     z-index: 9999 !important;
     position: relative !important;
-    background-color: rgba(254, 209, 0, 0.05) !important;
+    background-color: rgba(57, 255, 20, 0.1) !important;
     transition: all 0.3s ease;
     animation: tour-pulse 1.5s infinite alternate;
 }
 
 @keyframes tour-pulse {
-    from { box-shadow: 0 0 20px rgba(254, 209, 0, 0.3); }
-    to { box-shadow: 0 0 50px rgba(254, 209, 0, 0.8); }
+    from { box-shadow: 0 0 20px rgba(57, 255, 20, 0.3); }
+    to { box-shadow: 0 0 50px rgba(57, 255, 20, 0.8); }
 }

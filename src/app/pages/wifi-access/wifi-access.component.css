@@ -54,9 +54,41 @@
 }
 
 .wifi-page-wrapper .bg-white {
-    background-color: #ffffff !important;
+    background-color: #ffffff;
 }
 
 .wifi-page-wrapper .text-black {
-    color: #000000 !important;
+    color: #000000;
+}
+
+/* High Contrast & Dark Mode Fixes */
+:host-context(.dark-theme) .wifi-page-wrapper {
+    background-color: #000000 !important;
+    color: #ffffff !important;
+}
+
+:host-context(.dark-theme) .bg-white {
+    background-color: #111111 !important;
+    border-color: #333333 !important;
+}
+
+:host-context(.dark-theme) .text-black,
+:host-context(.dark-theme) .text-zinc-800,
+:host-context(.dark-theme) h3 {
+    color: #ffffff !important;
+}
+
+:host-context(.dark-theme) .text-zinc-500,
+:host-context(.dark-theme) .text-zinc-400 {
+    color: #aaaaaa !important;
+}
+
+:host-context(.dark-theme) .bg-zinc-50 {
+    background-color: #1a1a1a !important;
+    border-color: #333333 !important;
+}
+
+/* Force light mode readability if it's too light */
+.text-zinc-800 {
+    color: #1a1a1a !important;
 }

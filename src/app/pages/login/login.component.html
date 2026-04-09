@@ -18,18 +18,28 @@
         <p *ngIf="isAdminMode">Authorized access only. Please sign in to the management console.</p>
 
         <div *ngIf="loginError" class="error-banner" role="alert" aria-live="polite">
-            {{ errorMessage }}
+            <span class="error-text">{{ errorMessage }}</span>
+            
+            <div *ngIf="!isAdminMode" class="mt-4 flex flex-wrap justify-center gap-3">
+                <a routerLink="/register" class="bg-[#005c37] text-white px-5 py-2 rounded-xl text-xs font-black uppercase tracking-widest hover:bg-black transition-all shadow-md border-2 border-white/20">
+                    Register
+                </a>
+                <button type="button" (click)="openForgotPassword()" class="bg-black text-white px-5 py-2 rounded-xl text-xs font-black uppercase tracking-widest hover:bg-[#ffbb16] hover:text-black transition-all shadow-md border-2 border-white/20">
+                    Reset Password
+                </button>
+            </div>
         </div>
+
 
 
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" aria-label="Login form">
             <div class="form-group">
-                <label for="identifier">{{ isAdminMode ? 'Admin ID' : 'Full Name or Phone Number' }} *</label>
+                <label for="identifier">{{ isAdminMode ? 'Admin ID' : 'Full Name, ID Number, or Phone' }} *</label>
                 <input id="identifier" type="text" formControlName="identifier"
-                    [placeholder]="isAdminMode ? 'Enter Admin ID' : 'Enter your name or phone number'" 
+                    [placeholder]="isAdminMode ? 'Enter Admin ID' : 'Enter your name, ID, or phone number'" 
                     aria-required="true" />
                 <div class="error" *ngIf="loginForm.get('identifier')?.invalid && loginForm.get('identifier')?.touched" role="alert">
-                    {{ isAdminMode ? 'Admin ID' : 'Login Name or Phone Number' }} is required.
+                    {{ isAdminMode ? 'Admin ID' : 'Identity credentials are' }} required.
                 </div>
             </div>
 
@@ -65,15 +75,15 @@
     <div *ngIf="showForgotPasswordModal" class="modal-overlay" style="position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; z-index: 9999; padding: 1rem;">
         <div class="modal-content" style="background: white; padding: 2rem; border-radius: 16px; width: 100%; max-width: 400px; box-shadow: 0 10px 25px rgba(0,0,0,0.2);">
             <h3 style="margin-top: 0; margin-bottom: 1rem; color: #333; font-size: 1.5rem;">Reset Password</h3>
-            <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">Enter your Full Name or Phone Number, and a new password.</p>
+            <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">Confirm your Full Name, ID, or Phone Number to reset your password.</p>
             
             <div *ngIf="resetMessage" style="padding: 1rem; border-radius: 8px; margin-bottom: 1rem; font-weight: bold; font-size: 0.9rem;" [style.backgroundColor]="resetError ? '#fee2e2' : '#dcfce7'" [style.color]="resetError ? '#991b1b' : '#166534'">
                 {{ resetMessage }}
             </div>
 
             <div style="margin-bottom: 1rem;">
-                <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; font-size: 0.9rem; color: #333;">Login Name or Phone Number</label>
-                <input type="text" [(ngModel)]="resetIdentifier" placeholder="Enter your identifier" style="width: 100%; padding: 0.8rem; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 1rem;" />
+                <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; font-size: 0.9rem; color: #333;">Name, ID, or Phone</label>
+                <input type="text" [(ngModel)]="resetIdentifier" placeholder="Enter your credentials" style="width: 100%; padding: 0.8rem; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 1rem;" />
             </div>
             
             <div style="margin-bottom: 1.5rem;">

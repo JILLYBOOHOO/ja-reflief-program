@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { GuideService } from '../../services/guide.service';
+import { SocialAuthService, GoogleLoginProvider } from '@abacritt/angularx-social-login';
 
 @Component({
   selector: 'app-login',
@@ -42,6 +43,8 @@ export class LoginComponent implements OnInit {
         rememberMe: true
       });
     }
+
+    // External SSO (Google) has been explicitly disabled.
   }
 
   ngAfterViewInit(): void {
@@ -75,13 +78,14 @@ export class LoginComponent implements OnInit {
 
     const { identifier, password, rememberMe } = this.loginForm.value;
 
+    const identifierTrimmed = identifier.trim();
     if (rememberMe && !this.isAdminMode) {
-      localStorage.setItem('ja_relief_saved_identifier', identifier);
+      localStorage.setItem('ja_relief_saved_identifier', identifierTrimmed);
     } else {
       localStorage.removeItem('ja_relief_saved_identifier');
     }
 
-    this.authService.login(identifier, password).subscribe({
+    this.authService.login(identifierTrimmed, password, this.isAdminMode).subscribe({
       next: (response) => {
         this.isLoading = false;
         if (response && response.token) {

@@ -1,0 +1,280 @@
+﻿<div [ngClass]="{'bg-surface text-on-surface antialiased min-h-screen pb-12': donationType === 'in-kind'}">
+    <!-- MONETARY VIEW (Original) -->
+    <div class="donate-page" *ngIf="donationType === 'monetary'">
+        <div class="donate-container">
+            <h1>Make a Difference Today</h1>
+            <p class="subtitle">Support JA RELIEF in providing disaster assistance.</p>
+
+            <div class="donation-options">
+                <button class="active" aria-label="Make a monetary donation">
+                    ≡ƒÆ░ Monetary Donation
+                </button>
+                <button (click)="setDonationType('in-kind')" aria-label="Donate items in kind">
+                    ≡ƒôª Donate Items
+                </button>
+            </div>
+
+            <div class="donor-info-section top-donor-info">
+                <h3>Step 1: Your Information</h3>
+                <div id="form-errors" class="error-message" style="color: #fa755a; font-weight: bold; margin-bottom: 15px; font-size: 1.1rem;"></div>
+                <div class="form-grid">
+                    <div class="form-field">
+                        <label for="donor-name-m">Full Name *</label>
+                        <input id="donor-name-m" type="text" [(ngModel)]="donorName" placeholder="Enter Full Name" autocomplete="name" aria-required="true" />
+                    </div>
+                    <div class="form-field">
+                        <label for="donor-phone-m">Phone Number *</label>
+                        <input id="donor-phone-m" type="tel" [(ngModel)]="donorPhone" placeholder="876-000-0000" autocomplete="tel" aria-required="true" />
+                    </div>
+                    <div class="form-field">
+                        <label for="donor-email-m">Email Address *</label>
+                        <input id="donor-email-m" type="email" [(ngModel)]="donorEmail" placeholder="your@email.com" autocomplete="email" aria-required="true" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-header">
+                <h2>Secure Checkout</h2>
+                <p>Supporting immediate disaster relief in Jamaica.</p>
+            </div>
+
+            <div class="amount-selector" role="region" aria-labelledby="amount-header">
+                <label id="amount-header">Step 2: Select Amount (JMD)</label>
+                <div class="quick-amounts" role="group" aria-labelledby="amount-header">
+                    <button *ngFor="let amt of [1000, 5000, 10000, 15000, 25000, 50000]" 
+                        (click)="setAmount(amt)" 
+                        [class.selected]="donationAmount === amt"
+                        [attr.aria-pressed]="donationAmount === amt"
+                        [attr.aria-label]="'Donate ' + (amt | number) + ' Jamaican Dollars'">
+                        ${{ amt | number }}
+                    </button>
+                </div>
+                <div class="input-group">
+                    <label for="custom-amount" class="visually-hidden">Or enter a custom amount</label>
+                    <span class="currency-symbol" aria-hidden="true">$</span>
+                    <input id="custom-amount" type="number" min="1" placeholder="Other Amount" [(ngModel)]="donationAmount" aria-label="Enter other donation amount in JMD" />
+                </div>
+            </div>
+
+            <div class="payment-methods-section">
+                <h3 id="payment-label">Step 3: Checkout with PayPal or Card</h3>
+                <div class="payment-container paypal-container">
+                    <div id="paypal-button-container"></div>
+                </div>
+            </div>
+
+            <div class="security-badges">
+                <span>≡ƒöÆ Secure 256-bit SSL encrypted</span>
+                <span>Γ£à PCI Compliant Gateway</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- IN-KIND DASHBOARD (New Tailwind UI) -->
+    <main class="pt-8 px-6 md:px-12 max-w-[1600px] mx-auto" *ngIf="donationType === 'in-kind'">
+        <!-- Header Toggle for In-Kind (subtle) -->
+        <div class="flex justify-end mb-4">
+            <button class="text-sm font-bold text-jamaica-green hover:underline flex items-center gap-2" (click)="setDonationType('monetary')">
+                <span class="material-symbols-outlined text-sm">payments</span> Switch to Monetary Donation
+            </button>
+        </div>
+
+        <!-- Top Hero & High Priority Section -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-12">
+            <div class="lg:col-span-8 flex flex-col justify-center">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-jamaica-gold/10 text-jamaica-green font-bold text-xs uppercase tracking-wider mb-6 border border-jamaica-gold/20 w-max">
+                    <span class="relative flex h-2 w-2">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-jamaica-green opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-jamaica-green"></span>
+                    </span>
+                    Active Support Needed
+                </div>
+                <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight text-jamaica-black mb-6 leading-[1.1]">
+                    Jamaica <span class="text-jamaica-green underline decoration-jamaica-gold decoration-4 underline-offset-8">Relief Effort</span>
+                </h1>
+                <p class="text-on-surface/70 max-w-xl text-lg leading-relaxed mb-8">
+                    Help our communities recover. Organize your donation pledge below. Every item counts towards the collective impact for St. Elizabeth and surrounding parishes.
+                </p>
+            </div>
+
+            <!-- High Priority Sidebar -->
+            <div class="lg:col-span-4" *ngIf="activeSurvivorRequests.length > 0">
+                <div class="bg-white border-2 border-jamaica-gold rounded-xl overflow-hidden shadow-xl shadow-jamaica-gold/5">
+                    <div class="bg-jamaica-gold px-6 py-4 flex items-center justify-between">
+                        <div class="flex items-center gap-2 font-black text-jamaica-black uppercase tracking-tight italic">
+                            <span class="text-2xl">≡ƒÜ¿</span>
+                            <span>High Priority Requests</span>
+                        </div>
+                    </div>
+                    <div class="p-6 space-y-4 max-h-[300px] overflow-y-auto">
+                        <ng-container *ngFor="let req of activeSurvivorRequests">
+                            <ng-container *ngFor="let item of req.items">
+                                <div *ngIf="item.status === 'pending' || item.status === 'partially-fulfilled'" class="flex items-center justify-between p-3 rounded-lg border border-jamaica-gold/10 bg-surface-container/50">
+                                    <div class="flex flex-col">
+                                        <span class="text-xs font-bold text-jamaica-green uppercase tracking-tighter">{{ req.requesterName }} @ {{ req.location }}</span>
+                                        <span class="text-lg font-bold text-jamaica-black">{{ item.name }}</span>
+                                    </div>
+                                    <button class="bg-jamaica-green hover:bg-black text-white px-5 py-2 rounded-lg font-bold text-sm transition-colors shadow-lg shadow-jamaica-green/20" (click)="pledgeRequestItem(req, item)">Fulfill This</button>
+                                </div>
+                            </ng-container>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+            <div class="lg:col-span-4" *ngIf="activeSurvivorRequests.length === 0">
+                <!-- Static placeholder if no requests -->
+                <div class="bg-white border-2 border-jamaica-gold rounded-xl overflow-hidden shadow-xl shadow-jamaica-gold/5 h-full flex flex-col items-center justify-center p-8 text-center bg-jamaica-gold/5">
+                    <span class="material-symbols-outlined text-4xl text-jamaica-gold mb-2">volunteer_activism</span>
+                    <h3 class="font-bold text-jamaica-black">All priority requests fulfilled!</h3>
+                    <p class="text-sm text-on-surface/70 mt-2">You can still pledge general items below.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 1: Donor Info -->
+        <div class="bg-white rounded-xl border border-outline/10 p-8 shadow-sm mb-12">
+            <h3 class="text-2xl font-bold text-jamaica-black mb-6">Step 1: Your Information</h3>
+            <div id="form-errors-in-kind" class="text-red-500 font-bold mb-4"></div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div>
+                    <label class="block text-xs font-bold text-on-surface/70 uppercase tracking-wider mb-2">Full Name *</label>
+                    <input type="text" [(ngModel)]="donorName" class="w-full bg-surface-container border-none focus:ring-2 focus:ring-jamaica-green rounded-lg p-3 text-jamaica-black font-medium" placeholder="Enter Full Name" />
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-on-surface/70 uppercase tracking-wider mb-2">Phone Number *</label>
+                    <input type="tel" [(ngModel)]="donorPhone" class="w-full bg-surface-container border-none focus:ring-2 focus:ring-jamaica-green rounded-lg p-3 text-jamaica-black font-medium" placeholder="876-000-0000" />
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-on-surface/70 uppercase tracking-wider mb-2">Email Address *</label>
+                    <input type="email" [(ngModel)]="donorEmail" class="w-full bg-surface-container border-none focus:ring-2 focus:ring-jamaica-green rounded-lg p-3 text-jamaica-black font-medium" placeholder="your@email.com" />
+                </div>
+            </div>
+        </div>
+
+        <h3 class="text-2xl font-bold text-jamaica-black mb-6">Step 2: Choose Supplies to Pledge</h3>
+
+        <!-- Main Checklist Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+            <ng-container *ngFor="let cat of categorizedItems; let i = index">
+                <div class="bg-white rounded-xl border border-outline/10 shadow-sm overflow-hidden flex flex-col h-full">
+                    <div class="p-6 bg-surface-container border-b border-outline/10 flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-lg flex items-center justify-center shadow-sm" [ngClass]="{'bg-jamaica-black': i % 3 === 0, 'bg-jamaica-green': i % 3 === 1, 'bg-jamaica-gold': i % 3 === 2}">
+                            <span class="text-xl">{{ cat.icon }}</span>
+                        </div>
+                        <h2 class="text-xl font-extrabold text-jamaica-black">{{ cat.category }}</h2>
+                    </div>
+                    <div class="p-4 space-y-3 flex-grow">
+                        <div *ngFor="let item of cat.items" class="item-card flex items-center justify-between p-3 border rounded-lg hover:bg-surface-container/30 transition-all cursor-pointer" (click)="item.checked = !item.checked" [class.border-jamaica-green]="item.checked" [class.bg-jamaica-green]="item.checked" [class.bg-opacity-5]="item.checked">
+                            <div class="flex items-center gap-3">
+                                <input type="checkbox" [checked]="item.checked" (change)="item.checked = !item.checked; $event.stopPropagation()" class="w-5 h-5 rounded border-2 border-gray-400 text-jamaica-green focus:ring-jamaica-green cursor-pointer"/>
+                                <span class="text-xl" aria-hidden="true">{{ item.icon }}</span>
+                                <span class="font-semibold" [class.text-jamaica-black]="item.checked" [class.text-on-surface]="!item.checked">{{ item.name }}</span>
+                            </div>
+                            <!-- Quantity selector could go here if implemented, for now just checkbox -->
+                        </div>
+                    </div>
+                    <div class="p-4 bg-surface-container/20 border-t border-outline/5">
+                        <input class="w-full bg-white border border-outline/20 rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-jamaica-green border-transparent outline-none shadow-sm" placeholder="Other {{cat.category.toLowerCase()}} items..." type="text"/>
+                    </div>
+                </div>
+            </ng-container>
+
+            <!-- Call to Action Card -->
+            <div class="bg-jamaica-black p-8 rounded-xl flex flex-col justify-between text-white relative overflow-hidden group">
+                <div class="absolute -right-4 -bottom-4 w-32 h-32 bg-jamaica-green/20 rounded-full blur-2xl group-hover:bg-jamaica-green/40 transition-colors"></div>
+                
+                <div class="relative z-10 flex flex-col h-full">
+                    <div>
+                        <h3 class="text-3xl font-black mb-4 leading-tight italic uppercase tracking-tighter">Ready to <span class="text-jamaica-gold">Pledge?</span></h3>
+                        
+                        <div class="mb-6 bg-white/5 rounded-lg p-4 border border-white/10">
+                            <h4 class="text-xs text-jamaica-gold font-bold uppercase tracking-wider mb-3">Selected Items Summary</h4>
+                            
+                            <!-- Summary List -->
+                            <ul class="space-y-2 max-h-[140px] overflow-y-auto pr-2 custom-scrollbar">
+                                <ng-container *ngFor="let cat of categorizedItems">
+                                    <ng-container *ngFor="let item of cat.items">
+                                        <li *ngIf="item.checked" class="flex items-center justify-between text-sm">
+                                            <div class="flex items-center gap-2 text-white/90 font-medium">
+                                                <span aria-hidden="true" class="text-lg">{{ item.icon }}</span> 
+                                                {{ item.name }}
+                                            </div>
+                                            <button (click)="item.checked = false; $event.stopPropagation()" class="text-white/40 hover:text-red-400 transition-colors rounded-full p-1 hover:bg-white/10 cursor-pointer" aria-label="Remove item">
+                                                <span class="material-symbols-outlined text-[16px]">close</span>
+                                            </button>
+                                        </li>
+                                    </ng-container>
+                                </ng-container>
+                                
+                                <!-- Empty State -->
+                                <li class="text-white/40 text-sm italic py-2 text-center" *ngIf="!hasAnyCheckedItems()">
+                                    No items selected yet. Choose items from the categories.
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-auto">
+                        <button class="w-full bg-jamaica-gold text-jamaica-black font-black py-4 rounded-lg hover:bg-white hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-3 uppercase tracking-wider shadow-lg shadow-jamaica-gold/20 disabled:opacity-50 disabled:hover:scale-100 disabled:cursor-not-allowed" [disabled]="!hasAnyCheckedItems()" (click)="submitInKind()">
+                            Confirm Pledge
+                            <span class="material-symbols-outlined font-bold">arrow_forward</span>
+                        </button>
+                        <div class="mt-4 flex items-center justify-center gap-2 text-[10px] text-white/60 font-bold uppercase tracking-widest">
+                            <span class="material-symbols-outlined text-[14px] text-jamaica-green">verified</span>
+                            <span>Secure Donation Handling</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Success Modal -->
+    <div class="fixed inset-0 bg-black/70 backdrop-blur-md flex items-center justify-center p-4 z-50 transition-opacity" *ngIf="showSuccessModal" (click)="closeModal()">
+        <div class="bg-surface rounded-3xl p-8 md:p-12 max-w-lg w-full shadow-2xl relative text-center border-4 border-jamaica-gold" (click)="$event.stopPropagation()">
+            <div class="text-7xl mb-4 animate-bounce">≡ƒç»≡ƒç▓</div>
+            <h2 class="text-4xl font-black text-jamaica-green mb-4">Respect!</h2>
+            <p class="text-on-surface/80 text-lg mb-6 font-medium">Your contribution to JA RELIEF was successful. Together we are stronger!</p>
+            <div class="bg-surface-container rounded-xl p-4 mb-8 text-left max-h-[200px] overflow-y-auto" *ngIf="pledgedItems.length > 0">
+                <p class="font-bold text-jamaica-black mb-3 uppercase text-sm">You pledged:</p>
+                <ul class="space-y-2">
+                    <li *ngFor="let item of pledgedItems" class="flex items-start gap-2 text-on-surface text-sm font-semibold">
+                        <span class="material-symbols-outlined text-jamaica-green text-lg">check_circle</span>
+                        {{ item }}
+                    </li>
+                </ul>
+            </div>
+            <button class="w-full bg-jamaica-green text-white font-black py-4 rounded-xl uppercase tracking-wider hover:bg-black transition-colors" (click)="closeModal()">Done</button>
+        </div>
+    </div>
+
+    <!-- Alert Modal -->
+    <div class="fixed inset-0 bg-black/70 backdrop-blur-md flex items-center justify-center p-4 z-50 transition-opacity" *ngIf="alertMessage" (click)="closeAlert()">
+        <div class="bg-white rounded-3xl p-8 max-w-sm w-full shadow-2xl relative text-center border-t-8 border-red-500" (click)="$event.stopPropagation()">
+            <div class="text-6xl mb-4 text-red-500 material-symbols-outlined">warning</div>
+            <h2 class="text-2xl font-black text-red-500 mb-2">Action Required</h2>
+            <p class="text-on-surface/80 mb-8 font-medium">{{ alertMessage }}</p>
+            <button class="w-full bg-red-500 text-white font-black py-4 rounded-xl uppercase tracking-wider hover:bg-red-600 transition-colors shadow-lg shadow-red-500/20" (click)="closeAlert()">Got it</button>
+        </div>
+    </div>
+
+    <!-- Fulfillment Modal -->
+    <div class="fixed inset-0 bg-black/70 backdrop-blur-md flex items-center justify-center p-4 z-50 transition-opacity" *ngIf="showFulfillmentModal" (click)="closeFulfillment()">
+        <div class="bg-surface rounded-3xl p-8 max-w-md w-full shadow-2xl relative border-t-8 border-jamaica-green" (click)="$event.stopPropagation()">
+            <h2 class="text-3xl font-black text-jamaica-green mb-2 leading-tight">Provide Supply:<br/><span class="text-jamaica-black">{{ selectedRequest?.requesterName }}</span></h2>
+            <p class="text-on-surface/70 mb-6 font-medium">Please confirm the items you are pledging to supply for this request.</p>
+            
+            <div class="space-y-3 mb-8 max-h-[250px] overflow-y-auto px-1">
+                <label *ngFor="let itemName of itemsToFulfill | keyvalue" class="flex items-center gap-4 p-4 border-2 border-outline/20 rounded-xl cursor-pointer hover:bg-surface-container transition-colors">
+                    <input type="checkbox" [(ngModel)]="itemsToFulfill[itemName.key]" class="w-6 h-6 rounded border-2 border-gray-400 text-jamaica-green focus:ring-jamaica-green" />
+                    <span class="font-bold text-jamaica-black text-lg">{{ itemName.key }}</span>
+                </label>
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-4 mt-2">
+                <button class="flex-1 bg-jamaica-green hover:bg-black text-white font-black py-4 px-2 rounded-xl uppercase tracking-wider transition-colors text-sm shadow-lg shadow-jamaica-green/20" (click)="submitFulfillment()">Confirm Pick-Up</button>
+                <button class="flex-1 bg-white border-2 border-outline/30 hover:border-jamaica-black hover:bg-surface-container text-jamaica-black font-black py-4 px-2 rounded-xl uppercase tracking-wider transition-colors text-sm" (click)="closeFulfillment()">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>

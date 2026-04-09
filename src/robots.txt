@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ja-relief.web.app/sitemap.xml

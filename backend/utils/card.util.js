@@ -3,6 +3,14 @@ function generateCardNumber() {
     .toString();
 }
 
+function generateCVV() {
+  return Math.floor(100 + Math.random() * 900).toString();
+}
+
+function generatePIN() {
+  return Math.floor(1000 + Math.random() * 9000).toString();
+}
+
 function getInitialBalance(damageLevel) {
   switch (damageLevel) {
     case 'Minor':
@@ -16,4 +24,4 @@ function getInitialBalance(damageLevel) {
   }
 }
 
-module.exports = { generateCardNumber, getInitialBalance };
+module.exports = { generateCardNumber, generateCVV, generatePIN, getInitialBalance };

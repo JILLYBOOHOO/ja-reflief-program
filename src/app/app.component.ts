@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { AccessibilityService, FontSize } from './services/accessibility.service';
@@ -13,6 +13,7 @@ export class AppComponent implements OnInit {
   showCookieBanner = true;
   isDashboard = false;
   currentFontSize: FontSize = 'normal';
+  showBackToTop = false;
 
   constructor(private router: Router, private accessibilityService: AccessibilityService) {
     this.isOnline = navigator.onLine;
@@ -25,6 +26,7 @@ export class AppComponent implements OnInit {
     ).subscribe((event: any) => {
       const url = event.urlAfterRedirects;
       this.isDashboard = url.includes('/dashboard');
+      window.scrollTo(0, 0); // Scroll to top on navigation
     });
 
     this.accessibilityService.fontSize$.subscribe(size => {
@@ -32,11 +34,23 @@ export class AppComponent implements OnInit {
     });
   }
 
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    this.showBackToTop = window.pageYOffset > 400;
+  }
+
   ngOnInit() {
     const consent = localStorage.getItem('cookieConsent');
     if (consent === 'true') {
       this.showCookieBanner = false;
     }
+  }
+
+  scrollToTop() {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
   }
 
   acceptCookies() {

@@ -52,29 +52,78 @@ export class ImpactRequestService {
       // Fetch from backend
       this.http.get<any[]>(this.apiUrl).subscribe({
         next: (rows) => {
-          const reqs = rows.map(r => ({
-            id: r.id.toString(),
-            requesterName: r.requesterName,
-            location: r.location,
-            lat: parseFloat(r.lat),
-            lng: parseFloat(r.lng),
-            items: JSON.parse(r.items),
-            timestamp: new Date(r.createdAt).getTime()
-          }));
+          const dynamicNames = ['Pam', 'Ricardo', 'Alicia', 'Marcus', 'Tasha', 'Leon', 'Maya', 'Omar'];
+          const reqs = rows.map((r, i) => {
+            let parsedName = r.requesterName ? r.requesterName.trim() : 'Anonymous';
+            if (parsedName.toLowerCase() === 'anonymous') {
+                parsedName = dynamicNames[i % dynamicNames.length];
+            } else {
+                parsedName = parsedName.split(' ')[0]; // Only show first name
+            }
+
+            return {
+              id: r.id.toString(),
+              requesterName: parsedName,
+              location: r.location,
+              lat: parseFloat(r.lat),
+              lng: parseFloat(r.lng),
+              items: JSON.parse(r.items),
+              timestamp: new Date(r.createdAt).getTime()
+            };
+          });
           this.requestsSubject.next(reqs);
         },
         error: () => {
           // Fallback to mock if API fails
           console.warn('Using mock requests - backend unreachable');
-          this.requestsSubject.next([{
-            id: 'mock-1',
-            requesterName: 'Pam',
-            location: 'St. Elizabeth',
-            lat: PARISH_COORDS['St. Elizabeth'].lat,
-            lng: PARISH_COORDS['St. Elizabeth'].lng,
-            items: [{ name: 'Rice', quantity: 5, status: 'pending' }],
-            timestamp: Date.now()
-          }]);
+          const now = Date.now();
+          this.requestsSubject.next([
+            {
+              id: 'mock-1',
+              requesterName: 'Pam',
+              location: 'St. Elizabeth',
+              lat: PARISH_COORDS['St. Elizabeth'].lat,
+              lng: PARISH_COORDS['St. Elizabeth'].lng,
+              items: [{ name: 'Water', quantity: 1, status: 'pending' }],
+              timestamp: now
+            },
+            {
+              id: 'mock-2',
+              requesterName: 'Ricardo',
+              location: 'Kingston',
+              lat: PARISH_COORDS['Kingston'].lat,
+              lng: PARISH_COORDS['Kingston'].lng,
+              items: [{ name: 'Syrup', quantity: 1, status: 'pending' }],
+              timestamp: now - 300000
+            },
+            {
+              id: 'mock-3',
+              requesterName: 'Alicia',
+              location: 'St. James',
+              lat: PARISH_COORDS['St. James'].lat,
+              lng: PARISH_COORDS['St. James'].lng,
+              items: [{ name: 'Juice / Tin Juice', quantity: 2, status: 'pending' }],
+              timestamp: now - 600000
+            },
+            {
+              id: 'mock-4',
+              requesterName: 'Marcus',
+              location: 'Portland',
+              lat: PARISH_COORDS['Portland'].lat,
+              lng: PARISH_COORDS['Portland'].lng,
+              items: [{ name: 'Rice / Flour', quantity: 1, status: 'pending' }],
+              timestamp: now - 900000
+            },
+            {
+              id: 'mock-5',
+              requesterName: 'Tasha',
+              location: 'Manchester',
+              lat: PARISH_COORDS['Manchester'].lat,
+              lng: PARISH_COORDS['Manchester'].lng,
+              items: [{ name: 'Sugar / Cornmeal', quantity: 3, status: 'pending' }],
+              timestamp: now - 1200000
+            }
+          ]);
         }
       });
     }

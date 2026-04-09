@@ -383,6 +383,51 @@
     opacity: 0.7;
 }
 
+/* High Contrast Dark Mode for Special Sections */
+:host-context(.dark-theme) .fire-ext-section {
+    background-color: #000000 !important;
+    border-color: #39FF14 !important;
+}
+
+:host-context(.dark-theme) .fire-ext-section div[class*="bg-red-50"] {
+    background-color: #000000 !important;
+    border-bottom-color: #39FF14 !important;
+}
+
+:host-context(.dark-theme) .fire-ext-section div[class*="bg-red-100"] {
+    background-color: #111111 !important;
+    color: #39FF14 !important;
+}
+
+:host-context(.dark-theme) .fire-ext-section h2.text-red-800 {
+    color: #39FF14 !important;
+}
+
+:host-context(.dark-theme) .fire-ext-section h3.text-red-700 {
+    color: #39FF14 !important;
+}
+
+:host-context(.dark-theme) .fire-ext-section p.text-slate-600 {
+    color: #ffffff !important;
+}
+
+:host-context(.dark-theme) div[class*="bg-red-50"][class*="border-red-100"] {
+    background-color: #000000 !important;
+    border-color: #39FF14 !important;
+}
+
+:host-context(.dark-theme) h3[class*="text-red-900"] {
+    color: #39FF14 !important;
+}
+
+:host-context(.dark-theme) p[class*="text-red-700"] {
+    color: #ffffff !important;
+}
+
+:host-context(.dark-theme) span.text-red-600 {
+    color: #39FF14 !important;
+}
+
 @media (max-width: 768px) {
     .info-header h1 {
         font-size: 1.8rem;

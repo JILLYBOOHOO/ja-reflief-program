@@ -101,11 +101,30 @@ import { HazardService, HazardReport } from '../../services/hazard.service';
         </form>
       </div>
     </div>
+    <!-- Modern UI Alert Layer -->
+    <div class="fixed inset-0 bg-black/90 backdrop-blur-lg flex items-center justify-center p-4 z-[3000] animate-in fade-in duration-300" *ngIf="resultMessage" (click)="closeResult()">
+      <div class="bg-black border-[3px] border-[#ffcc00] rounded-[32px] p-8 md:p-12 max-w-sm w-full shadow-2xl relative text-center" (click)="$event.stopPropagation()">
+        <div class="text-7xl mb-6 material-symbols-outlined" [class.text-red-500]="resultType === 'error'" [class.text-jamaica-green]="resultType === 'success'">
+          {{ resultType === 'success' ? 'check_circle' : 'warning' }}
+        </div>
+        <h2 class="text-2xl font-black mb-4 uppercase tracking-tighter italic" [class.text-red-500]="resultType === 'error'" [class.text-jamaica-green]="resultType === 'success'">
+          {{ resultType === 'success' ? 'Respect!' : 'Danger!' }}
+        </h2>
+        <p class="text-white text-lg mb-8 font-medium leading-tight">{{ resultMessage }}</p>
+        <button (click)="closeResult()" 
+          class="w-full font-black py-4 rounded-full uppercase tracking-widest transition-all shadow-[0_4px_0_#000] active:translate-y-1 active:shadow-none"
+          [class.bg-[#ffcc00]]="resultType === 'success'" [class.text-black]="resultType === 'success'"
+          [class.bg-red-600]="resultType === 'error'" [class.text-white]="resultType === 'error'">
+          Got it
+        </button>
+      </div>
+    </div>
   `,
   styles: [`
     .custom-scrollbar::-webkit-scrollbar { width: 8px; }
     .custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
     .custom-scrollbar::-webkit-scrollbar-thumb { background: #ef4444; border-radius: 10px; }
+    .text-jamaica-green { color: #009b3a; }
   `]
 })
 export class HazardReportModalComponent {
@@ -132,6 +151,10 @@ export class HazardReportModalComponent {
   selectedFiles: File[] = [];
   isSubmitting = false;
 
+  // New alert state
+  resultMessage = '';
+  resultType: 'success' | 'error' = 'success';
+
   constructor(private hazardService: HazardService) {}
 
   onFileSelected(event: any) {
@@ -140,9 +163,19 @@ export class HazardReportModalComponent {
     }
   }
 
+  closeResult() {
+    const isSuccess = this.resultType === 'success';
+    this.resultMessage = '';
+    if (isSuccess) {
+      this.submitted.emit();
+      this.close.emit();
+    }
+  }
+
   submit() {
     if (!this.report.dangerType || !this.report.description || !this.report.location) {
-      alert('Please fill in all required fields');
+      this.resultMessage = 'Please fill in all required fields marked with *';
+      this.resultType = 'error';
       return;
     }
 
@@ -160,14 +193,14 @@ export class HazardReportModalComponent {
 
     this.hazardService.submitReport(formData).subscribe({
       next: () => {
-        alert('Hazard report submitted successfully! Admin will review it.');
+        this.resultMessage = 'Hazard report submitted successfully! Admin will review it.';
+        this.resultType = 'success';
         this.isSubmitting = false;
-        this.submitted.emit();
-        this.close.emit();
       },
       error: (err) => {
         console.error(err);
-        alert('Failed to submit report. Please try again.');
+        this.resultMessage = 'Failed to submit report. Please check your connection and try again.';
+        this.resultType = 'error';
         this.isSubmitting = false;
       }
     });

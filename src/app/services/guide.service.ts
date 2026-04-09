@@ -15,6 +15,8 @@ export class GuideService {
     private accessibilityService: AccessibilityService
   ) {}
 
+  private currentDriver: any;
+
   public startGuideForCurrentPage(force = true, key?: string) {
     const currentUrl = this.router.url.split('?')[0];
     const storageKey = key ? `guide_seen_${key}` : `guide_seen_${currentUrl}`;
@@ -131,7 +133,7 @@ export class GuideService {
         ];
     }
 
-    const driverObj = driver({
+    this.currentDriver = driver({
       showProgress: true,
       animate: true,
       steps: steps,
@@ -142,13 +144,14 @@ export class GuideService {
           if (state.activeIndex === (config.steps?.length || 0) - 1) {
               localStorage.setItem(storageKey, 'true');
           }
-          driverObj.moveNext();
+          this.currentDriver.moveNext();
       },
       onDestroyStarted: () => {
         window.speechSynthesis.cancel();
         // Also mark as seen if user closes it early (skipped)
         localStorage.setItem(storageKey, 'true');
-        driverObj.destroy();
+        this.currentDriver.destroy();
+        this.currentDriver = null;
       },
       onHighlightStarted: (element, step) => {
         // Page Guide ONLY speaks if audio is enabled
@@ -159,11 +162,17 @@ export class GuideService {
       }
     });
 
-    driverObj.drive();
+    this.currentDriver.drive();
+  }
+
+  public prevStep() {
+    if (this.currentDriver) {
+      this.currentDriver.movePrevious();
+    }
   }
 
   public autoStartIfFirstTime(key?: string) {
-    this.startGuideForCurrentPage(false, key);
+    // Guide is only shown on explicit user request — not auto-started
   }
 
   public resetGuideStatus(path: string) {

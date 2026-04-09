@@ -2,6 +2,16 @@ const express = require('express');
 const router = express.Router();
 const db = require('../db');
 
+// GET all survivor requests (for admin/monitoring)
+router.get('/', async (req, res, next) => {
+  try {
+    const [rows] = await db.query('SELECT * FROM survivor_requests ORDER BY id DESC');
+    res.json(rows);
+  } catch (err) {
+    next(err);
+  }
+});
+
 // Record a new survivor request
 router.post('/', async (req, res, next) => {
   try {

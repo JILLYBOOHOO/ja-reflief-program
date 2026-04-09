@@ -59,17 +59,6 @@ export class AiChatbotComponent implements OnInit, AfterViewChecked {
       }
     });
 
-    // Check for dashboard entrance to start tour
-    this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd)
-    ).subscribe((event: any) => {
-      if (event.url.includes('/dashboard')) {
-        const hasSeenTour = localStorage.getItem('dashboard_tour_seen');
-        if (!hasSeenTour) {
-          setTimeout(() => this.startTour(), 1500); // Wait for page load
-        }
-      }
-    });
   }
 
   startTour() {

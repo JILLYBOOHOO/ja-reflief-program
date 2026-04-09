@@ -33,10 +33,18 @@ export class AccessibilityToolbarComponent implements OnInit {
 
 
   toggleVoice() {
-    this.speechService.toggleListening();
+    this.speechService.toggleListening('Listening');
+  }
+
+  readPage() {
+    this.speechService.toggleReadPage();
   }
 
   startGuide() {
     this.guideService.startGuideForCurrentPage();
+  }
+
+  backStep() {
+    this.guideService.prevStep();
   }
 }

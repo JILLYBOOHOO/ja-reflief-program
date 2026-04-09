@@ -14,6 +14,39 @@
     vertical-align: middle;
 }
 
+/* HIGH CONTRAST REINFORCEMENTS */
+.admin-badge-urgent, 
+span.bg-\[\#ffdad6\], 
+span.bg-error-container {
+    background-color: #ba1a1a !important;
+    color: #ffffff !important;
+    font-weight: 800 !important;
+    border: 1px solid #ffffff !important;
+}
+
+:host-context(.dark-theme) .admin-badge-urgent,
+:host-context(.dark-theme) span.bg-\[\#ffdad6\],
+:host-context(.dark-theme) span.bg-error-container {
+    background-color: #ff0000 !important;
+    color: #ffffff !important;
+    border: 1px solid #ffffff !important;
+}
+
+button[routerLink="/donate"],
+button.view-map-btn {
+    background-color: #005c37 !important;
+    color: #ffffff !important;
+    font-weight: 800 !important;
+    border: 1px solid #ffffff !important;
+}
+
+:host-context(.dark-theme) button[routerLink="/donate"],
+:host-context(.dark-theme) button.view-map-btn {
+    background-color: #39FF14 !important;
+    color: #000000 !important;
+    border: 2px solid #ffffff !important;
+}
+
 /* Specific color adjustments to match Tailwind Extend */
 .bg-primary { background-color: #005c37 !important; }
 .text-primary { color: #005c37 !important; }
@@ -29,9 +62,25 @@
 .bg-error { background-color: #ba1a1a !important; }
 .bg-error-container { background-color: #ffdad6 !important; }
 
-/* Custom Font Families */
-h1, h2, h3, .font-headline { font-family: 'Manrope', sans-serif; }
-body, .font-body { font-family: 'Inter', sans-serif; }
+/* Custom Font Families & Readability */
+h1, h2, h3, .font-headline { 
+    font-family: 'Manrope', sans-serif; 
+    font-weight: 900 !important; 
+}
+body, .font-body, p, span, label, input, textarea, select { 
+    font-family: 'Inter', sans-serif; 
+    font-weight: 600 !important; /* Enforce minimum semibold for readability */
+}
+
+label {
+    font-weight: 900 !important;
+    letter-spacing: 0.1em !important;
+    color: #1a1c1e !important;
+}
+
+:host-context(.dark-theme) label {
+    color: #ffffff !important;
+}
 
 /* Dashboard Specific Layout */
 .dashboard-metrics-grid {
@@ -40,57 +89,173 @@ body, .font-body { font-family: 'Inter', sans-serif; }
     gap: 2rem;
 }
 
-/* Dark Mode Support */
-@media (prefers-color-scheme: dark) {
-    .bg-white { background-color: #1a1c1e !important; }
-    .bg-\[\#f8f9fb\] { background-color: #0d0e10 !important; }
-    .bg-\[\#f2f4f6\], .bg-slate-100 { background-color: #1e2124 !important; }
-    
-    /* Force high contrast text - allow specific title colors to override */
-    h1, h2, h3, h4, p, span, label, td, th { color: #ffffff; opacity: 1 !important; }
-    
-    .text-\[\#005c37\] { color: #4ade80 !important; }
-    .text-primary { color: #4ade80 !important; }
-    .text-secondary { color: #fbbf24 !important; }
-    
-    .border-\[\#becabf\]\/15, .border-slate-100 { border-color: rgba(255, 255, 255, 0.2) !important; }
-    
-    input, textarea, select {
-        background-color: #1e2124 !important;
-        color: #ffffff !important;
-        border: 1px solid rgba(255, 255, 255, 0.3) !important;
-    }
-    
-    .glass-effect {
-        background: rgba(26, 28, 30, 0.95);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-    }
+/* Headings Contrast - Light Mode */
+h2, h3 {
+    color: #000000 !important;
+    opacity: 1 !important;
 }
 
 /* Also support explicit .dark class */
-:host-context(.dark) {
-    .bg-white { background-color: #1a1c1e !important; }
-    .bg-\[\#f8f9fb\] { background-color: #0d0e10 !important; }
-    .bg-\[\#f2f4f6\], .bg-slate-100 { background-color: #1e2124 !important; }
-    
-    /* Force high contrast text */
-    h1, h2, h3, h4, p, span, label, td, th { color: #ffffff; opacity: 1 !important; }
-    
-    .text-\[\#005c37\] { color: #4ade80 !important; }
-    .text-primary { color: #4ade80 !important; }
-    .text-secondary { color: #fbbf24 !important; }
-    
-    .border-\[\#becabf\]\/15, .border-slate-100 { border-color: rgba(255, 255, 255, 0.2) !important; }
-    
-    input, textarea, select {
-        background-color: #1e2124 !important;
-        color: #ffffff !important;
-        border: 1px solid rgba(255, 255, 255, 0.3) !important;
-    }
+/* Force high-contrast dark mode when .dark-theme is active on body */
+/* Force high-contrast dark mode when .dark-theme is active on body */
+:host-context(.dark-theme) main,
+:host-context(.dark-theme) .bg-\[\#f8f9fb\] {
+    background-color: #000000 !important;
+}
+
+:host-context(.dark-theme) .bg-white {
+    background-color: #0a110a !important; /* Extremely dark green */
+    border-color: #333333 !important;
+}
+
+.admin-side-section {
+    background-color: #f2f4f6 !important;
+}
+
+.admin-side-section h2 {
+    color: #000000 !important;
+}
+
+:host-context(.dark-theme) .admin-side-section {
+    background-color: #000000 !important;
+    border: 1px solid #39FF14 !important;
+}
+
+:host-context(.dark-theme) .admin-side-section h2 {
+    color: #39FF14 !important;
+}
+
+:host-context(.dark-theme) h1,
+:host-context(.dark-theme) h2,
+:host-context(.dark-theme) h3,
+:host-context(.dark-theme) span.text-\[\#005c37\],
+:host-context(.dark-theme) span.text-5xl,
+:host-context(.dark-theme) .material-symbols-outlined {
+    color: #39FF14 !important; /* Neon Green for metrics and headers */
+}
+
+:host-context(.dark-theme) span.text-\[\#3e4941\],
+:host-context(.dark-theme) p.text-zinc-400,
+:host-context(.dark-theme) label.text-\[\#3e4941\],
+:host-context(.dark-theme) p,
+:host-context(.dark-theme) span {
+    color: #ffffff !important; /* High contrast white for readability */
+    opacity: 1 !important;
+}
+
+:host-context(.dark-theme) .bg-\[\#f2f4f6\] {
+    background-color: #111111 !important;
+}
+
+:host-context(.dark-theme) input,
+:host-context(.dark-theme) textarea,
+:host-context(.dark-theme) select {
+    background-color: #000000 !important;
+    color: #ffffff !important;
+    border: 1px solid #39FF14 !important;
+}
+
+:host-context(.dark-theme) .glass-effect {
+    background: rgba(0, 0, 0, 0.95) !important;
+    border: 1px solid #39FF14 !important;
+}
+
+:host-context(.dark-theme) .w-full.bg-\[\#f8f9fb\],
+:host-context(.dark-theme) footer {
+    background-color: #000000 !important;
 }
 
 @media (max-width: 768px) {
     .dashboard-metrics-grid {
         grid-template-columns: 1fr;
     }
+}
+
+/* Alert Action Buttons */
+.btn-edit-alert {
+    background-color: #000000 !important;
+    color: #ffffff !important;
+    font-weight: 900 !important;
+    padding: 4px 12px !important;
+    border-radius: 8px !important;
+    font-size: 10px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.1em !important;
+    cursor: pointer !important;
+    border: none !important;
+    transition: all 0.15s ease !important;
+    white-space: nowrap !important;
+}
+.btn-edit-alert:hover {
+    background-color: #333333 !important;
+}
+
+.btn-delete-alert {
+    background-color: #fee2e2 !important;
+    color: #dc2626 !important;
+    font-weight: 900 !important;
+    padding: 4px 12px !important;
+    border-radius: 8px !important;
+    font-size: 10px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.1em !important;
+    cursor: pointer !important;
+    border: none !important;
+    transition: all 0.15s ease !important;
+    white-space: nowrap !important;
+}
+.btn-delete-alert:hover {
+    background-color: #dc2626 !important;
+    color: #ffffff !important;
+}
+
+/* Danger Zone Hover-Reveal Buttons */
+.hazard-actions {
+    display: flex !important;
+    gap: 8px !important;
+    margin-top: 8px !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    transition: opacity 0.2s ease !important;
+    height: 0 !important;
+    overflow: hidden !important;
+}
+.group:hover .hazard-actions {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    height: auto !important;
+}
+.btn-verify {
+    flex: 1 !important;
+    padding: 6px 0 !important;
+    background-color: #005c37 !important;
+    color: #ffffff !important;
+    font-size: 10px !important;
+    font-weight: 900 !important;
+    border-radius: 8px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.1em !important;
+    cursor: pointer !important;
+    border: none !important;
+    transition: background-color 0.15s ease !important;
+}
+.btn-verify:hover {
+    background-color: #007749 !important;
+}
+.btn-under-review {
+    flex: 1 !important;
+    padding: 6px 0 !important;
+    background-color: #ffbb16 !important;
+    color: #005c37 !important;
+    font-size: 10px !important;
+    font-weight: 900 !important;
+    border-radius: 8px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.1em !important;
+    cursor: pointer !important;
+    border: none !important;
+    transition: background-color 0.15s ease !important;
+}
+.btn-under-review:hover {
+    background-color: #ffdea6 !important;
 }

@@ -3,8 +3,11 @@
     <!-- MONETARY VIEW (Original) -->
     <div class="donate-page" *ngIf="donationType === 'monetary'">
         <div class="donate-container">
-            <h1>Make a Difference Today</h1>
-            <p class="subtitle">Support JA RELIEF in providing disaster assistance.</p>
+            <div class="form-header text-center mb-12">
+                <h1 class="text-5xl md:text-6xl font-black text-black uppercase tracking-tighter leading-[0.9]">Monetary <br><span class="text-jamaica-green">Contribution</span></h1>
+                <p class="text-lg font-bold text-slate-500 uppercase tracking-widest mt-4">Empowering Jamaica's Local Recovery Efforts</p>
+                <div class="w-24 h-2 bg-jamaica-gold mx-auto mt-6 rounded-full"></div>
+            </div>
 
             <div class="donation-options">
                 <button class="active" aria-label="Make a monetary donation">
@@ -23,42 +26,56 @@
                 </button>
             </div>
 
-            <div class="donor-info-section top-donor-info">
-                <h3>Step 1: Your Information</h3>
+            <div class="donor-info-section bg-white border-[3px] border-black p-10 rounded-3xl mb-12 shadow-[8px_8px_0px_0px_rgba(0,155,58,1)]">
+                <h3 class="text-lg font-black text-black uppercase tracking-widest mb-8 block border-b-2 border-slate-100 pb-4">Step 1: Identity & Verification</h3>
+                
+
+                <!-- Logged In State (Profile Card) -->
+                <div *ngIf="isLoggedIn" class="bg-gray-50 border-2 border-green-600/30 rounded-2xl p-5 flex items-center justify-between gap-4 shadow-sm mb-6">
+                    <div class="flex items-center gap-4">
+                        <img src="https://ui-avatars.com/api/?name={{ donorName }}&background=0D8ABC&color=fff&rounded=true" alt="Profile" class="w-12 h-12 rounded-full border-2 border-white shadow-sm">
+                        <div class="flex flex-col">
+                            <span class="text-[10px] font-black text-green-700 uppercase tracking-widest leading-tight">Verified Donor</span>
+                            <span class="text-lg font-bold text-gray-900 leading-none mt-0.5">{{ donorName }}</span>
+                            <span class="text-xs font-medium text-gray-500 mt-0.5">{{ donorEmail }}</span>
+                        </div>
+                    </div>
+                    <button (click)="logout()" class="text-xs font-black uppercase tracking-widest text-[#fa755a] hover:text-white px-4 py-2 bg-red-50 hover:bg-[#fa755a] rounded-lg border border-red-100 transition-colors">
+                        Sign Out
+                    </button>
+                </div>
+
                 <div id="form-errors" class="error-message" style="color: #fa755a; font-weight: bold; margin-bottom: 15px; font-size: 1.1rem;"></div>
-                <div class="form-grid">
+                
+                <div *ngIf="!isLoggedIn" class="form-grid">
                     <div class="form-field">
-                        <label for="donor-name-m">Full Name *</label>
-                        <div class="voice-input-wrapper">
-                            <input id="donor-name-m" type="text" [(ngModel)]="donorName" placeholder="Enter Full Name" autocomplete="name" aria-required="true" (focus)="speakField('Full Name', 'Enter your complete legal name.')" />
-                            <button type="button" class="voice-mic-btn" [class.active]="activeVoiceField === 'donorName'" (click)="listenToField('donorName')" aria-label="Use voice to input name">
-                                <span class="material-symbols-outlined">{{ activeVoiceField === 'donorName' ? 'mic' : 'mic_none' }}</span>
+                        <label for="donor-name-m" class="text-xs font-black uppercase text-black tracking-wider mb-3 block leading-relaxed">Full Legal Name *</label>
+                        <div class="voice-input-wrapper relative border-[3px] border-black rounded-xl overflow-hidden shadow-sm">
+                            <input id="donor-name-m" type="text" [(ngModel)]="donorName" placeholder="Enter Full Name" autocomplete="name" aria-required="true" (focus)="speakField('Full Name', 'Enter your complete legal name.')" class="w-full bg-slate-50 p-5 pr-16 text-xl font-black focus:bg-jamaica-gold/10 outline-none text-black transition-all" />
+                            <button type="button" class="voice-mic-btn absolute right-2 top-1/2 -translate-y-1/2" [class.active]="activeVoiceField === 'donorName'" (click)="listenToField('donorName')" aria-label="Use voice to input name">
+                                <span class="material-symbols-outlined text-black">{{ activeVoiceField === 'donorName' ? 'mic' : 'mic_none' }}</span>
                             </button>
                         </div>
                     </div>
                     <div class="form-field">
-                        <label for="donor-phone-m">Phone Number *</label>
-                        <div class="voice-input-wrapper">
-                            <input id="donor-phone-m" type="tel" [(ngModel)]="donorPhone" placeholder="876-000-0000" autocomplete="tel" aria-required="true" (focus)="speakField('Phone Number', 'Enter your 10 digit Jamaican contact number.')" />
-                            <button type="button" class="voice-mic-btn" [class.active]="activeVoiceField === 'donorPhone'" (click)="listenToField('donorPhone')" aria-label="Use voice to input phone">
-                                <span class="material-symbols-outlined">{{ activeVoiceField === 'donorPhone' ? 'mic' : 'mic_none' }}</span>
+                        <label for="donor-phone-m" class="text-xs font-black uppercase text-black tracking-wider mb-3 block leading-relaxed">Phone Number <span class="text-[9px] opacity-60 ml-1">(Optional)</span></label>
+                        <div class="voice-input-wrapper relative border-[3px] border-black rounded-xl overflow-hidden shadow-sm">
+                            <input id="donor-phone-m" type="tel" [(ngModel)]="donorPhone" placeholder="876-000-0000" autocomplete="tel" (focus)="speakField('Phone Number', 'Enter your 10 digit Jamaican contact number.')" class="w-full bg-slate-50 p-5 pr-16 text-xl font-black focus:bg-jamaica-gold/10 outline-none text-black transition-all" />
+                            <button type="button" class="voice-mic-btn absolute right-2 top-1/2 -translate-y-1/2" [class.active]="activeVoiceField === 'donorPhone'" (click)="listenToField('donorPhone')" aria-label="Use voice to input phone">
+                                <span class="material-symbols-outlined text-black">{{ activeVoiceField === 'donorPhone' ? 'mic' : 'mic_none' }}</span>
                             </button>
                         </div>
                     </div>
                     <div class="form-field">
-                        <label for="donor-email-m">Email Address *</label>
-                        <input id="donor-email-m" type="email" [(ngModel)]="donorEmail" placeholder="your@email.com" autocomplete="email" aria-required="true" (focus)="speakField('Email Address', 'Enter your email address to receive a receipt.')" />
+                        <label for="donor-email-m" class="text-xs font-black uppercase text-black tracking-wider mb-3 block leading-relaxed">Email Address *</label>
+                        <input id="donor-email-m" type="email" [(ngModel)]="donorEmail" placeholder="your@email.com" autocomplete="email" aria-required="true" (focus)="speakField('Email Address', 'Enter your email address to receive a receipt.')" class="w-full bg-slate-50 border-[3px] border-black p-5 rounded-xl text-xl font-black focus:bg-jamaica-gold/10 outline-none text-black transition-all" />
                     </div>
                 </div>
             </div>
 
-            <div class="form-header">
-                <h2>Secure Checkout</h2>
-                <p>Supporting immediate disaster relief in Jamaica.</p>
-            </div>
 
-            <div class="amount-selector" role="region" aria-labelledby="amount-header">
-                <label id="amount-header">Step 2: Select Amount (JMD)</label>
+            <div class="amount-selector bg-white border-[3px] border-black p-10 rounded-3xl mb-12 shadow-[8px_8px_0px_0px_rgba(254,209,0,1)]">
+                <label id="amount-header" class="text-lg font-black text-black uppercase tracking-widest mb-8 block border-b-2 border-slate-100 pb-4">Step 2: Selection of Amount (JMD)</label>
                 <div class="quick-amounts" role="group" aria-labelledby="amount-header">
                     <button *ngFor="let amt of [15000, 25000, 35000, 45000, 55000, 65000]" 
                         (click)="setAmount(amt)" 
@@ -80,9 +97,88 @@
                 </div>
             </div>
 
-            <div class="payment-methods-section">
-                <h3 id="payment-label">Step 3: Checkout with PayPal or Card</h3>
-                <div class="payment-container paypal-container">
+            <div class="payment-methods-section mt-12">
+                <h3 id="payment-label" class="text-lg font-black text-black uppercase tracking-widest mb-8 block">Step 3: Verification & Checkout</h3>
+                
+                <div class="terms-container mb-6 flex items-start gap-3 bg-red-50 p-4 rounded-xl border-l-[6px] border-red-600 shadow-sm transition-all hover:bg-red-100/50">
+                    <input type="checkbox" id="terms-accept" [(ngModel)]="termsAccepted" class="mt-1 w-6 h-6 rounded-sm !border-black !border-[3px] text-red-600 focus:ring-red-600 cursor-pointer flex-shrink-0 transition-colors shadow-sm">
+                    <label for="terms-accept" class="text-sm font-bold text-gray-900 cursor-pointer pt-0.5 select-none hover:text-black">
+                        I authorize this one-time donation to JA Relief and understand it is non-refundable. <span class="text-red-600">*</span>
+                    </label>
+                </div>
+
+                <div class="payment-tabs flex gap-4 mb-6">
+                    <button type="button" (click)="selectedPaymentMethod = 'card'" [class.active-tab]="selectedPaymentMethod === 'card'" class="flex-1 py-4 font-black uppercase tracking-widest border-b-4 transition-all" [class.border-jamaica-green]="selectedPaymentMethod === 'card'" [class.border-transparent]="selectedPaymentMethod !== 'card'">
+                        💳 Credit / Debit Card
+                    </button>
+                    <button type="button" (click)="selectedPaymentMethod = 'paypal'" [class.active-tab]="selectedPaymentMethod === 'paypal'" class="flex-1 py-4 font-black uppercase tracking-widest border-b-4 transition-all" [class.border-jamaica-green]="selectedPaymentMethod === 'paypal'" [class.border-transparent]="selectedPaymentMethod !== 'paypal'">
+                        🅿️ PayPal / Other
+                    </button>
+                </div>
+
+                <!-- VANGUARD DIRECT CARD FORM (Jamaican High-Contrast Edition) -->
+                <div *ngIf="selectedPaymentMethod === 'card'" class="bg-white rounded-3xl border-[3px] border-black p-10 mb-8 shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] animate-in zoom-in duration-300">
+                    <div class="flex items-center gap-3 mb-8 pb-4 border-b-2 border-slate-100">
+                        <div class="w-12 h-12 bg-jamaica-gold rounded-full flex items-center justify-center shadow-sm">
+                            <span class="material-symbols-outlined text-black font-black">lock</span>
+                        </div>
+                        <div>
+                            <h4 class="text-xl font-black text-black uppercase tracking-tighter">Secure Transaction</h4>
+                            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">End-to-End Encrypted</p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                        <div class="form-field md:col-span-2">
+                            <label for="v-reg-num" class="text-xs font-black uppercase text-black tracking-wider mb-3 block leading-relaxed">Cardholder's Card Number</label>
+                            <input id="v-reg-num" type="text" placeholder="#### #### #### ####" 
+                                name="v_registry_ident"
+                                spellcheck="false"
+                                class="w-full bg-slate-50 border-[3px] border-black p-5 rounded-xl text-2xl font-black tracking-[0.2em] focus:bg-jamaica-gold/10 outline-none text-black transition-all" />
+                        </div>
+                        <div class="form-field">
+                            <label for="v-reg-exp" class="text-xs font-black uppercase text-black tracking-wider mb-3 block leading-relaxed">Expiration Date</label>
+                            <input id="v-reg-exp" type="text" placeholder="MM / YY" 
+                                name="v_registry_val"
+                                spellcheck="false"
+                                class="w-full bg-slate-50 border-[3px] border-black p-5 rounded-xl text-2xl font-black focus:bg-jamaica-gold/10 outline-none text-black transition-all" />
+                        </div>
+                        <div class="form-field">
+                            <label for="v-reg-cvv" class="text-xs font-black uppercase text-black tracking-widest mb-3 block leading-relaxed">Security CVV</label>
+                            <input id="v-reg-cvv" type="password" maxlength="4" placeholder="***" 
+                                name="v_registry_sec"
+                                spellcheck="false"
+                                class="w-full bg-slate-50 border-[3px] border-black p-5 rounded-xl text-2xl font-black focus:bg-jamaica-gold/10 outline-none text-black transition-all" />
+                        </div>
+                    </div>
+                    
+                    <button (click)="processDirectPayment()" [disabled]="loading" class="w-full mt-12 bg-black hover:bg-jamaica-green text-white font-black py-6 rounded-2xl uppercase tracking-[0.3em] shadow-[0_15px_40px_rgba(0,0,0,0.3)] transition-all flex items-center justify-center gap-4 active:scale-95 group">
+                        <span *ngIf="!loading">Pay & Authorize Recognition</span>
+                        <div *ngIf="loading" class="flex items-center gap-3">
+                            <span class="w-6 h-6 border-4 border-white/30 border-t-jamaica-gold rounded-full animate-spin"></span>
+                            Authorizing...
+                        </div>
+                        <span class="material-symbols-outlined group-hover:translate-x-2 transition-transform" *ngIf="!loading">arrow_forward</span>
+                    </button>
+                    
+                    <div class="mt-8 flex justify-center gap-4">
+                        <div class="px-3 py-1 bg-black text-white rounded-full flex items-center gap-2 border border-white/20">
+                            <span class="material-symbols-outlined text-[10px]">verified_user</span>
+                            <span class="text-[9px] font-black uppercase tracking-widest">PCI-DSS Level 1 Certified</span>
+                        </div>
+                        <div class="px-3 py-1 bg-jamaica-gold text-black rounded-full flex items-center gap-2 border border-black/20">
+                            <span class="material-symbols-outlined text-[10px]">shield</span>
+                            <span class="text-[9px] font-black uppercase tracking-widest">AES-256 Encrypted</span>
+                        </div>
+                    </div>
+
+                    <p class="mt-6 text-[9px] text-slate-400 text-center uppercase font-bold tracking-tighter leading-tight italic">
+                        Security Notice: JA Relief uses industry-standard tokenization. Your raw credit card data is never stored on our servers and is processed exclusively via secure payment vaulting.
+                    </p>
+                </div>
+
+                <!-- PAYPAL CONTAINER -->
+                <div [hidden]="selectedPaymentMethod !== 'paypal'" class="payment-container paypal-container">
                     <div id="paypal-button-container"></div>
                 </div>
             </div>
@@ -97,7 +193,7 @@
     <!-- IN-KIND DASHBOARD (New Tailwind UI) -->
     <main class="pt-8 px-6 md:px-12 max-w-[1600px] mx-auto" *ngIf="donationType === 'in-kind'">
         <!-- Donor Live Impact Progress (Premium) -->
-        <div class="bg-white rounded-3xl p-8 mb-12 border-y-8 border-jamaica-gold shadow-2xl relative overflow-hidden group">
+        <div class="bg-white rounded-[24px] p-8 mb-12 border-[3px] border-jamaica-gold shadow-2xl relative overflow-hidden group">
             <div class="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
                 <span class="material-symbols-outlined text-8xl text-jamaica-green">volunteer_activism</span>
             </div>
@@ -117,32 +213,32 @@
                 </div>
             </div>
 
-            <!-- Progress Bar with Glow -->
-            <div class="w-full h-10 bg-slate-100 rounded-2xl overflow-hidden border-2 border-slate-200 relative shadow-inner">
-                <div class="h-full bg-gradient-to-r from-jamaica-green via-jamaica-gold to-jamaica-green bg-[length:200%_100%] animate-[gradient_3s_linear_infinite] w-[72%] shadow-[0_0_20px_rgba(0,155,58,0.3)] transition-all duration-1000 ease-out" 
+            <!-- Progress Bar with High Contrast Gradient -->
+            <div class="w-full h-10 bg-[#f1f5f9] rounded-full overflow-hidden border-2 border-[#e2e8f0] relative shadow-inner">
+                <div class="h-full bg-gradient-to-r from-[#16a34a] to-[#ffcc00] w-[72%] shadow-[0_0_15px_rgba(22,163,74,0.2)] transition-all duration-1000 ease-out" 
                      role="progressbar" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100">
                 </div>
-                <div class="absolute inset-0 flex items-center justify-center text-[10px] font-black uppercase tracking-[0.4em] text-jamaica-black drop-shadow-sm">
+                <div class="absolute inset-0 flex items-center justify-center text-[11px] font-black uppercase tracking-[0.2em] text-black">
                     72% of Community Goal Reached
                 </div>
             </div>
 
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
-                <div class="bg-surface-container/50 p-5 rounded-2xl border border-outline/5 text-center group/item hover:bg-jamaica-green/10 transition-colors">
-                    <p class="text-3xl font-black text-jamaica-black group-hover/item:text-jamaica-green">1,420</p>
-                    <p class="text-[10px] font-black uppercase opacity-40 tracking-widest mt-1">Families Fed</p>
+                <div class="bg-[#f8fafc] p-6 rounded-2xl border border-slate-100 text-center transition-all hover:scale-105">
+                    <p class="text-4xl font-black text-black">1,420</p>
+                    <p class="text-[9px] font-black uppercase text-slate-400 tracking-[0.15em] mt-2">Families Fed</p>
                 </div>
-                <div class="bg-surface-container/50 p-5 rounded-2xl border border-outline/5 text-center group/item hover:bg-jamaica-green/10 transition-colors">
-                    <p class="text-3xl font-black text-jamaica-black group-hover/item:text-jamaica-green">425</p>
-                    <p class="text-[10px] font-black uppercase opacity-40 tracking-widest mt-1">Shelters Fixed</p>
+                <div class="bg-[#f8fafc] p-6 rounded-2xl border border-slate-100 text-center transition-all hover:scale-105">
+                    <p class="text-4xl font-black text-black">425</p>
+                    <p class="text-[9px] font-black uppercase text-slate-400 tracking-[0.15em] mt-2">Shelters Fixed</p>
                 </div>
-                <div class="bg-surface-container/50 p-5 rounded-2xl border border-outline/5 text-center group/item hover:bg-jamaica-green/10 transition-colors">
-                    <p class="text-3xl font-black text-jamaica-black group-hover/item:text-jamaica-green">8,500</p>
-                    <p class="text-[10px] font-black uppercase opacity-40 tracking-widest mt-1">Liters Water</p>
+                <div class="bg-[#f8fafc] p-6 rounded-2xl border border-slate-100 text-center transition-all hover:scale-105">
+                    <p class="text-4xl font-black text-black">8,500</p>
+                    <p class="text-[9px] font-black uppercase text-slate-400 tracking-[0.15em] mt-2">Liters Water</p>
                 </div>
-                <div class="bg-surface-container/50 p-5 rounded-2xl border border-outline/5 text-center group/item hover:bg-jamaica-green/10 transition-colors">
-                    <p class="text-3xl font-black text-jamaica-black group-hover/item:text-jamaica-green">12</p>
-                    <p class="text-[10px] font-black uppercase opacity-40 tracking-widest mt-1">Parishes Active</p>
+                <div class="bg-[#f8fafc] p-6 rounded-2xl border border-slate-100 text-center transition-all hover:scale-105">
+                    <p class="text-4xl font-black text-black">12</p>
+                    <p class="text-[9px] font-black uppercase text-slate-400 tracking-[0.15em] mt-2">Parishes Active</p>
                 </div>
             </div>
         </div>
@@ -157,76 +253,131 @@
             </button>
         </div>
 
-        <!-- Top Hero & High Priority Section -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-12">
-            <div class="lg:col-span-8 flex flex-col justify-center">
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-jamaica-gold/10 text-jamaica-green font-bold text-xs uppercase tracking-wider mb-6 border border-jamaica-gold/20 w-max">
-                    <span class="relative flex h-2 w-2">
-                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-jamaica-green opacity-75"></span>
-                        <span class="relative inline-flex rounded-full h-2 w-2 bg-jamaica-green"></span>
-                    </span>
+        <!-- Top Hero and High Priority Section -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-12 items-start">
+            <div class="lg:col-span-5 flex flex-col justify-center">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#fef08a] text-jamaica-green font-black text-[9px] uppercase tracking-[0.2em] mb-6 border border-[#fde047] w-max">
+                    <span class="w-1.5 h-1.5 rounded-full bg-jamaica-green"></span>
                     Active Support Needed
                 </div>
-                <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight text-jamaica-black mb-6 leading-[1.1]">
-                    Jamaica <span class="text-jamaica-green underline decoration-jamaica-gold decoration-4 underline-offset-8">Relief Effort</span>
+                <h1 class="text-5xl md:text-[64px] font-black tracking-tight text-black mb-6 leading-none">
+                    Jamaica <span class="text-jamaica-green border-b-4 border-jamaica-gold pb-1 inline-block">Relief Effort</span>
                 </h1>
-                <p class="mission-text text-on-surface text-2xl md:text-3xl font-black leading-tight mb-8">
+                <p class="text-black text-xl font-bold leading-snug mb-8 max-w-[90%]">
                     Help our communities recover. Organize your donation pledge below. Every item counts towards the collective impact for St. Elizabeth and surrounding parishes.
                 </p>
             </div>
 
             <!-- High Priority Sidebar -->
-            <div id="high-priority-sidebar" class="lg:col-span-4" *ngIf="activeSurvivorRequests.length > 0">
-                <div class="bg-white border-2 border-jamaica-gold rounded-xl overflow-hidden shadow-xl shadow-jamaica-gold/5">
-                    <div class="bg-jamaica-gold px-6 py-4 flex items-center justify-between">
+            <div id="high-priority-sidebar" class="lg:col-span-4">
+                <div class="bg-white border-2 border-[#ffcc00] rounded-[28px] overflow-hidden shadow-2xl flex flex-col h-full">
+                    <div class="bg-[#ffcc00] px-6 py-5 flex items-center justify-between pb-4">
                         <div class="flex items-center gap-2 font-black uppercase tracking-tight italic" style="color: #000000 !important;">
                             <span class="text-2xl">🚨</span>
                             <span>High Priority Requests</span>
                         </div>
                     </div>
-                    <div class="p-6 space-y-4 max-h-[300px] overflow-y-auto">
+                    <div class="p-4 space-y-4 overflow-y-auto max-h-[350px]">
                         <ng-container *ngFor="let req of activeSurvivorRequests">
                             <ng-container *ngFor="let item of req.items">
-                                <div *ngIf="item.status === 'pending' || item.status === 'partially-fulfilled'" class="flex items-center justify-between p-3 rounded-xl border-2 border-white/10 bg-black/40 hover:bg-black/60 transition-all">
+                                <div *ngIf="item.status === 'pending' || item.status === 'partially-fulfilled'" class="flex items-center justify-between px-6 py-3.5 rounded-full bg-black mb-4 shadow-[0_5px_0_#333]">
                                     <div class="flex flex-col">
-                                        <span class="text-[10px] font-black text-jamaica-gold uppercase tracking-widest">{{ req.requesterName }} @ {{ req.location }}</span>
-                                        <span class="text-xl font-extrabold text-white">{{ item.name }}</span>
+                                        <span class="text-[10px] font-black text-[#ffcc00] uppercase tracking-[0.14em] mb-1.5 leading-none">{{ req.requesterName }} @ {{ req.location }}</span>
+                                        <span class="text-[20px] font-black text-white leading-none">{{ item.name }}</span>
                                     </div>
-                                    <button class="bg-jamaica-gold hover:bg-jamaica-green px-5 py-3 rounded-xl font-black text-xs uppercase tracking-widest transition-all shadow-lg hover:scale-105 active:scale-95" (click)="pledgeRequestItem(req, item)">
-                                        <span style="color: #000000 !important;">Fulfill This</span>
+                                    <button class="bg-[#ffcc00] text-black px-6 py-2.5 rounded-full font-black text-[11px] uppercase tracking-widest shadow-[0_4px_0_#ca8a04] hover:bg-jamaica-green hover:text-white hover:shadow-[0_2px_0_#15803d] hover:translate-y-1 active:shadow-none active:translate-y-2 transition-all" (click)="pledgeRequestItem(req, item)">
+                                        Fulfill This
                                     </button>
                                 </div>
                             </ng-container>
                         </ng-container>
+                        <div *ngIf="activeSurvivorRequests.length === 0" class="text-center py-8">
+                            <span class="material-symbols-outlined text-4xl text-jamaica-gold mb-2">check_circle</span>
+                            <p class="font-bold text-sm">All high priorities covered!</p>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="lg:col-span-4" *ngIf="activeSurvivorRequests.length === 0">
-                <!-- Static placeholder if no requests -->
-                <div class="bg-white border-2 border-jamaica-gold rounded-xl overflow-hidden shadow-xl shadow-jamaica-gold/5 h-full flex flex-col items-center justify-center p-8 text-center bg-jamaica-gold/5">
-                    <span class="material-symbols-outlined text-4xl text-jamaica-gold mb-2">volunteer_activism</span>
-                    <h3 class="font-bold text-jamaica-black">All priority requests fulfilled!</h3>
-                    <p class="text-sm text-on-surface/70 mt-2">You can still pledge general items below.</p>
+
+            <!-- Generated QR Receipt Section (Compact High-Contrast) -->
+            <div *ngIf="qrCodeData" class="lg:col-span-3 flex justify-center lg:justify-end">
+                <div class="bg-black rounded-[24px] border-[3px] border-[#ffcc00] p-6 shadow-2xl flex flex-col items-center text-center animate-in slide-in-from-right duration-500 max-w-[280px] w-full relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-full h-1 bg-jamaica-green"></div>
+                    <span class="text-[9px] font-black text-[#ffcc00] uppercase tracking-[0.3em] mb-4 bg-zinc-900 px-3 py-1 rounded-full">Your Active Receipt</span>
+                    <div id="active-page-qr" class="bg-white p-3 rounded-2xl border-[3px] border-black mb-4 group relative shadow-[5px_5px_0px_0px_#ffcc00] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all cursor-pointer" (click)="downloadQR('active-page-qr')">
+                        <qrcode [qrdata]="qrCodeData" [width]="140" [errorCorrectionLevel]="'M'"></qrcode>
+                        <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity rounded-xl">
+                            <span class="material-symbols-outlined text-[#ffcc00] text-4xl">download</span>
+                        </div>
+                    </div>
+                    <p class="text-[10px] font-black text-white uppercase tracking-[0.15em] mb-1">Impact Pass</p>
+                    <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">{{ selectedCenter || 'Drop-off Center' }}</p>
+                    <div class="flex gap-2 mt-5 w-full">
+                        <button (click)="downloadQR('active-page-qr')" class="flex-1 bg-[#ffcc00] hover:bg-white text-black font-black text-[10px] py-3 rounded-full transition-all uppercase tracking-widest shadow-[0_4px_0_#ca8a04] hover:shadow-none hover:translate-y-1 flex items-center justify-center gap-1">
+                            <span class="material-symbols-outlined text-sm">download</span>
+                            Download
+                        </button>
+                        <button (click)="shareQR('active-page-qr')" class="w-12 bg-zinc-800 hover:bg-zinc-700 text-white rounded-xl transition-all flex items-center justify-center border border-white/10 shadow-[0_4px_0_#222] hover:shadow-none hover:translate-y-1">
+                            <span class="material-symbols-outlined text-xl">share</span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- Step 1: Donor Info -->
-        <div id="contact-details" class="bg-white rounded-xl border border-outline/10 p-8 shadow-sm mb-12">
+        <div id="contact-details" class="bg-white rounded-[24px] border border-outline/10 p-8 shadow-sm mb-12">
             <h3 class="text-2xl font-bold text-jamaica-black mb-6">Step 1: Your Information</h3>
+            
+
+            <!-- Logged In State (Profile Card) -->
+            <div *ngIf="isLoggedIn" class="bg-surface-container/50 border-2 border-jamaica-green/30 rounded-2xl p-6 flex flex-col md:flex-row items-center justify-between gap-4 shadow-sm mb-8">
+                <div class="flex items-center gap-4">
+                    <img src="https://ui-avatars.com/api/?name={{ donorName }}&background=009b3a&color=fff&rounded=true" alt="Profile" class="w-16 h-16 rounded-full border-4 border-white shadow-md">
+                    <div class="flex flex-col">
+                        <span class="text-xs font-black text-jamaica-green uppercase tracking-widest leading-tight">Verified Logistics Partner</span>
+                        <span class="text-2xl font-black text-jamaica-black leading-none mt-1">{{ donorName }}</span>
+                        <span class="text-sm font-bold text-on-surface/60 mt-1">{{ donorEmail }}</span>
+                    </div>
+                </div>
+                <button (click)="logout()" class="text-xs font-black uppercase tracking-widest text-red-500 hover:text-white px-6 py-3 bg-red-50 hover:bg-red-500 rounded-xl border border-red-100 transition-colors w-full md:w-auto">
+                    Sign Out
+                </button>
+            </div>
+
             <div id="form-errors-in-kind" class="text-red-500 font-bold mb-4"></div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="form-field">
-                    <label class="block text-xs font-bold text-on-surface/70 uppercase tracking-wider mb-2" for="donor-name-i">Full Name *</label>
-                    <input id="donor-name-i" type="text" [(ngModel)]="donorName" class="w-full bg-surface-container border-none focus:ring-2 focus:ring-jamaica-green rounded-lg p-3 text-jamaica-black font-medium" placeholder="Enter Full Name" />
+            
+            <!-- Input Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Personal Info (Hidden if logged in) -->
+                <ng-container *ngIf="!isLoggedIn">
+                    <div class="form-field">
+                        <label class="block text-xs font-black uppercase text-gray-500 tracking-wider mb-2 leading-relaxed" for="donor-name-i">Full Name (Optional)</label>
+                        <input id="donor-name-i" type="text" [(ngModel)]="donorName" class="w-full bg-surface-container border-none focus:ring-2 focus:ring-jamaica-green rounded-lg p-3 text-jamaica-black font-medium" placeholder="Enter Full Name" />
+                    </div>
+                    <div class="form-field">
+                        <label class="block text-xs font-black uppercase text-gray-500 tracking-wider mb-2 leading-relaxed" for="donor-phone-i">Phone Number (Optional)</label>
+                        <input id="donor-phone-i" type="tel" [(ngModel)]="donorPhone" class="w-full bg-surface-container border-none focus:ring-2 focus:ring-jamaica-green rounded-lg p-3 text-jamaica-black font-medium" placeholder="876-000-0000" />
+                    </div>
+                    <div class="form-field">
+                        <label class="block text-xs font-black uppercase text-gray-500 tracking-wider mb-2 leading-relaxed" for="donor-email-i">Email Address *</label>
+                        <input id="donor-email-i" type="email" [(ngModel)]="donorEmail" class="w-full bg-surface-container border-none focus:ring-2 focus:ring-jamaica-green rounded-lg p-3 text-jamaica-black font-medium" placeholder="your@email.com" />
+                    </div>
+                </ng-container>
+                <!-- Logistical Selection -->
+                <div class="form-field lg:col-span-2">
+                    <label class="block text-xs font-black uppercase text-jamaica-black tracking-wider mb-2 leading-relaxed" for="drop-off-center">Preferred Drop-Off Center *</label>
+                    <div class="relative group dropdown-container">
+                        <select id="drop-off-center" [(ngModel)]="selectedCenter" class="w-full bg-surface-container border-none focus:ring-2 focus:ring-jamaica-green rounded-lg p-3 text-jamaica-black font-medium appearance-none cursor-pointer">
+                            <option value="">-- Please Select a Drop-Off Center --</option>
+                            <option *ngFor="let center of donationCenters" [value]="center.name">{{ center.name }}</option>
+                        </select>
+                        <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 p-2 pointer-events-none opacity-40 group-hover:opacity-100 transition-opacity">expand_more</span>
+                    </div>
                 </div>
                 <div class="form-field">
-                    <label class="block text-xs font-bold text-on-surface/70 uppercase tracking-wider mb-2" for="donor-phone-i">Phone Number *</label>
-                    <input id="donor-phone-i" type="tel" [(ngModel)]="donorPhone" class="w-full bg-surface-container border-none focus:ring-2 focus:ring-jamaica-green rounded-lg p-3 text-jamaica-black font-medium" placeholder="876-000-0000" />
-                </div>
-                <div class="form-field">
-                    <label class="block text-xs font-bold text-on-surface/70 uppercase tracking-wider mb-2" for="donor-email-i">Email Address *</label>
-                    <input id="donor-email-i" type="email" [(ngModel)]="donorEmail" class="w-full bg-surface-container border-none focus:ring-2 focus:ring-jamaica-green rounded-lg p-3 text-jamaica-black font-medium" placeholder="your@email.com" />
+                    <label class="block text-xs font-black uppercase text-jamaica-black tracking-wider mb-2 leading-relaxed" for="drop-off-date">Estimated Date of Drop-Off</label>
+                    <input id="drop-off-date" type="date" [(ngModel)]="dropOffDate" [min]="todayDate" class="w-full bg-surface-container border-none focus:ring-2 focus:ring-jamaica-green rounded-lg p-3 text-jamaica-black font-medium cursor-pointer" />
                 </div>
             </div>
         </div>
@@ -244,11 +395,21 @@
                         <h2 class="text-xl font-extrabold text-jamaica-black">{{ cat.category }}</h2>
                     </div>
                     <div class="p-4 space-y-3 flex-grow">
-                        <div *ngFor="let item of cat.items" class="item-card flex items-center justify-between p-3 border rounded-lg hover:bg-surface-container/30 transition-all cursor-pointer" (click)="item.checked = !item.checked" [class.border-jamaica-green]="item.checked" [class.bg-jamaica-green]="item.checked" [class.bg-opacity-5]="item.checked">
-                            <div class="flex items-center gap-3">
-                                <input type="checkbox" [checked]="item.checked" (change)="item.checked = !item.checked; $event.stopPropagation()" class="w-5 h-5 rounded border-2 border-gray-400 text-jamaica-green focus:ring-jamaica-green cursor-pointer"/>
-                                <span class="text-xl" aria-hidden="true">{{ item.icon }}</span>
-                                <span class="font-semibold transition-colors" [class.text-jamaica-black]="item.checked" [class.opacity-80]="!item.checked">{{ item.name }}</span>
+                        <div *ngFor="let item of cat.items" 
+                             class="item-card flex items-center justify-between p-4 border rounded-2xl hover:bg-surface-container/50 transition-all cursor-pointer select-none mb-2" 
+                             (click)="item.checked = !item.checked" 
+                             [class.border-jamaica-green]="item.checked" 
+                             [class.bg-green-50]="item.checked" 
+                             role="checkbox"
+                             [attr.aria-checked]="item.checked"
+                             [attr.aria-label]="'Select ' + item.name">
+                            <div class="flex items-center gap-4">
+                                <div class="checkbox-box w-6 h-6 rounded-full flex items-center justify-center transition-all"
+                                     [ngClass]="item.checked ? 'bg-green-600 border-2 border-green-600' : 'bg-white border-2 border-gray-300'">
+                                    <span class="material-symbols-outlined text-white text-sm font-black drop-shadow-sm" *ngIf="item.checked">check</span>
+                                </div>
+                                <span class="text-2xl" aria-hidden="true">{{ item.icon }}</span>
+                                <span class="font-bold text-lg transition-colors text-black">{{ item.name }}</span>
                             </div>
                         </div>
                     </div>
@@ -256,37 +417,39 @@
             </ng-container>
 
             <!-- Call to Action Card -->
-            <div id="pledge-summary" class="bg-jamaica-black p-8 rounded-xl flex flex-col justify-between text-white relative overflow-hidden group">
-                <div class="absolute -right-4 -bottom-4 w-32 h-32 bg-jamaica-green/20 rounded-full blur-2xl group-hover:bg-jamaica-green/40 transition-colors"></div>
+            <div id="pledge-summary" class="bg-black p-8 rounded-[24px] flex flex-col justify-between text-white relative overflow-hidden group shadow-2xl">
+                <div class="absolute right-0 bottom-0 w-full h-32 bg-gradient-to-t from-jamaica-gold/10 to-transparent pointer-events-none"></div>
                 <div class="relative z-10 flex flex-col h-full">
                     <div>
-                        <h3 class="text-3xl font-black mb-4 leading-tight italic uppercase tracking-tighter">Ready to <span class="text-jamaica-gold">Pledge?</span></h3>
-                        <div class="mb-6 bg-white/5 rounded-lg p-4 border border-white/10">
-                            <h4 class="text-xs text-jamaica-gold font-bold uppercase tracking-wider mb-3">Selected Items Summary</h4>
-                            <ul class="space-y-2 max-h-[140px] overflow-y-auto pr-2 custom-scrollbar">
+                        <h3 class="text-3xl font-black mb-6 leading-tight italic uppercase tracking-tighter">Ready to <span class="text-[#ffbb16]">Pledge?</span></h3>
+                        <div class="mb-6 bg-[#111] rounded-2xl p-5 border border-white/5">
+                            <h4 class="text-[10px] text-jamaica-gold font-bold uppercase tracking-wider mb-4">Selected Items Summary</h4>
+                            <ul class="space-y-3 max-h-[140px] overflow-y-auto pr-2 custom-scrollbar">
                                 <ng-container *ngFor="let cat of categorizedItems">
                                     <ng-container *ngFor="let item of cat.items">
                                         <li *ngIf="item.checked" class="flex items-center justify-between text-sm">
-                                            <div class="flex items-center gap-2 text-white/90 font-medium">
+                                            <div class="flex items-center gap-3 text-white font-medium">
                                                 <span aria-hidden="true" class="text-lg">{{ item.icon }}</span> 
                                                 {{ item.name }}
                                             </div>
-                                            <button (click)="item.checked = false; $event.stopPropagation()" class="text-white/40 hover:text-red-400 transition-colors rounded-full p-1 hover:bg-white/10 cursor-pointer" aria-label="Remove item">
-                                                <span class="material-symbols-outlined text-[16px]">close</span>
+                                            <button (click)="item.checked = false; $event.stopPropagation()" class="text-gray-500 hover:text-white transition-colors rounded-full p-1 cursor-pointer flex items-center justify-center" aria-label="Remove item">
+                                                <span class="material-symbols-outlined text-[18px]">close</span>
                                             </button>
                                         </li>
                                     </ng-container>
                                 </ng-container>
-                                <li class="text-white/40 text-sm italic py-2 text-center" *ngIf="!hasAnyCheckedItems()">
+                                <li class="text-gray-500 text-sm italic py-2 text-center" *ngIf="!hasAnyCheckedItems()">
                                     No items selected yet. Choose items from the categories.
                                 </li>
                             </ul>
                         </div>
                     </div>
-                    <div class="mt-auto">
-                        <button class="w-full bg-jamaica-gold text-jamaica-black font-black py-4 rounded-lg hover:bg-white hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-3 uppercase tracking-wider shadow-lg shadow-jamaica-gold/20 disabled:opacity-50 disabled:hover:scale-100 disabled:cursor-not-allowed" [disabled]="!hasAnyCheckedItems()" (click)="submitInKind()">
+                    <div class="mt-auto pt-4 relative">
+                        <!-- Yellow glowing shadow effect for button mapped explicitly -->
+                        <div class="absolute inset-0 bg-[#ffbb16] opacity-30 blur-2xl rounded-full transform translate-y-2"></div>
+                        <button class="relative w-full bg-[#ffbb16] text-black font-black py-4 rounded-full hover:bg-white hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-3 uppercase tracking-wider disabled:opacity-50 disabled:hover:scale-100 disabled:cursor-not-allowed text-sm" [disabled]="!hasAnyCheckedItems()" (click)="submitInKind()">
                             Confirm Pledge
-                            <span class="material-symbols-outlined font-bold">arrow_forward</span>
+                            <span class="material-symbols-outlined font-bold text-xl">arrow_forward</span>
                         </button>
                     </div>
                 </div>
@@ -295,49 +458,68 @@
     </main>
 
     <!-- Success Modal -->
-    <div *ngIf="showSuccessModal" class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-        <div class="bg-white dark:bg-[#0c0d0c] rounded-[2rem] max-w-lg w-full p-8 md:p-12 text-center shadow-2xl border-4 border-jamaica-gold animate-in fade-in zoom-in duration-300">
-            <div class="text-7xl mb-4 animate-bounce">🇯🇲</div>
-            <h2 class="text-4xl font-black text-jamaica-green mb-4">Respect!</h2>
-            <div class="mb-6 text-on-surface dark:text-white">
-                <p class="text-2xl font-black mb-2" *ngIf="donationType === 'monetary'">
-                    Donation Amount: ${{ donationAmount | number }} JMD
-                </p>
-                <p class="text-lg font-medium">
-                    Your contribution to JA RELIEF was successful. Together we are building a stronger Jamaica! 
-                </p>
+    <div class="fixed inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 z-50 transition-opacity" *ngIf="showSuccessModal" (click)="closeModal()">
+        <div class="bg-black rounded-[32px] p-6 md:p-10 max-w-lg w-full shadow-2xl relative text-center border-[3px] border-[#ffcc00] max-h-[90vh] overflow-y-auto" (click)="$event.stopPropagation()">
+            <h2 class="text-3xl font-black text-[#ffcc00] mb-2 uppercase tracking-tighter italic mt-4">Respect!</h2>
+            <p class="text-white text-base mb-4 font-medium leading-tight">Your contribution to JA RELIEF was successful. Together we are stronger!</p>
+            
+            <div class="bg-zinc-950 border border-zinc-800 rounded-2xl p-4 mb-4 text-left max-h-[140px] overflow-y-auto" *ngIf="pledgedItems.length > 0">
+                <p class="font-black text-[#ffcc00] mb-2 uppercase text-[10px] tracking-widest">You pledged:</p>
+                <ul class="space-y-2">
+                    <li *ngFor="let item of pledgedItems" class="flex items-center gap-2 text-white text-sm font-bold">
+                        <span class="material-symbols-outlined text-[#ffcc00] text-base">check_circle</span>
+                        {{ item }}
+                    </li>
+                </ul>
             </div>
-            <button class="w-full bg-jamaica-green text-white font-black py-5 rounded-2xl uppercase tracking-widest hover:bg-black transition-all shadow-xl shadow-jamaica-green/20 active:scale-95" (click)="closeModal()">
-                Done & Return
-            </button>
+
+            <!-- QR Component in Modal (Scaled down for visibility) -->
+            <div *ngIf="qrCodeData" class="flex flex-col items-center p-4 bg-zinc-950 border border-zinc-800 rounded-2xl mb-6">
+                <p class="text-[9px] font-black text-[#ffcc00] uppercase tracking-[0.2em] mb-2">Digital Drop-off Pass</p>
+                <div id="modal-qr-code" class="bg-white p-2 rounded-xl border border-black mb-3">
+                    <qrcode [qrdata]="qrCodeData" [width]="100" [errorCorrectionLevel]="'M'"></qrcode>
+                </div>
+                <div class="flex gap-3 w-full">
+                    <button (click)="downloadQR('modal-qr-code')" class="flex-1 bg-white/10 hover:bg-white/20 text-white text-[9px] font-black py-2.5 rounded-full border border-white/10 transition-all uppercase tracking-widest flex items-center justify-center gap-2">
+                        <span class="material-symbols-outlined text-xs">download</span>
+                        Download
+                    </button>
+                    <button (click)="shareQR('modal-qr-code')" class="w-10 bg-[#ffcc00] hover:bg-white text-black py-2 rounded-xl transition-all flex items-center justify-center shadow-[0_3px_0_#ca8a04] hover:shadow-none hover:translate-y-1">
+                        <span class="material-symbols-outlined text-sm font-black">share</span>
+                    </button>
+                </div>
+            </div>
+
+            <button class="w-full bg-[#ffcc00] text-black font-black py-4 rounded-full uppercase tracking-widest hover:bg-white transition-colors shadow-[0_4px_0_#ca8a04] active:translate-y-1 active:shadow-none" (click)="closeModal()">Done</button>
         </div>
     </div>
 
     <!-- Alert Modal -->
     <div class="fixed inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 z-50 transition-opacity" *ngIf="alertMessage" (click)="closeAlert()">
-        <div class="bg-white dark:bg-[#0c0d0c] rounded-3xl p-8 max-w-sm w-full shadow-2xl relative text-center border-t-8 border-red-500 border-2 border-red-500/20" (click)="$event.stopPropagation()">
+        <div class="bg-black rounded-[32px] p-8 max-w-sm w-full shadow-2xl relative text-center border-t-[8px] border-red-500" (click)="$event.stopPropagation()">
             <div class="text-6xl mb-4 text-red-500 material-symbols-outlined">warning</div>
             <h2 class="text-2xl font-black text-red-500 mb-2">Action Required</h2>
-            <p class="text-on-surface dark:text-white mb-8 font-medium">{{ alertMessage }}</p>
-            <button class="w-full bg-red-500 text-white font-black py-4 rounded-xl uppercase tracking-wider hover:bg-red-600 transition-colors shadow-lg shadow-red-500/20" (click)="closeAlert()">Got it</button>
+            <p class="text-white mb-8 font-medium text-lg">{{ alertMessage }}</p>
+            <button class="w-full bg-red-500 text-white font-black py-4 rounded-full uppercase tracking-widest hover:bg-red-400 transition-colors shadow-[0_4px_0_#991b1b]" (click)="closeAlert()">Got it</button>
         </div>
     </div>
 
     <!-- Fulfillment Modal -->
-    <div class="fixed inset-0 bg-black/70 backdrop-blur-md flex items-center justify-center p-4 z-50 transition-opacity" *ngIf="showFulfillmentModal" (click)="closeFulfillment()">
-        <div class="bg-surface rounded-3xl p-8 max-w-md w-full shadow-2xl relative border-t-8 border-jamaica-green" (click)="$event.stopPropagation()">
-            <h2 class="text-3xl font-black text-jamaica-green mb-2 leading-tight">Provide Supply:<br/><span class="text-jamaica-black">{{ selectedRequest?.requesterName }}</span></h2>
+    <div class="fixed inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 z-50 transition-opacity" *ngIf="showFulfillmentModal" (click)="closeFulfillment()">
+        <div class="bg-black rounded-[32px] p-8 max-w-md w-full shadow-2xl relative border-[3px] border-[#ffcc00]" (click)="$event.stopPropagation()">
+            <h2 class="text-3xl font-black text-white mb-6 leading-tight">Provide Supply:<br/><span class="text-jamaica-gold">{{ selectedRequest?.requesterName }}</span></h2>
             <div class="space-y-3 mb-8 max-h-[250px] overflow-y-auto px-1">
-                <label *ngFor="let itemName of itemsToFulfill | keyvalue" class="flex items-center gap-4 p-4 border-2 border-outline/20 rounded-xl cursor-pointer hover:bg-surface-container transition-colors">
-                    <input type="checkbox" [(ngModel)]="itemsToFulfill[itemName.key]" class="w-6 h-6 rounded border-2 border-gray-400 text-jamaica-green focus:ring-jamaica-green" />
-                    <span class="font-bold text-jamaica-black text-lg">{{ itemName.key }}</span>
+                <label *ngFor="let itemName of itemsToFulfill | keyvalue" class="flex items-center gap-4 p-4 border-2 border-gray-600 rounded-xl cursor-pointer hover:bg-gray-800 transition-colors">
+                    <input type="checkbox" [(ngModel)]="itemsToFulfill[itemName.key]" class="w-6 h-6 rounded border-2 border-gray-400 bg-gray-800 text-blue-500 focus:ring-blue-500" />
+                    <span class="font-bold text-white text-lg">{{ itemName.key }}</span>
                 </label>
             </div>
             <div class="flex flex-col sm:flex-row gap-4 mt-2">
-                <button class="flex-1 bg-jamaica-green hover:bg-black text-white font-black py-4 px-2 rounded-xl uppercase tracking-wider transition-colors text-sm shadow-lg shadow-jamaica-green/20" (click)="submitFulfillment()">Confirm Pick-Up</button>
-                <button class="flex-1 bg-white border-2 border-outline/30 hover:border-jamaica-black hover:bg-surface-container text-jamaica-black font-black py-4 px-2 rounded-xl uppercase tracking-wider transition-colors text-sm" (click)="closeFulfillment()">Cancel</button>
+                <button class="flex-1 bg-gray-600 hover:bg-gray-500 text-white font-black py-4 px-2 rounded-xl uppercase tracking-widest transition-colors text-xs" (click)="submitFulfillment()">Confirm Pledge Supply</button>
+                <button class="flex-1 bg-white hover:bg-gray-200 text-black font-black py-4 px-2 rounded-xl uppercase tracking-widest transition-colors text-xs" (click)="closeFulfillment()">Cancel</button>
             </div>
         </div>
     </div>
+
 </div>
 <app-hazard-report-modal *ngIf="showHazardModal" (close)="showHazardModal = false"></app-hazard-report-modal>

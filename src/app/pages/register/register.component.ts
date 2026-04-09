@@ -1,4 +1,3 @@
-
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup, AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -18,8 +17,8 @@ export function sequenceValidator(): ValidatorFn {
     const commonSequences = ['1234', '2345', '3456', '4567', '5678', '6789', 'abcd', 'qwerty', 'password'];
     const isCommon = commonSequences.some(seq => value.toLowerCase().includes(seq));
     
-    // Check for repetitive chars like 111111
-    const isRepetitive = /^(.)\1+$/.test(value) || /(.)\1\1\1\1/.test(value);
+    // Check for repetitive chars like 1111
+    const isRepetitive = /^(.)\1+$/.test(value) || /(.)\1\1\1/.test(value);
     
     if (isCommon || isRepetitive) {
       return { simpleSequence: true };
@@ -52,11 +51,11 @@ export function dobValidator(): ValidatorFn {
     if (!value) return null;
     
     const selectedDate = new Date(value);
-    const oneMonthAgo = new Date();
-    oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
+    const selectedYear = selectedDate.getFullYear();
     
-    if (selectedDate > oneMonthAgo) {
-      return { tooRecent: true };
+    // Prevent DOB 2018 to present
+    if (selectedYear >= 2018) {
+      return { tooYoung: true };
     }
     return null;
   };
@@ -123,10 +122,8 @@ export class RegisterComponent implements OnInit {
 
 
   ngOnInit(): void {
-    // Prevent future DOB by setting max date to yesterday
-    const pastDate = new Date();
-    pastDate.setDate(pastDate.getDate() - 1);
-    this.today = pastDate.toISOString().split('T')[0];
+    // Prevent DOB from 2018 to present - Max date is Dec 31, 2017
+    this.today = '2017-12-31';
 
     // Form setup
     this.survivorForm = this.fb.group({
@@ -137,19 +134,22 @@ export class RegisterComponent implements OnInit {
       provisional: [false],
       parish: ['', Validators.required],
       address: [''],
+      email: ['', [Validators.required, Validators.email]],
       dob: ['', [Validators.required, dobValidator()]],
       damageLevel: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(6), passwordComplexityValidator()]],
       // Emergency Medical Fields (Optional)
       weight: [''],
       emergencyContact: [''],
+      emergencyContactPhone: [''],
       bloodType: [''],
       currentMedications: [''],
       medicalConditions: [''],
       allergies: [''],
       preferredDoctorName: [''],
       doctorContactNumber: [''],
-      medicalConsent: [false]
+      medicalConsent: [false],
+      website: [''] // Honeypot field
     });
 
     // Restore saved form data
@@ -278,11 +278,11 @@ export class RegisterComponent implements OnInit {
         }
 
         // Silent login and redirect after a short delay so they see the success message
-        const idNumber = this.survivorForm.get('idNumber')?.value || 'provisional';
+        const loginIdentifier = this.survivorForm.get('email')?.value || this.survivorForm.get('fullName')?.value;
         const password = this.survivorForm.get('password')?.value;
 
         setTimeout(() => {
-          this.authService.login(idNumber, password).subscribe({
+          this.authService.login(loginIdentifier, password).subscribe({
             next: (loginRes) => {
               if (loginRes && loginRes.token) {
                 this.router.navigate(['/dashboard']);

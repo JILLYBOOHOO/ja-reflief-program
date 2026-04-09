@@ -1,342 +1,702 @@
-
-<main class="py-8 px-8 max-w-[calc(100%-22rem)] mr-auto">
-    <!-- Public Safety Warning / Report Button -->
-    <div class="mb-8 p-4 bg-red-50 border-2 border-red-100 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-4 shadow-sm">
-        <div class="flex items-center gap-3">
-            <span class="material-symbols-outlined text-red-600 text-3xl animate-pulse">report_problem</span>
-            <div>
-                <h3 class="font-black text-red-900 uppercase tracking-tighter text-sm">Have you spotted a dangerous area?</h3>
-                <p class="text-xs text-red-700/70 font-bold">Help your community by reporting landslides, flooding, or blocked roads.</p>
-            </div>
-        </div>
-        <button (click)="showHazardModal = true" class="bg-red-600 text-white px-6 py-3 rounded-xl font-black uppercase text-xs tracking-widest hover:bg-black transition-all shadow-md">
-            Report Danger Zone
-        </button>
-    </div>
-    <!-- ID Cards Section -->
-    <div class="flex flex-col xl:flex-row items-center xl:items-start justify-center gap-12 mb-16">
-        <!-- Virtual ID Card Section -->
-        <div class="id-card-perspective flex flex-col items-center">
-            <!-- Virtual ID Card Container -->
-            <div id="tour-step-1" (click)="flipCard()"
-                class="relative w-full min-w-[320px] max-w-lg aspect-[1.58/1] bg-gradient-to-br from-[#0b3d1c] via-[#006b25] to-[#0b3d1c] rounded-2xl shadow-2xl p-8 text-white font-['Manrope'] overflow-hidden border border-white/10 cursor-pointer transition-transform duration-700 transform-style-3d hover:shadow-emerald-500/20"
-                [class.rotate-y-180]="isCardFlipped">
-                
-                <ng-container *ngIf="!isCardFlipped; else backSide">
-                    <!-- FRONT SIDE -->
-                    <!-- Background Decorative Circles -->
-                    <div class="absolute -right-20 -top-20 w-64 h-64 bg-white/5 rounded-full"></div>
-                    <div class="absolute -left-10 -bottom-10 w-48 h-48 bg-white/5 rounded-full"></div>
-                    <!-- Header -->
-                    <div class="flex justify-between items-start relative z-10">
-                        <div>
-                            <p class="text-[10px] uppercase tracking-[0.2em] font-bold opacity-80">JA Relief Survivor ID</p>
-                            <div
-                                class="mt-4 w-12 h-9 bg-gradient-to-br from-yellow-300 via-yellow-500 to-yellow-200 rounded-md shadow-inner border border-black/10">
-                            </div>
-                        </div>
-                        <span class="material-symbols-outlined text-3xl opacity-80 rotate-90">contactless</span>
-                    </div>
-                    <!-- Card Number -->
-                    <div class="mt-8 relative z-10">
-                        <p class="text-2xl tracking-[0.25em] font-medium drop-shadow-md">{{ cardNumber }}</p>
-                    </div>
-                    <!-- Balance -->
-                    <div class="mt-4 relative z-10">
-                        <p class="text-[10px] uppercase tracking-widest opacity-60">Available Balance</p>
-                        <p class="text-xl font-bold ml-1">$50,000.00 JMD</p>
-                    </div>
-                    <!-- Footer Info -->
-                    <div class="mt-auto flex justify-between items-end relative z-10">
-                        <div class="space-y-1">
-                            <p class="text-[10px] uppercase tracking-widest opacity-60 ml-0.5">Card Holder</p>
-                            <p class="text-lg font-bold">{{ currentUser?.name || 'Leon Davis' }}</p>
-                            <p class="text-xs font-medium opacity-80">ID: {{ currentUser?.idNumber || '876409321' }}</p>
-                        </div>
-                        <div class="flex flex-col items-end">
-                            <img alt="Flag of Jamaica" src="https://upload.wikimedia.org/wikipedia/commons/0/0a/Flag_of_Jamaica.svg" width="32" height="20" class="w-8 h-5 rounded-sm mb-1 opacity-80" priority />
-                            <p class="text-[8px] opacity-40">Tap card to flip</p>
-                        </div>
-                    </div>
-                </ng-container>
-
-                <ng-template #backSide>
-                    <!-- BACK SIDE -->
-                    <div class="flex flex-col h-full relative z-10 back-unmirror">
-                        <div class="w-full h-12 bg-black/90 -mx-8 mt-2 shadow-inner"></div>
-                        <div class="mt-8 flex items-center gap-4">
-                            <div class="flex-grow h-12 bg-white/20 rounded flex items-center px-4 italic text-sm border border-white/10">
-                                Authorized Signature
-                            </div>
-                            <div class="bg-white text-black px-4 py-2 rounded-lg font-black tracking-widest text-lg shadow-lg">
-                                {{ cvvCode }}
-                            </div>
-                        </div>
-                        <div class="mt-auto pt-6 border-t border-white/5">
-                            <p class="text-[9px] leading-relaxed opacity-60 italic text-center px-4">
-                                Notice: This virtual card is only authorized for use at local relief-compliant MCCs, grocery stores, pharmacies, and hardware medical facilities. For assistance call 1-888-JA-RELIEF.
-                            </p>
-                        </div>
-                    </div>
-                </ng-template>
-            </div>
-            <!-- Terms of Use Notice -->
-            <p class="mt-6 max-w-lg text-center text-[10px] text-on-surface-variant/70 italic px-4 uppercase tracking-widest font-bold">
-                Auth Use Only: MCCs, Pharmacies, Hardware Stores
-            </p>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+<div class="flex min-h-screen bg-[#f8faf8] dark:bg-black transition-colors duration-300">
+    <!-- Main Content Area -->
+    <main class="flex-grow py-8 px-10 min-w-0 lg:mr-[26rem]">
+        <div class="mb-8">
+            <h1 class="text-3xl font-black text-jamaica-black dark:text-white tracking-tight uppercase">Welcome, {{ userName }}</h1>
+            <p class="text-on-surface/50 font-bold tracking-widest text-[10px] uppercase mt-1">JA Relief Survivor Portal</p>
         </div>
 
-        <!-- Emergency Medical Card -->
-        <div id="tour-step-2" class="w-full max-w-lg">
-            <div class="bg-white rounded-[24px] shadow-2xl overflow-hidden border-2 border-slate-900/5 transition-all hover:shadow-red-500/10">
-                <!-- Header Section -->
-                <header class="bg-[#006b25] p-6 relative overflow-hidden">
-                    <div class="absolute inset-0 opacity-10" style="background-image: linear-gradient(135deg, #000 25%, transparent 25%), linear-gradient(225deg, #000 25%, transparent 25%), linear-gradient(45deg, #000 25%, transparent 25%), linear-gradient(315deg, #000 25%, transparent 25%); background-position: 10px 0, 10px 0, 0 0, 0 0; background-size: 20px 20px; background-repeat: repeat;"></div>
-                    <div class="relative z-10 flex justify-between items-start">
-                        <div>
-                            <h1 class="text-white text-2xl font-black leading-tight tracking-tighter uppercase font-headline">
-                                {{ currentUser?.name || 'NAME NOT FOUND' }}
-                            </h1>
-                            <p class="text-[#62df74] text-[10px] font-black tracking-[0.2em] uppercase mt-1 opacity-100 font-label">
-                                MEDICAL EMERGENCY PROFILE • ID: {{ currentUser?.idNumber || 'UNASSIGNED' }}
-                            </p>
-                        </div>
-                        <div class="bg-[#ffd31a] text-[#231b00] px-4 py-2 rounded-xl flex flex-col items-center justify-center min-w-[90px] border border-black/10 shadow-sm">
-                            <span class="text-[8px] font-black uppercase font-label leading-none mb-1 opacity-70">Blood Type</span>
-                            <span class="text-lg font-black leading-none">{{ currentUser?.bloodType || 'N/A' }}</span>
-                        </div>
-                    </div>
-                </header>
-
-                <!-- Quick Data Row & QR -->
-                <div class="px-6 py-4 grid grid-cols-12 gap-4 border-b border-slate-100">
-                    <div class="col-span-8 flex flex-col justify-center">
-                        <div class="flex justify-between items-center bg-slate-50 p-4 rounded-xl border border-slate-100">
-                            <div class="text-center">
-                                <span class="block text-[10px] font-black uppercase text-slate-400 font-label">DOB</span>
-                                <span class="text-sm font-black text-slate-800">{{ formattedDOB }}</span>
-                            </div>
-                            <div class="w-px h-6 bg-slate-200"></div>
-                            <div class="text-center">
-                                <span class="block text-[10px] font-black uppercase text-slate-400 font-label">Age</span>
-                                <span class="text-sm font-black text-slate-800">{{ age }} Yrs</span>
-                            </div>
-                            <div class="w-px h-6 bg-slate-200"></div>
-                            <div class="text-center">
-                                <span class="block text-[10px] font-black uppercase text-slate-400 font-label">Weight</span>
-                                <span class="text-sm font-black text-slate-800">{{ currentUser?.weight || '---' }} Lbs</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-span-4 flex flex-col items-center justify-center">
-                        <div class="bg-black p-1.5 rounded-lg">
-                            <img alt="Medical Emergency Profile QR Code" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=JA_RELIEF_SURVIVOR_" width="64" height="64" class="w-16 h-16 grayscale brightness-125" loading="lazy" />
-                        </div>
-                        <span class="text-[8px] font-black mt-2 text-center leading-tight text-slate-400 uppercase font-label">Scan for Profile</span>
-                    </div>
-                </div>
-
-                <!-- Health Data Body -->
-                <div class="p-6 space-y-4">
-                    <!-- Urgent Section: Allergies -->
-                    <section *ngIf="allergiesList.length > 0">
-                        <div class="flex items-center gap-2 mb-3">
-                            <span class="material-symbols-outlined text-red-600 text-xl" style="font-variation-settings: 'FILL' 1;">warning</span>
-                            <h2 class="text-xs font-black uppercase font-label text-red-600 tracking-wider">Urgent: Allergies</h2>
-                        </div>
-                        <div class="flex flex-wrap gap-2">
-                            <span *ngFor="let allergy of allergiesList" class="bg-red-50 text-red-700 px-3 py-1.5 rounded-lg text-xs font-bold border border-red-100">
-                                {{ allergy }}
-                            </span>
-                        </div>
-                    </section>
-
-                    <!-- Chronic Conditions & Meds -->
-                    <div class="grid grid-cols-2 gap-4">
-                        <section class="bg-slate-50 p-4 rounded-xl border border-slate-100">
-                            <div class="flex items-center gap-2 mb-3">
-                                <span class="material-symbols-outlined text-[#006b25] text-sm">medical_services</span>
-                                <h2 class="text-[10px] font-black uppercase font-label text-slate-500 tracking-wider">Conditions</h2>
-                            </div>
-                            <div class="space-y-1">
-                                <div *ngFor="let condition of medicalConditionsList" class="flex items-start gap-1">
-                                    <span class="text-xs font-bold text-slate-800">• {{ condition }}</span>
-                                </div>
-                                <p *ngIf="medicalConditionsList.length === 0" class="text-xs font-bold text-slate-400">None reported</p>
-                            </div>
-                        </section>
-                        <section class="bg-slate-50 p-4 rounded-xl border border-slate-100">
-                            <div class="flex items-center gap-2 mb-3">
-                                <span class="material-symbols-outlined text-[#006b25] text-sm">pill</span>
-                                <h2 class="text-[10px] font-black uppercase font-label text-slate-500 tracking-wider">Medications</h2>
-                            </div>
-                            <ul class="space-y-1">
-                                <li *ngFor="let med of medicationsList" class="text-xs font-bold text-slate-800">• {{ med }}</li>
-                                <li *ngIf="medicationsList.length === 0" class="text-xs font-bold text-slate-400">None reported</li>
-                            </ul>
-                        </section>
-                    </div>
-
-                    <!-- Contact Info Section -->
-                    <section class="space-y-3">
-                        <div class="grid grid-cols-1 gap-3">
-                            <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
-                                <h3 class="text-[10px] font-black uppercase font-label text-slate-400 mb-2 tracking-wider">Emergency Contact</h3>
-                                <p class="text-sm font-black text-slate-800">{{ currentUser?.emergencyContact || 'UNSPECIFIED' }}</p>
-                            </div>
-                            <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
-                                <h3 class="text-[10px] font-black uppercase font-label text-slate-400 mb-2 tracking-wider">Preferred Doctor</h3>
-                                <p class="text-sm font-black text-slate-800 leading-tight">{{ currentUser?.preferredDoctorName || 'NO DOCTOR LISTED' }}</p>
-                                <div class="flex items-center gap-1 mt-2 text-[#006b25]">
-                                    <span class="material-symbols-outlined text-xs">call</span>
-                                    <span class="text-xs font-bold">{{ currentUser?.doctorContactNumber || 'N/A' }}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                </div>
-
-                <!-- Action Buttons Footer -->
-                <footer class="bg-slate-50 p-4 grid grid-cols-3 gap-3 border-t border-slate-100">
-                    <button class="bg-[#ffd31a] text-[#231b00] py-4 rounded-xl flex flex-col items-center justify-center gap-1 hover:brightness-95 transition-all border border-black/5">
-                        <span class="material-symbols-outlined text-lg">share</span>
-                        <span class="text-[9px] font-black uppercase font-label">Share</span>
-                    </button>
-                    <button class="bg-black text-white py-4 rounded-xl flex flex-col items-center justify-center gap-1 hover:brightness-110 transition-all">
-                        <span class="material-symbols-outlined text-lg">edit</span>
-                        <span class="text-[9px] font-black uppercase font-label">Edit</span>
-                    </button>
-                    <button class="bg-[#006b25] text-white py-4 rounded-xl flex flex-col items-center justify-center gap-1 hover:brightness-110 transition-all">
-                        <span class="material-symbols-outlined text-lg">download</span>
-                        <span class="text-[9px] font-black uppercase font-label">Export</span>
-                    </button>
-                </footer>
-            </div>
-            <p class="mt-4 text-center text-[10px] font-black text-slate-400 uppercase tracking-widest">Verified Jamaican Health Record</p>
-        </div>
-    </div>
-
-    <!-- Bento Grid Supplies -->
-    <form id="tour-step-3" [formGroup]="pantryForm" (ngSubmit)="submitPantryRequest()" style="content-visibility: auto; contain-intrinsic-size: 500px;">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <ng-container *ngFor="let cat of categorizedPantryItems; let i = index">
-                <!-- Category Section -->
-                <section class="bg-surface-container-lowest p-8 rounded-xl shadow-sm hover:bg-surface-bright transition-all group border border-emerald-100/50">
-                    <div class="flex items-center justify-between mb-8">
-                        <div class="flex items-center space-x-4">
-                            <div class="p-3 bg-surface-container-low rounded-xl group-hover:bg-primary/10 transition-colors">
-                                <span class="material-symbols-outlined text-primary text-3xl">{{ cat.icon }}</span>
-                            </div>
-                            <h2 class="font-headline text-3xl font-bold tracking-tight text-emerald-900">{{ cat.category }}</h2>
-                        </div>
-                        <span class="text-sm font-label uppercase tracking-widest text-tertiary">{{ cat.priority }}</span>
-                    </div>
-                    <div class="grid grid-cols-2 gap-4">
-                        <label *ngFor="let item of cat.items" class="flex items-center p-4 bg-surface-container-low rounded-xl cursor-pointer hover:bg-surface-container transition-colors">
-                            <input [formControlName]="item.name" class="w-5 h-5 rounded-md border-none bg-surface-container-highest text-primary focus:ring-primary mr-3" type="checkbox" />
-                            <span class="text-lg font-bold flex items-center gap-3">
-                                {{ item.icon }} {{ item.name }}
-                            </span>
-                        </label>
-                    </div>
-                </section>
-            </ng-container>
-
-            <!-- Other / Item not listed -->
-            <section class="lg:col-span-2 bg-surface-container-lowest p-8 rounded-xl shadow-sm hover:bg-surface-bright transition-all border border-emerald-100/50">
-                <div class="flex items-center space-x-4 mb-4">
-                    <div class="p-3 bg-surface-container-low rounded-xl group-hover:bg-primary/10 transition-colors">
-                        <span class="material-symbols-outlined text-primary text-4xl">edit_note</span>
-                    </div>
-                    <h2 class="font-headline text-3xl font-bold tracking-tight text-emerald-900">Other / Specific Needs</h2>
-                </div>
-                <textarea formControlName="otherItems" class="w-full p-6 rounded-xl border border-emerald-100 bg-surface-container-low focus:ring-primary focus:border-primary text-lg min-h-[120px]" placeholder="e.g. Specific medication, dietary requirements, or any other essentials not listed above..."></textarea>
-            </section>
-
-            <!-- Donation Centers Section -->
-            <section class="lg:col-span-2 bg-white p-8 rounded-xl shadow-xl border-2 border-emerald-900/10">
-                <div class="flex items-center gap-4 mb-6">
-                    <div class="bg-emerald-900 text-white p-3 rounded-xl">
-                        <span class="material-symbols-outlined text-3xl">location_on</span>
+        <!-- Real-time Request Status Horizontal Bar -->
+        <div *ngIf="hasActiveRequest" class="mb-8 p-10 bg-white dark:bg-[#0c0d0c] rounded-[3rem] shadow-2xl border-2 border-jamaica-green transition-all duration-700 animate-in slide-in-from-top-10">
+            <div class="flex items-center justify-between mb-8">
+                <div class="flex items-center gap-6">
+                    <div class="bg-jamaica-green p-4 rounded-2xl shadow-lg shadow-jamaica-green/40">
+                        <span class="material-symbols-outlined text-white text-4xl">
+                            {{ currentRequestStatus === 'Out for Delivery' ? 'local_shipping' : (currentRequestStatus === 'Packing' ? 'inventory_2' : 'shopping_bag') }}
+                        </span>
                     </div>
                     <div>
-                        <h2 class="text-2xl font-black text-emerald-900 uppercase tracking-tighter">Active Donation Drop-Off Centers</h2>
-                        <p class="text-sm text-emerald-700 font-bold">Monday - Saturday: 8:00 AM - 6:00 PM</p>
+                        <h3 class="text-2xl font-black text-jamaica-black dark:text-white uppercase tracking-tight">Relief Progress</h3>
+                        <p class="text-sm font-bold text-jamaica-green uppercase tracking-widest">{{ currentRequestStatus }}</p>
                     </div>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="flex items-start gap-3 p-4 bg-emerald-50 rounded-xl border border-emerald-100">
-                        <span class="text-xl">📍</span>
-                        <div>
-                            <p class="font-black text-emerald-900">Kingston Warehouse</p>
-                            <p class="text-xs text-emerald-700">123 Hope Road, Kingston 6</p>
-                        </div>
-                    </div>
-                    <div class="flex items-start gap-3 p-4 bg-emerald-50 rounded-xl border border-emerald-100">
-                        <span class="text-xl">📍</span>
-                        <div>
-                            <p class="font-black text-emerald-900">Montego Bay Center</p>
-                            <p class="text-xs text-emerald-700">Fairview Plaza Block C, MoBay</p>
-                        </div>
-                    </div>
-                    <div class="flex items-start gap-3 p-4 bg-emerald-50 rounded-xl border border-emerald-100">
-                        <span class="text-xl">📍</span>
-                        <div>
-                            <p class="font-black text-emerald-900">Mandeville Hub</p>
-                            <p class="text-xs text-emerald-700">4 Ward Avenue, Mandeville</p>
-                        </div>
-                    </div>
-                    <div class="flex items-start gap-3 p-4 bg-emerald-50 rounded-xl border border-emerald-100">
-                        <span class="text-xl">📍</span>
-                        <div>
-                            <p class="font-black text-emerald-900">St. Ann's Bay Point</p>
-                            <p class="text-xs text-emerald-700">Main Street (Opposite Parish Church)</p>
-                        </div>
-                    </div>
+                <div class="text-right">
+                    <span class="text-lg font-black text-jamaica-green bg-jamaica-green/10 px-8 py-3 rounded-full border-2 border-jamaica-green/20 animate-pulse inline-block">
+                        {{ currentRequestStatus === 'Request Made' ? '20%' : (currentRequestStatus === 'Packing' ? '50%' : (currentRequestStatus === 'Out for Delivery' ? '80%' : '100%')) }}
+                    </span>
+                    <p class="text-[9px] font-bold text-slate-400 uppercase mt-2 tracking-widest">Live Logistics Sync</p>
                 </div>
-            </section>
-        </div>
-    </form>
-</main>
+            </div>
 
-<!-- SideNavBar (Request Summary) -->
-<aside id="tour-step-4"
-    class="fixed right-0 top-[140px] h-[calc(100vh-140px)] w-96 rounded-l-3xl bg-slate-100/95 dark:bg-slate-900/90 backdrop-blur-xl shadow-2xl flex flex-col p-8 space-y-6 border-l border-emerald-100/20 z-[40]">
-    <div class="pt-4">
-        <h2 class="text-2xl font-black text-emerald-900 dark:text-white font-['Work_Sans']">Request Summary</h2>
-        <p class="text-base leading-relaxed text-slate-600 dark:text-slate-400">Tracking your items</p>
+            <!-- Enhanced Progress Track -->
+            <div class="relative h-7 bg-black rounded-full overflow-hidden mb-10 border-4 border-slate-200 dark:border-white/10 shadow-inner">
+                <div class="absolute inset-y-0 left-0 bg-gradient-to-r from-[#000000] via-[#39FF14] to-[#000000] transition-all duration-1000 ease-out shadow-[0_0_40px_rgba(57,255,20,0.8)]"
+                     [style.width]="currentRequestStatus === 'Request Made' ? '20%' : (currentRequestStatus === 'Packing' ? '50%' : (currentRequestStatus === 'Out for Delivery' ? '80%' : '100%'))">
+                    <div class="w-full h-full bg-white/10 animate-[pulse_1s_infinite]"></div>
+                     <!-- Animated Item moving along the bar -->
+                     <span class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 material-symbols-outlined text-black text-xl bg-[#39FF14] rounded-full p-1.5 border-4 border-black shadow-[0_0_20px_rgba(57,255,20,0.5)]">
+                        {{ currentRequestStatus === 'Out for Delivery' ? 'local_shipping' : (currentRequestStatus === 'Packing' ? 'inventory_2' : (currentRequestStatus === 'Request Made' ? 'assignment' : 'task_alt')) }}
+                     </span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-4 gap-4 relative">
+                <div class="flex flex-col items-center gap-3">
+                    <div class="w-14 h-14 rounded-full flex items-center justify-center transition-all duration-500"
+                         [ngClass]="hasActiveRequest ? 'bg-[#39FF14] text-black shadow-lg shadow-[#39FF14]/40 scale-110' : 'bg-slate-100 text-slate-300'">
+                        <span class="material-symbols-outlined text-3xl font-black">assignment</span>
+                    </div>
+                    <span class="text-[10px] font-black uppercase text-center tracking-tighter text-black">Request Made</span>
+                </div>
+
+                <div class="flex flex-col items-center gap-3">
+                    <div class="w-12 h-12 rounded-full flex items-center justify-center transition-all duration-500"
+                         [ngClass]="(currentRequestStatus === 'Packing' || currentRequestStatus === 'Out for Delivery' || currentRequestStatus === 'Delivered') ? 'bg-jamaica-green text-white shadow-lg shadow-jamaica-green/20 scale-110' : 'bg-slate-100 text-slate-300'">
+                        <span class="material-symbols-outlined text-2xl font-black">inventory_2</span>
+                    </div>
+                    <span class="text-[10px] font-black uppercase text-center tracking-tighter" [ngClass]="(currentRequestStatus === 'Packing' || currentRequestStatus === 'Out for Delivery' || currentRequestStatus === 'Delivered') ? 'text-jamaica-black dark:text-white' : 'text-slate-400'">Packing</span>
+                </div>
+
+                <div class="flex flex-col items-center gap-3">
+                    <div class="w-12 h-12 rounded-full flex items-center justify-center transition-all duration-500"
+                         [ngClass]="(currentRequestStatus === 'Out for Delivery' || currentRequestStatus === 'Delivered') ? 'bg-[#ffbb16] text-black shadow-lg shadow-[#ffbb16]/20 scale-110' : 'bg-slate-100 text-slate-300'">
+                        <span class="material-symbols-outlined text-2xl font-black">local_shipping</span>
+                    </div>
+                    <span class="text-[10px] font-black uppercase text-center tracking-tighter" [ngClass]="(currentRequestStatus === 'Out for Delivery' || currentRequestStatus === 'Delivered') ? 'text-jamaica-black dark:text-white' : 'text-slate-400'">Out For Delivery</span>
+                </div>
+
+                <div class="flex flex-col items-center gap-3">
+                    <div class="w-12 h-12 rounded-full flex items-center justify-center transition-all duration-500"
+                         [ngClass]="currentRequestStatus === 'Delivered' ? 'bg-[#39FF14] text-black shadow-lg shadow-[#39FF14]/50 scale-125' : 'bg-slate-100 text-slate-300'">
+                        <span class="material-symbols-outlined text-2xl font-black">task_alt</span>
+                    </div>
+                    <span class="text-[10px] font-black uppercase text-center tracking-tighter" [ngClass]="currentRequestStatus === 'Delivered' ? 'text-jamaica-green font-black drop-shadow-sm' : 'text-slate-400'">Delivered</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Public Safety Warning -->
+        <div class="mb-8 p-6 bg-red-50 border-2 border-red-100 rounded-3xl flex flex-col md:flex-row items-center justify-between gap-6 shadow-sm">
+            <div class="flex items-center gap-5">
+                <div class="w-16 h-16 rounded-2xl bg-red-600 flex items-center justify-center shadow-lg shadow-red-600/20">
+                    <span class="material-symbols-outlined text-white text-4xl animate-pulse">report_problem</span>
+                </div>
+                <div>
+                    <h3 class="font-black text-red-900 uppercase tracking-tight text-xl">Spotted a danger zone?</h3>
+                    <p class="text-sm text-red-700/70 font-bold">Your reports help rescue teams prioritize safe routes for all Jamaicans.</p>
+                </div>
+            </div>
+            <button (click)="showHazardModal = true" class="bg-red-600 text-white px-8 py-4 rounded-2xl font-black uppercase text-sm tracking-widest hover:bg-black transition-all shadow-xl shadow-red-600/20 active:scale-95">
+                Report Danger Zone
+            </button>
+        </div>
+
+        <!-- Card Grid: Survivor ID/Transactions Column & Medical Card Column -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 xl:gap-28 mb-16 items-start w-full max-w-7xl mx-auto">
+            
+            <!-- Column 1: ID & Transactions Stack -->
+            <div class="flex flex-col items-center gap-8">
+                <div class="id-card-perspective flex flex-col items-center w-full">
+                    <div id="tour-step-1" (click)="flipCard()"
+                        class="relative w-full min-w-[340px] max-w-lg min-h-[230px] bg-gradient-to-br from-[#0b3d1c] via-[#006b25] to-[#0b3d1c] rounded-3xl shadow-2xl p-8 text-white font-['Manrope'] overflow-hidden border border-white/10 cursor-pointer transition-transform duration-700 transform-style-3d hover:shadow-emerald-500/30"
+                        [class.rotate-y-180]="isCardFlipped">
+                        
+                        <ng-container *ngIf="!isCardFlipped; else backSide">
+                            <div class="absolute -right-20 -top-20 w-64 h-64 bg-white/5 rounded-full"></div>
+                            <div class="absolute -left-10 -bottom-10 w-48 h-48 bg-white/5 rounded-full"></div>
+                            <div class="flex justify-between items-start relative z-10">
+                                <div>
+                                    <p class="text-[11px] uppercase tracking-[0.25em] font-black opacity-80">JA Relief Survivor ID</p>
+                                    <div class="mt-5 w-14 h-10 bg-gradient-to-br from-yellow-300 via-yellow-500 to-yellow-200 rounded-lg shadow-inner border border-black/10"></div>
+                                </div>
+                                <div class="flex flex-col items-end">
+                                    <span class="material-symbols-outlined text-4xl opacity-80 -rotate-90 translate-x-2" [class.animate-pulse]="isProcessing" [class.text-[#39FF14]]="isProcessing">contactless</span>
+                                </div>
+                            </div>
+                            <div class="mt-6 relative z-10">
+                                <p class="text-2xl tracking-[0.3em] font-black drop-shadow-lg text-white/90">{{ cardNumber }}</p>
+                            </div>
+                            <div class="mt-auto flex justify-between items-end relative z-10">
+                                <div class="space-y-1">
+                                    <p class="text-[10px] uppercase tracking-widest opacity-60 ml-0.5">Card Holder</p>
+                                    <p class="text-lg font-black whitespace-normal break-words max-w-[220px] leading-tight text-white uppercase">{{ userName }}</p>
+                                </div>
+                                <div class="flex flex-col items-end">
+                                    <img alt="Flag" src="https://upload.wikimedia.org/wikipedia/commons/0/0a/Flag_of_Jamaica.svg" width="40" height="25" class="w-10 h-6 rounded-sm mb-2 opacity-90 shadow-md" />
+                                    <p class="text-[9px] font-black opacity-40 uppercase tracking-tighter">Tap to Flip</p>
+                                </div>
+                            </div>
+                        </ng-container>
+
+                        <ng-template #backSide>
+                            <div class="flex flex-col h-full relative z-10 back-unmirror pt-2">
+                                <div class="w-full h-14 bg-black/90 -mx-8 mt-4 shadow-inner mb-8"></div>
+                                <div class="flex items-center gap-5">
+                                    <div class="flex-grow h-14 bg-white/20 rounded-xl flex items-center px-6 border border-white/10 relative overflow-hidden">
+                                        <span class="text-[10px] uppercase tracking-widest opacity-20 font-black absolute top-1 left-4">Authorized Signature</span>
+                                        <span class="signature-font text-2xl text-white/90 translate-y-1">JA RELIEF</span>
+                                    </div>
+                                    <div class="bg-white text-black px-6 py-3 rounded-xl font-black tracking-widest text-xl shadow-2xl min-w-[80px] text-center">{{ revealedCVV || '000' }}</div>
+                                </div>
+                                <div class="mt-4 flex justify-between items-center bg-black/30 p-4 rounded-xl border border-white/5">
+                                    <span class="text-[10px] font-black uppercase tracking-widest text-white/40">Security PIN:</span>
+                                    <span class="text-xl font-black tracking-[0.5em]">{{ revealedPIN }}</span>
+                                </div>
+                                <div class="mt-auto pt-6 border-t border-white/10">
+                                    <p class="text-[9px] leading-relaxed opacity-50 italic text-center px-6 font-bold uppercase tracking-tight">
+                                        Strictly for emergency logistics at verified MCC hubs. 1-888-JA-RELIEF.
+                                    </p>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </div>
+                </div>
+
+                <!-- NFC & Security Reveal Controls (Neon Green / Black) -->
+                <div class="w-full max-w-lg space-y-4">
+                    <!-- NFC Status -->
+                    <div class="bg-black p-5 rounded-3xl border-2 border-[#39FF14]/20 shadow-lg flex items-center gap-4 group hover:border-[#39FF14]/40 transition-all">
+                        <div class="flex-grow">
+                            <h4 class="text-[10px] font-black uppercase tracking-widest" [ngClass]="nfcStatus === 'active' ? 'text-[#39FF14]' : 'text-gray-500'">Contactless Readiness</h4>
+                            <p class="text-sm font-bold leading-tight" [ngClass]="nfcStatus === 'active' ? 'text-white' : 'text-gray-400'">{{ nfcMessage }}</p>
+                        </div>
+                        <div class="relative flex-none">
+                            <span class="material-symbols-outlined text-4xl" [ngClass]="(nfcStatus === 'active' || isProcessing) ? 'text-[#39FF14]' : 'text-gray-600'" [class.animate-pulse]="isProcessing">contactless</span>
+                            <div *ngIf="nfcStatus === 'active' || isProcessing" class="absolute inset-0 bg-[#39FF14] rounded-full animate-ping opacity-20"></div>
+                        </div>
+                        <span *ngIf="nfcStatus === 'active'" class="material-symbols-outlined text-[#39FF14]">check_circle</span>
+                        <span *ngIf="nfcStatus === 'inactive'" class="material-symbols-outlined text-gray-600 cursor-help" title="Check phone settings">help</span>
+                    </div>
+
+                    <div class="relative z-50 space-y-4">
+                        <button (click)="simulateTapToPay()" [disabled]="isProcessing"
+                                class="w-full py-5 bg-[#39FF14] !text-black rounded-3xl font-black uppercase tracking-[0.2em] text-sm shadow-xl shadow-[#39FF14]/40 hover:bg-white transition-all active:scale-95 flex items-center justify-center gap-3 disabled:opacity-100 disabled:shadow-none">
+                                <span [class.animate-spin]="isProcessing && nfcMessage !== 'Payment Authorized!'" class="material-symbols-outlined !text-black">
+                                    {{ !isProcessing ? 'contactless' : (nfcMessage === 'Payment Authorized!' ? 'check_circle' : 'sync') }}
+                                </span>
+                                <span class="!text-black">{{ isProcessing ? nfcMessage : 'TAP TO PAY (DEMO)' }}</span>
+                            </button>
+
+                            <button *ngIf="!isRevealing" (click)="handleRevealClick()"
+                                class="w-full py-5 bg-[#000000] text-white border-2 border-[#ffbb16] rounded-3xl font-black uppercase tracking-[0.2em] text-sm shadow-xl hover:bg-[#005c37] hover:border-white transition-all active:scale-95 flex items-center justify-center gap-3">
+                                <span class="material-symbols-outlined">lock_open</span>
+                                Reveal Card Details
+                            </button>
+                        </div>
+
+                        <!-- SECURITY FLOW OVERLAY (Neon Green / Black) -->
+                        <div *ngIf="isRevealing" class="bg-black p-8 rounded-3xl border-2 border-[#39FF14] shadow-2xl animate-in fade-in zoom-in duration-300">
+                            
+                            <!-- PIN SETUP (First Time) -->
+                            <div *ngIf="showPinSetup" class="text-center">
+                                <h4 class="text-[#39FF14] font-black uppercase tracking-widest text-lg mb-4">Setup Security PIN</h4>
+                                <p class="text-white font-bold text-sm mb-6">Create a 4-digit PIN to securely access your card details.</p>
+                                
+                                <div class="space-y-4">
+                                    <input type="text" [(ngModel)]="newPinValue" maxLength="4"
+                                        class="w-full bg-[#1a1c1e] border-2 border-[#39FF14]/30 rounded-2xl p-6 text-center text-4xl font-black text-[#39FF14] tracking-[1em] focus:border-[#39FF14] outline-none transition-all placeholder:text-[#39FF14]/10"
+                                        placeholder="0000" />
+                                    <p *ngIf="revealError" class="text-red-500 text-[10px] font-black uppercase mt-2">{{ revealError }}</p>
+                                    
+                                    <div class="flex gap-4">
+                                        <button (click)="cancelReveal()" class="flex-1 py-4 border-2 border-white/10 text-white/40 rounded-2xl font-black uppercase text-xs tracking-widest hover:border-white/20 transition-all">
+                                            Cancel
+                                        </button>
+                                        <button (click)="setSecurityPin()" [disabled]="newPinValue.length !== 4"
+                                            class="flex-[2] py-5 bg-[#39FF14] disabled:opacity-30 text-black rounded-3xl font-black uppercase tracking-[0.2em] text-sm shadow-xl hover:bg-white transition-all active:scale-95">
+                                            Setup PIN
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                             <!-- PIN VERIFY (Subsequent Reveals) -->
+                             <div *ngIf="showPinVerify && !showPinSetup && !showPasswordVerify">
+                                 <div class="flex items-center justify-between mb-6">
+                                     <h4 class="text-[#39FF14] font-black uppercase tracking-widest text-xs">Enter Security PIN</h4>
+                                     <button (click)="cancelReveal()" class="text-white/40 hover:text-white transition-colors">
+                                         <span class="material-symbols-outlined">close</span>
+                                     </button>
+                                 </div>
+                                 <div class="space-y-4">
+                                     <input type="password" [(ngModel)]="pinValue" maxLength="4"
+                                         class="w-full bg-[#1a1c1e] border-2 border-[#39FF14]/30 rounded-2xl p-6 text-center text-4xl font-black text-[#39FF14] tracking-[1em] focus:border-[#39FF14] outline-none transition-all placeholder:text-[#39FF14]/10"
+                                         placeholder="****" />
+                                     <p *ngIf="revealError" class="text-red-500 text-[10px] font-black uppercase mt-2 text-center">{{ revealError }}</p>
+                                     
+                                     <button (click)="verifySecurityPIN()" [disabled]="pinValue.length !== 4"
+                                         class="w-full py-5 bg-[#39FF14] disabled:opacity-30 text-black rounded-3xl font-black uppercase tracking-[0.2em] text-sm shadow-xl hover:bg-white transition-all active:scale-95">
+                                         Unlock Details
+                                     </button>
+
+                                     <button (click)="showPasswordVerify = true; revealError = ''" class="w-full text-center text-[10px] font-black text-[#39FF14]/40 uppercase tracking-widest hover:text-[#39FF14] transition-colors mt-4">
+                                         Forgot PIN? Use Account Password
+                                     </button>
+
+                                     <button (click)="showPinSetup = true; showPinVerify = false; revealError = ''" class="w-full text-center text-[9px] font-bold text-white/20 uppercase tracking-[0.2em] hover:text-white/40 transition-colors mt-2">
+                                         Reset & Setup New PIN
+                                     </button>
+                                 </div>
+                             </div>
+
+                             <!-- PASSWORD VERIFY (Recovery Flow) -->
+                             <div *ngIf="showPasswordVerify">
+                                <div class="flex items-center justify-between mb-6">
+                                    <h4 class="text-[#39FF14] font-black uppercase tracking-widest text-xs">Forgot PIN Recovery</h4>
+                                    <button (click)="showPasswordVerify = false; revealError = ''" class="text-white/40 hover:text-white transition-colors">
+                                        <span class="material-symbols-outlined">arrow_back</span>
+                                    </button>
+                                </div>
+                                <p class="text-white font-bold text-[10px] uppercase mb-6 opacity-60">Enter your main account login password to reveal card details and PIN.</p>
+                                <div class="space-y-4">
+                                    <input type="password" [(ngModel)]="recoveryPassword" 
+                                        class="w-full bg-[#1a1c1e] border-2 border-[#39FF14]/30 rounded-2xl p-5 text-white font-bold focus:border-[#39FF14] outline-none transition-all"
+                                        placeholder="Enter Account Password" />
+                                    <p *ngIf="revealError" class="text-red-500 text-[10px] font-black uppercase mt-2 text-center">{{ revealError }}</p>
+                                    
+                                    <button (click)="verifyPasswordReveal()" [disabled]="!recoveryPassword"
+                                        class="w-full py-5 bg-[#39FF14] disabled:opacity-30 text-black rounded-3xl font-black uppercase tracking-[0.2em] text-sm shadow-xl hover:bg-white transition-all active:scale-95">
+                                        Identify & Reveal
+                                    </button>
+                                </div>
+                             </div>
+
+                            <!-- LOADING/ERROR STATE -->
+                            <div *ngIf="!showPinSetup && !showPinVerify && !revealError && !showPasswordVerify" class="text-center py-10">
+                                <div class="w-12 h-12 border-4 border-[#39FF14] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+                                <p class="text-[#39FF14] font-black uppercase text-[10px] tracking-widest">Authorizing Request...</p>
+                            </div>
+                             <div *ngIf="!showPinSetup && !showPinVerify && revealError" class="text-center py-10">
+                                <span class="material-symbols-outlined text-red-500 text-5xl mb-4">error</span>
+                                <p class="text-red-500 font-black uppercase text-xs mb-6">{{ revealError }}</p>
+                                <button (click)="cancelReveal()" class="text-white underline font-bold text-xs uppercase">Try Again</button>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Senior Navigation Tip -->
+                    <p class="text-center text-[10px] font-bold text-gray-500 dark:text-gray-600 uppercase tracking-widest px-8 leading-relaxed">
+                        Tip for seniors: Use a 4-digit PIN you can easily remember. This PIN protects your card's security code and ATM access.
+                    </p>
+
+                    <!-- Transactions Card (Moved under Reveal for UX flow) -->
+                    <div id="tour-step-history" class="w-full min-w-[340px] max-w-lg bg-jamaica-black rounded-[3rem] shadow-2xl overflow-hidden border-2 border-white/10 relative group transition-all duration-700">
+                        <div class="bg-gradient-to-br from-zinc-800 to-black p-6 text-white flex justify-between items-center border-b border-white/10">
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-10 rounded-2xl bg-white/10 flex items-center justify-center">
+                                    <span class="material-symbols-outlined text-[#ffbb16]">receipt_long</span>
+                                </div>
+                                <div>
+                                    <h3 class="text-base font-black uppercase tracking-widest leading-none text-white">Recent Transactions</h3>
+                                    <p class="text-[10px] text-[#ffbb16] font-black uppercase tracking-widest mt-1">Virtual Card History</p>
+                                </div>
+                            </div>
+                            <button (click)="loadTransactions()" class="p-2 hover:bg-white/10 rounded-full transition-all">
+                                <span class="material-symbols-outlined text-sm">refresh</span>
+                            </button>
+                        </div>
+
+                        <div class="p-8 space-y-4 max-h-[320px] overflow-y-auto custom-scrollbar">
+                            <div *ngIf="transactions.length === 0" class="text-center py-10 opacity-30">
+                                <span class="material-symbols-outlined text-4xl mb-2 text-[#ffbb16]">history</span>
+                                <p class="text-[10px] font-black uppercase tracking-widest text-[#ffbb16]">No recent activity found</p>
+                            </div>
+
+                            <div *ngFor="let tx of transactions" class="flex items-center justify-between p-5 rounded-2xl bg-white shadow-lg border-2 border-slate-200 hover:scale-[1.02] transition-all group/tx">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center border border-slate-200">
+                                        <span class="material-symbols-outlined text-sm text-black font-black">
+                                            {{ tx.type === 'Credit' ? 'arrow_downward' : 'arrow_upward' }}
+                                        </span>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs font-black text-black leading-none mb-1">{{ tx.description }}</p>
+                                        <p class="text-[10px] text-slate-500 font-bold uppercase tracking-widest">{{ tx.createdAt | date:'MMM d, h:mm a' }}</p>
+                                    </div>
+                                </div>
+                                <p class="text-sm font-black text-black">
+                                    {{ tx.type === 'Credit' ? '+' : '-' }}${{ tx.amount | number:'1.2-2' }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Emergency Medical Card Section (High Contrast Red) -->
+                <div class="flex flex-col items-center gap-6">
+                    <div class="w-full min-w-[340px] max-w-lg min-h-[460px] bg-white dark:bg-[#0c0d0c] rounded-[3rem] shadow-2xl overflow-hidden border-4 border-red-600 relative group transition-all hover:scale-[1.02]">
+                        <div class="bg-red-600 p-6 text-white flex justify-between items-center">
+                        <div class="flex items-center gap-4">
+                            <span class="material-symbols-outlined text-4xl animate-pulse">medical_services</span>
+                            <h3 class="text-xl font-black uppercase tracking-tighter leading-none">Emergency Medical Card</h3>
+                        </div>
+                        <div class="flex items-baseline gap-2">
+                             <button (click)="openEditMedicalModal()" class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center hover:bg-white/40 transition-all shadow-lg" title="Edit Info">
+                                <span class="material-symbols-outlined text-sm">edit</span>
+                            </button>
+                            <button (click)="shareMedicalCard()" class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center hover:bg-white/40 transition-all shadow-lg" title="Share">
+                                <span class="material-symbols-outlined text-sm">share</span>
+                            </button>
+                            <button (click)="downloadMedicalCard()" class="w-8 h-8 rounded-full bg-white text-red-600 flex items-center justify-center hover:bg-slate-100 transition-all shadow-lg" title="Download as PDF">
+                                <span class="material-symbols-outlined text-sm">download</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Medical Content -->
+                    <div class="p-8 space-y-6">
+                        <!-- Top Info (Blood Type & Weight) -->
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-red-50 dark:bg-white/5 p-4 rounded-3xl border border-red-100 dark:border-white/10 text-center">
+                                <p class="text-[12px] font-black text-red-700 dark:text-red-400 uppercase tracking-[0.25em] mb-1">Blood Type</p>
+                                <p class="text-4xl font-black text-red-900 dark:text-red-500">{{ currentUser?.bloodType || 'N/A' }}</p>
+                            </div>
+                            <div class="bg-slate-50 dark:bg-white/5 p-4 rounded-3xl border border-slate-100 dark:border-white/10 text-center">
+                                <p class="text-[12px] font-black text-slate-600 dark:text-slate-300 uppercase tracking-[0.25em] mb-1">Weight</p>
+                                <p class="text-4xl font-black text-slate-800 dark:text-white">{{ currentUser?.weight || '---' }} <span class="text-xs">lbs</span></p>
+                            </div>
+                        </div>
+
+                        <!-- DOB & Age Row -->
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-slate-50 dark:bg-white/5 p-4 rounded-3xl border border-slate-100 dark:border-white/10">
+                                <p class="text-[11px] font-black text-slate-600 dark:text-slate-300 uppercase tracking-[0.25em] mb-1 px-2 text-center">Date of Birth</p>
+                                <p class="text-lg font-black text-slate-800 dark:text-white text-center">{{ currentUser?.dob | date:'MMM d, y' }}</p>
+                            </div>
+                            <div class="bg-slate-50 dark:bg-white/5 p-4 rounded-3xl border border-slate-100 dark:border-white/10">
+                                <p class="text-[11px] font-black text-slate-600 dark:text-slate-300 uppercase tracking-[0.25em] mb-1 px-2 text-center">Current Age</p>
+                                <p class="text-3xl font-black text-slate-800 dark:text-white text-center">{{ calculateAge(currentUser?.dob) }} <span class="text-xs opacity-50">yrs</span></p>
+                            </div>
+                        </div>
+
+                        <!-- Critical Warnings (Allergies & Conditions) -->
+                        <div class="space-y-4">
+                            <div class="relative group/item">
+                                <div class="flex items-center gap-3 mb-2">
+                                    <span class="material-symbols-outlined text-red-700 font-bold">warning</span>
+                                    <h4 class="text-[13px] font-black text-red-700 dark:text-red-400 uppercase tracking-[0.25em]">Critical Allergies</h4>
+                                </div>
+                                <div class="bg-red-50 dark:bg-white/5 p-4 rounded-2xl border-2 border-red-100 dark:border-white/10">
+                                    <p class="text-sm font-bold text-red-900 dark:text-red-200 leading-tight">
+                                        {{ currentUser?.allergies || 'No critical allergies reported' }}
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="relative group/item">
+                                <div class="flex items-center gap-3 mb-2">
+                                    <span class="material-symbols-outlined text-red-700 font-bold">stethoscope</span>
+                                    <h4 class="text-[13px] font-black text-slate-700 dark:text-slate-300 uppercase tracking-[0.25em]">Medical Conditions</h4>
+                                </div>
+                                <p class="text-sm font-bold text-slate-800 dark:text-white px-4">
+                                    {{ currentUser?.medicalConditions || 'No existing conditions reported' }}
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Medications & Contact -->
+                        <div class="mt-8 pt-6 border-t-2 border-dashed border-slate-100 dark:border-white/10 space-y-5">
+                            <div class="flex items-start gap-4">
+                                <span class="material-symbols-outlined text-red-700 text-xl flex-none bg-red-100 dark:bg-red-900/40 p-2 rounded-xl">pills</span>
+                                <div>
+                                    <h4 class="text-[12px] font-black text-slate-700 dark:text-slate-300 uppercase tracking-widest mb-1">Current Medications</h4>
+                                    <p class="text-xs font-bold dark:text-white leading-relaxed">{{ currentUser?.currentMedications || 'None listed' }}</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-4 bg-slate-900 text-white p-5 rounded-3xl shadow-xl border-l-[8px] border-red-500">
+                                <span class="material-symbols-outlined text-red-500 text-xl flex-none">emergency_share</span>
+                                <div>
+                                    <h4 class="text-[12px] font-black text-red-400 uppercase tracking-widest mb-1">Emergency Contact</h4>
+                                    <p class="text-xs font-black tracking-tight leading-none mb-1">{{ currentUser?.emergencyContact || 'Not Provided' }}</p>
+                                    <p class="text-[11px] font-black text-[#39FF14] tracking-wider">{{ currentUser?.emergencyContactPhone || 'No Phone Number' }}</p>
+                                    <p class="text-[8px] font-bold opacity-40 uppercase tracking-widest mt-1">Available 24/7 Priority</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-4 bg-slate-50 dark:bg-zinc-800/50 border-2 border-slate-200 dark:border-white/10 p-5 rounded-3xl">
+                                <span class="material-symbols-outlined text-red-700 text-xl flex-none">medication_liquid</span>
+                                <div>
+                                    <h4 class="text-[12px] font-black text-slate-700 dark:text-slate-300 uppercase tracking-widest mb-1">Preferred Doctor</h4>
+                                    <p class="text-xs font-black tracking-tight leading-none dark:text-white mb-1">{{ currentUser?.preferredDoctorName }}</p>
+                                    <p class="text-[10px] font-bold text-red-600 tracking-tight leading-none">{{ currentUser?.doctorContactNumber || 'No Phone Listed' }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Footer -->
+                    <div class="bg-red-600/5 py-6 px-8 flex justify-between items-center border-t border-red-100 dark:border-white/5">
+                        <p class="text-[10px] font-black text-red-900/40 uppercase tracking-widest max-w-[120px] leading-tight">Jamaica National Disaster Registry</p>
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=MED-VERIFY-{{currentUser?.idNumber}}" 
+                             class="w-12 h-12 p-1 bg-white rounded-lg shadow-md grayscale" alt="Verify QR" />
+                    </div>
+                </div>
+                
+                <p class="text-center text-[10px] font-bold text-gray-500 dark:text-gray-600 uppercase tracking-widest px-8 leading-relaxed max-w-sm">
+                    First responders: Scan the QR code or use ID number to verify medical consent and full history.
+                </p>
+        </div>
     </div>
-    <div class="flex-grow overflow-y-auto space-y-4 pr-2">
-        <ng-container *ngFor="let cat of categorizedPantryItems">
-            <div *ngIf="getSelectedItemsCountForCategory(cat.category) > 0"
-                class="flex items-center p-5 space-x-4 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-900 dark:text-emerald-100 font-bold rounded-2xl border border-emerald-200/50">
-                <span class="material-symbols-outlined text-2xl font-bold">{{ cat.icon }}</span>
-                <div class="flex flex-col">
-                    <span class="text-base">{{ cat.category }}</span>
-                    <span class="text-sm font-normal opacity-70 italic">{{ getSelectedItemsCountForCategory(cat.category) }} Item Selected</span>
+
+        <!-- Pantry Essentials Section -->
+        <!-- Pantry Essentials Section -->
+        <section id="tour-step-3" class="mt-8">
+            <h2 class="text-4xl font-black text-jamaica-black dark:text-white mb-10 flex items-center gap-6">
+                <span class="w-16 h-16 rounded-3xl bg-[#005c37] text-white flex items-center justify-center shadow-2xl shadow-[#005c37]/40">
+                    <span class="material-symbols-outlined text-4xl">inventory_2</span>
+                </span>
+                Resilient Pantry Request
+            </h2>
+            <form [formGroup]="pantryForm">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6">
+
+                    <!-- Gradient border wrapper for each category card -->
+                    <div *ngFor="let cat of categorizedPantryItems" class="ja-gradient-border">
+                        <div class="ja-gradient-border-inner">
+
+                            <!-- Black Header with White text -->
+                            <div class="bg-black p-6 flex flex-col gap-3 border-b-4 border-[#005c37] min-h-[110px] h-auto justify-center text-center py-8">
+                                <div class="w-14 h-14 rounded-full bg-white/10 flex items-center justify-center text-2xl mx-auto shadow-md mb-2 border-2 border-white/20">
+                                    {{ cat.icon }}
+                                </div>
+                                <h3 class="text-xl font-black text-white tracking-widest uppercase leading-tight px-4 break-words">{{ cat.category }}</h3>
+                            </div>
+
+                            <!-- White Item Body -->
+                            <div class="p-4 flex-grow bg-white divide-y divide-[#005c37]/10">
+                                <div class="grid grid-cols-1 gap-2 pt-2">
+                                    <label *ngFor="let item of cat.items"
+                                        class="relative cursor-pointer transition-all active:scale-95 flex items-center gap-4 p-4 bg-[#f8faf8] hover:bg-[#005c37]/8 rounded-2xl border-2 border-transparent hover:border-[#005c37]/40 shadow-sm group/item">
+                                        <input type="checkbox" [formControlName]="item.name" (change)="0"
+                                            class="w-6 h-6 rounded-md border-2 border-[#005c37]/40 bg-white text-[#005c37] accent-[#005c37] focus:ring-[#005c37] flex-none" />
+                                        <span class="text-3xl flex-none leading-none group-hover/item:scale-110 transition-transform">{{ item.icon }}</span>
+                                        <span class="text-sm font-black uppercase tracking-wide text-[#191c1e] leading-tight break-words flex-grow group-hover/item:text-[#005c37] transition-colors">{{ item.name }}</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Jamaican gradient bottom bar -->
+                            <div class="h-2 w-full bg-gradient-to-r from-black via-[#005c37] to-[#ffbb16]"></div>
+                        </div>
+                    </div>
+
+                    <!-- Special Request Card -->
+                    <div class="md:col-span-full ja-gradient-border">
+                        <div class="ja-gradient-border-inner bg-white flex flex-col items-center justify-center text-center p-8">
+                            <div class="w-16 h-16 rounded-full bg-[#005c37] flex items-center justify-center mb-4 shadow-xl">
+                                <span class="material-symbols-outlined text-3xl text-white">note_add</span>
+                            </div>
+                            <h3 class="text-xl font-black mb-2 text-[#005c37] uppercase tracking-tight">Something Else?</h3>
+                            <p class="text-[11px] text-[#3e4941] mb-6 font-bold px-4 leading-normal max-w-xl">Medical equipment, specific tools, or emergency baby needs? Detail them below:</p>
+                            <textarea formControlName="otherItems" (input)="0"
+                                class="w-full max-w-3xl bg-[#f8faf8] text-[#191c1e] p-5 rounded-3xl border-2 border-[#005c37]/20 focus:border-[#005c37] transition-all outline-none font-bold text-sm resize-none shadow-inner placeholder:text-[#3e4941]/40"
+                                rows="3" placeholder="e.g. Zinc sheets, medical oxygen..."></textarea>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </section>
+
+        <!-- Drop-off Centers -->
+        <section class="mt-20 bg-[#00220a] text-white p-12 rounded-[4rem] shadow-2xl relative overflow-hidden border-2 border-emerald-500/20">
+            <div class="absolute -right-20 -bottom-20 w-80 h-80 bg-emerald-500/10 rounded-full blur-[80px]"></div>
+            <div class="relative z-10 flex items-center gap-6 mb-12">
+                <div class="bg-emerald-600 p-5 rounded-[2rem] shadow-2xl border-2 border-emerald-400/30">
+                    <span class="material-symbols-outlined text-5xl text-white">add_location_alt</span>
+                </div>
+                <div>
+                    <h2 class="text-4xl font-black uppercase tracking-tighter text-white">Verified Relief Logistics Hubs</h2>
+                    <p class="text-emerald-400 text-lg font-bold">Standard Operating Hours: 08:00 - 18:00 EST</p>
+                </div>
+            </div>
+            <div class="relative z-10 grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-4 gap-8">
+                <div *ngFor="let center of ['Kingston Hub', 'MoBay Warehouse', 'Mandeville Point', 'St. Ann Relief']" class="p-8 bg-black/40 rounded-3xl border-2 border-emerald-500/20 hover:border-emerald-400 transition-all backdrop-blur-md group">
+                    <div class="flex items-center gap-3 mb-3">
+                        <span class="material-symbols-outlined text-emerald-400 group-hover:scale-125 transition-transform">location_on</span>
+                        <p class="text-xl font-black uppercase tracking-tight text-white">{{ center }}</p>
+                    </div>
+                    <p class="text-[10px] text-emerald-400/60 font-black tracking-widest uppercase">Validated Relief Zone</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Sidebar: Request Summary (Optimized for visibility and density) -->
+    <aside id="tour-step-4"
+        class="fixed top-[140px] bottom-[60px] right-4 w-[24rem] bg-white dark:bg-[#0c0d0c] shadow-[-30px_0_80px_rgba(0,0,0,0.15)] hidden lg:flex flex-col border border-jamaica-green/20 z-[45] rounded-[2rem] overflow-hidden">
+        
+        <!-- Header -->
+        <div class="flex-none px-8 pt-10 pb-6 border-b border-slate-50 dark:border-white/5 bg-slate-50/50 dark:bg-white/[0.02]">
+            <h2 class="text-3xl font-black text-jamaica-black dark:text-white leading-tight uppercase tracking-tight">Relief Order Summary</h2>
+            <p class="text-[10px] font-black text-jamaica-green uppercase tracking-[0.4em] mt-1">Authenticated Request Packet</p>
+        </div>
+
+        <!-- Selection Area (Maximum-density list grid) -->
+        <div class="flex-grow px-3 py-3 overflow-y-auto custom-scrollbar">
+            <div class="grid grid-cols-3 gap-1">
+                <div *ngFor="let itemName of selectedItemsNames"
+                     class="flex items-center justify-center p-1 bg-slate-50 dark:bg-white/5 rounded border border-slate-200/40 dark:border-white/10 hover:border-jamaica-green transition-all group animate-in slide-in-from-bottom-1 duration-200 text-center min-h-[32px]">
+                    <span class="text-[9px] font-black text-jamaica-black dark:text-white uppercase tracking-tighter leading-[1]">{{ itemName }}</span>
+                </div>
+            </div>
+            <div *ngIf="selectedItemsNames.length === 0" class="flex flex-col items-center justify-center py-20 opacity-10">
+                <span class="material-symbols-outlined text-8xl mb-4 text-jamaica-green">shopping_basket</span>
+                <p class="text-xs font-black uppercase tracking-[0.3em] text-center dark:text-white">Basket Empty</p>
+            </div>
+        </div>
+
+        <!-- Sidebar Actions Section (Streamlined & Locked at bottom) -->
+        <div class="flex-none p-5 bg-white dark:bg-[#0c0d0c] border-t border-slate-100 dark:border-white/10 shadow-[0_-15px_40px_rgba(0,0,0,0.08)]">
+            <div class="flex justify-between items-center mb-5">
+                <div>
+                    <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">Items in Packet</p>
+                    <p class="text-lg font-black text-jamaica-black dark:text-white uppercase tracking-tighter">Total</p>
+                </div>
+                <div class="relative">
+                    <span class="text-jamaica-green text-5xl font-black tabular-nums tracking-tighter leading-none">{{ selectedItemsCount }}</span>
                 </div>
             </div>
             
-            <div *ngIf="getSelectedItemsCountForCategory(cat.category) === 0"
-                class="flex items-center p-4 space-x-3 text-slate-600 dark:text-slate-400 hover:text-emerald-700 hover:translate-x-1 transition-transform">
-                <span class="material-symbols-outlined">{{ cat.icon }}</span>
-                <div class="flex flex-col">
-                    <span class="text-sm">{{ cat.category }}</span>
-                    <span class="text-xs font-normal opacity-70">Nothing Selected</span>
-                </div>
-            </div>
-        </ng-container>
-    </div>
-    <div class="space-y-6 pt-6 border-t border-emerald-200/30">
-        <div class="flex justify-between items-center text-lg font-black px-2">
-            <span>Total Items</span>
-            <span class="text-primary text-2xl">{{ selectedItemsCount }}</span>
+            <button (click)="submitPantryRequest()"
+                [disabled]="selectedItemsCount === 0"
+                id="submit-pantry-btn"
+                class="w-full py-3.5 rounded-2xl bg-black hover:bg-jamaica-green disabled:bg-slate-200 disabled:text-slate-500 text-white font-black text-sm uppercase tracking-[0.2em] shadow-xl transition-all active:scale-95 flex items-center justify-center gap-2 border border-white/10 group">
+                <span class="material-symbols-outlined text-xl font-black text-white group-hover:animate-bounce">send</span>
+                <span class="text-white">Send Request</span>
+            </button>
+            <p *ngIf="selectedItemsCount === 0" class="text-[7px] text-center font-bold text-slate-400 uppercase mt-3 tracking-[0.2em]">Select items to activate</p>
         </div>
-        <button (click)="submitPantryRequest()"
-            class="w-full py-5 rounded-full signature-gradient text-white font-headline font-black text-xl text-center shadow-xl shadow-primary-container/20 active:scale-95 transition-all">
-            Submit Request
-        </button>
+    </aside>
+</div>
+
+<!-- Modals -->
+<div *ngIf="showConfirmationAlert" class="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/90 backdrop-blur-md animate-in fade-in duration-300">
+    <div class="bg-white dark:bg-[#0c0d0c] rounded-[4rem] max-w-sm w-full p-12 text-center shadow-[0_0_100px_rgba(0,155,58,0.3)] border-t-[16px] border-jamaica-green transform animate-in zoom-in-95 duration-500">
+        <div class="mx-auto w-24 h-24 bg-jamaica-green/10 text-jamaica-green rounded-full flex items-center justify-center mb-10 shadow-inner">
+            <span class="material-symbols-outlined text-7xl font-black">verified</span>
+        </div>
+        <h2 class="text-4xl font-black text-jamaica-black dark:text-white mb-4 tracking-tighter uppercase leading-tight">Request<br/>Submitted!</h2>
+        <p class="text-slate-500 dark:text-slate-400 font-bold mb-12 leading-relaxed text-sm uppercase tracking-wide">RED ALERT: Your request is now live in the global relief mapping system.</p>
+        <button (click)="closeModals()" class="w-full bg-black text-white font-black py-6 rounded-[2rem] uppercase tracking-[0.3em] hover:bg-jamaica-green transition-all shadow-2xl active:scale-95">CONTINUE</button>
     </div>
-</aside>
+</div>
+
+<div *ngIf="showErrorAlert" class="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/90 backdrop-blur-md animate-in fade-in duration-300">
+    <div class="bg-white dark:bg-[#0c0d0c] rounded-[4rem] max-w-sm w-full p-12 text-center shadow-[0_0_100px_rgba(255,209,0,0.2)] border-t-[16px] border-[#ffd100] transform animate-in zoom-in-95 duration-500">
+        <div class="mx-auto w-24 h-24 bg-[#ffd100]/20 text-[#231b00] rounded-full flex items-center justify-center mb-10 shadow-inner">
+            <span class="material-symbols-outlined text-7xl font-black">priority_high</span>
+        </div>
+        <h2 class="text-4xl font-black text-jamaica-black dark:text-white mb-4 tracking-tighter uppercase leading-tight">Empty<br/>Request</h2>
+        <p class="text-slate-500 dark:text-slate-400 font-bold mb-12 leading-relaxed text-sm uppercase tracking-wide">{{ errorMessage }}</p>
+        <button (click)="closeModals()" class="w-full bg-black text-white font-black py-6 rounded-[2rem] uppercase tracking-[0.3em] hover:bg-red-600 transition-all shadow-2xl active:scale-95">GO BACK</button>
+    </div>
+</div>
 
 <app-hazard-report-modal *ngIf="showHazardModal" (close)="showHazardModal = false"></app-hazard-report-modal>
+
+<!-- Payment Success Simulation Modal -->
+<div *ngIf="showPaymentSuccess" class="fixed inset-0 z-[120] flex items-center justify-center p-6 bg-black/90 backdrop-blur-xl animate-in fade-in duration-500">
+    <div class="bg-white dark:bg-[#0c0d0c] rounded-[3rem] max-w-sm w-full p-10 text-center shadow-[0_0_100px_#39FF1444] border-t-[16px] border-[#39FF14] transform animate-in zoom-in-95 duration-700">
+        <div class="w-24 h-24 bg-[#39FF14]/10 rounded-full flex items-center justify-center mx-auto mb-8 relative">
+            <span class="material-symbols-outlined text-[#39FF14] text-6xl animate-in zoom-in spin-in duration-1000">check_circle</span>
+            <div class="absolute inset-0 bg-[#39FF14] rounded-full animate-ping opacity-20"></div>
+        </div>
+        
+        <h2 class="text-3xl font-black text-jamaica-black dark:text-white uppercase tracking-tighter leading-tight mb-2">Payment Authorized</h2>
+        <p class="text-slate-400 font-bold uppercase text-[10px] tracking-widest mb-8">Verified at hub merchant</p>
+        
+        <div class="bg-slate-50 dark:bg-white/5 rounded-3xl p-6 mb-8 border border-slate-100 dark:border-white/10">
+            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Total Amount</p>
+            <p class="text-4xl font-black text-jamaica-black dark:text-[#39FF14]">${{ paymentResult?.amount }} <span class="text-xs">JMD</span></p>
+            <p class="text-[10px] font-bold text-slate-400 mt-4 italic">{{ paymentResult?.merchant }}</p>
+        </div>
+
+        <button (click)="dismissPaymentSuccess()" 
+            class="w-full py-5 bg-[#39FF14] text-black rounded-[2rem] font-black uppercase tracking-[0.2em] shadow-xl hover:bg-black hover:text-white transition-all active:scale-95">
+            Dismiss & View History
+        </button>
+    </div>
+</div>
+
+<!-- Edit Medical Card Modal -->
+<div *ngIf="showEditMedicalModal" class="fixed inset-0 z-[110] flex items-center justify-center p-6 bg-black/90 backdrop-blur-md animate-in fade-in duration-300">
+    <div class="bg-white dark:bg-[#0c0d0c] rounded-[3rem] max-w-xl w-full p-10 shadow-[0_0_100px_rgba(239,68,68,0.2)] border-t-[16px] border-red-600 transform animate-in zoom-in-95 duration-500 overflow-y-auto max-h-[90vh]">
+        <div class="flex justify-between items-center mb-8">
+            <h2 class="text-3xl font-black text-jamaica-black dark:text-white uppercase tracking-tighter leading-tight">Update Medical Info</h2>
+            <button (click)="showEditMedicalModal = false" class="text-slate-400 hover:text-red-600 transition-colors">
+                <span class="material-symbols-outlined text-3xl">close</span>
+            </button>
+        </div>
+        
+        <form [formGroup]="medicalEditForm" (ngSubmit)="saveMedicalInfo()" class="space-y-6">
+            <div class="grid grid-cols-2 gap-4">
+                <div class="form-group">
+                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 block">Blood Type</label>
+                    <select formControlName="bloodType" class="w-full bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-2xl p-4 font-bold dark:text-white outline-none focus:border-red-600 transition-all">
+                        <option value="">Select</option>
+                        <option>A+</option><option>A-</option><option>B+</option><option>B-</option>
+                        <option>AB+</option><option>AB-</option><option>O+</option><option>O-</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 block">Weight (lbs)</label>
+                    <input type="text" formControlName="weight" class="w-full bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-2xl p-4 font-bold dark:text-white outline-none focus:border-red-600 transition-all" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 block">Allergies</label>
+                <textarea formControlName="allergies" rows="2" class="w-full bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-2xl p-4 font-bold dark:text-white outline-none focus:border-red-600 transition-all"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 block">Medical Conditions</label>
+                <textarea formControlName="medicalConditions" rows="2" class="w-full bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-2xl p-4 font-bold dark:text-white outline-none focus:border-red-600 transition-all"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 block">Current Medications</label>
+                <textarea formControlName="currentMedications" rows="2" class="w-full bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-2xl p-4 font-bold dark:text-white outline-none focus:border-red-600 transition-all"></textarea>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+                <div class="form-group">
+                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 block">Date of Birth</label>
+                    <input type="date" formControlName="dob" class="w-full bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-2xl p-4 font-bold dark:text-white outline-none focus:border-red-600 transition-all" />
+                </div>
+                <div class="form-group">
+                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 block">Contact Person</label>
+                    <input type="text" formControlName="emergencyContact" placeholder="e.g. Mother, Spouse" class="w-full bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-2xl p-4 font-bold dark:text-white outline-none focus:border-red-600 transition-all" />
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+                <div class="form-group">
+                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 block">Contact Phone</label>
+                    <input type="tel" formControlName="emergencyContactPhone" placeholder="876-###-####" class="w-full bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-2xl p-4 font-bold dark:text-white outline-none focus:border-red-600 transition-all" />
+                </div>
+                <div class="field-placeholder">
+                    <!-- Space for future fields -->
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+                <div class="form-group">
+                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 block">Preferred Doctor</label>
+                    <input type="text" formControlName="preferredDoctorName" placeholder="Dr. Name" class="w-full bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-2xl p-4 font-bold dark:text-white outline-none focus:border-red-600 transition-all" />
+                </div>
+                <div class="form-group">
+                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 block">Doctor Phone</label>
+                    <input type="text" formControlName="doctorContactNumber" placeholder="Contact #" class="w-full bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-2xl p-4 font-bold dark:text-white outline-none focus:border-red-600 transition-all" />
+                </div>
+            </div>
+
+            <button type="submit" class="w-full bg-red-600 text-white font-black py-5 rounded-[2rem] uppercase tracking-[0.3em] hover:bg-black transition-all shadow-2xl active:scale-95 disabled:opacity-50" [disabled]="loading">
+                {{ loading ? 'SAVING...' : 'SAVE UPDATES' }}
+            </button>
+        </form>
+    </div>
+</div>

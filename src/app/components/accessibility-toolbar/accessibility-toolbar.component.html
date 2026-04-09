@@ -11,17 +11,21 @@
         <button (click)="setSize('huge')" [class.active]="currentSize === 'huge'" title="Extra Large Font">A++</button>
       </div>
       <div class="divider"></div>
-      <button class="voice-nav-indicator page-guide-btn" (click)="startGuide()" title="Launch Interactive Page Guide with Text & Voice">
+      <button class="voice-nav-indicator page-guide-btn" (click)='startGuide()' title='Launch Interactive Page Guide with Text & Voice'>
          <span class="material-symbols-outlined">menu_book</span>
          Page Guide
       </button>
+      <button class="voice-nav-indicator" [class.is-active]="(speechService.isReading$ | async)" (click)="readPage()" title="Read all text on this page aloud">
+         <span class="material-symbols-outlined">{{ (speechService.isReading$ | async) ? 'stop_circle' : 'record_voice_over' }}</span>
+         {{ (speechService.isReading$ | async) ? 'Reading' : 'Read Page' }}
+      </button>
        <button class="voice-nav-indicator" [class.is-active]="(accessibilityService.isAudioEnabled$ | async)" (click)="toggleAudio()" title="Toggle Voice Guidance / Mute Assistant">
          <span class="material-symbols-outlined">{{ (accessibilityService.isAudioEnabled$ | async) ? 'volume_up' : 'volume_off' }}</span>
-         Auto Audio
+         {{ (accessibilityService.isAudioEnabled$ | async) ? 'Audio On' : 'Audio Off' }}
       </button>
       <button class="voice-nav-indicator" [class.is-active]="(speechService.isListening$ | async)" (click)="toggleVoice()" title="Toggle Universal Voice Navigation (Mic Command Mode)">
          <span class="material-symbols-outlined">{{ (speechService.isListening$ | async) ? 'mic' : 'mic_off' }}</span>
-         Voice Nav
+         {{ (speechService.isListening$ | async) ? 'Listening' : 'Use Voice' }}
       </button>
     </div>
   </div>

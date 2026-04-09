@@ -80,3 +80,72 @@
         width: 100%;
     }
 }
+
+/* Back to Top Button */
+.back-to-top {
+    position: fixed;
+    bottom: 16px;
+    left: 88px; /* Perfectly aligned gap with the JA-Z Assistant */
+    width: 56px;
+    height: 56px;
+    background: #000;
+    color: #FED100;
+    border: 3px solid #009B3A;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+}
+
+.back-to-top.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.back-to-top:hover {
+    background: #009B3A;
+    color: #fff;
+    border-color: #FED100;
+    transform: scale(1.1) translateY(-5px);
+}
+
+.back-to-top:active {
+    transform: scale(0.9);
+}
+
+.back-to-top span {
+    font-size: 28px;
+    font-weight: bold;
+}
+
+@media (max-width: 768px) {
+    .back-to-top {
+        bottom: 20px;
+        left: 100px;
+        width: 48px;
+        height: 48px;
+    }
+    
+    .back-to-top span {
+        font-size: 24px;
+    }
+}
+
+:host-context(.dark-theme) .back-to-top {
+    background: #000 !important;
+    color: #39FF14 !important;
+    border-color: #39FF14 !important;
+}
+
+:host-context(.dark-theme) .back-to-top:hover {
+    background: #39FF14 !important;
+    color: #000 !important;
+}

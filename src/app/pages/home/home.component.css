@@ -11,7 +11,7 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    background-image: url('/assets/hmpg.png');
+    background-image: url('/assets/hmpg.webp');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -97,8 +97,8 @@
 }
 
 .donate-secondary {
-    background: #009B3A !important;
-    color: #fff !important;
+    background: #FFFFFF !important;
+    color: #000000 !important;
     box-shadow: 6px 6px 0px #000000 !important;
 }
 

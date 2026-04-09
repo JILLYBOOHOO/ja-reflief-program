@@ -1,0 +1,36 @@
+<div class="maintenance-container">
+  <div class="maintenance-card">
+    <div class="icon-wrapper">
+      <div class="pulse"></div>
+      <i class="fas fa-tools main-icon"></i>
+    </div>
+    
+    <h1>JA RELIEF Is Optimizing</h1>
+    <p class="subtitle">Our response system is undergoing rapid improvements to serve you better.</p>
+    
+    <div class="status-grid">
+      <div class="status-item">
+        <span class="label">System Status</span>
+        <span class="value online">Healthy</span>
+      </div>
+      <div class="status-item">
+        <span class="label">Response Team</span>
+        <span class="value active">Active</span>
+      </div>
+    </div>
+
+    <div class="emergency-notice">
+      <h3>Need Urgent Help?</h3>
+      <p>If you are in immediate danger, please contact local emergency services directly.</p>
+      <div class="emergency-buttons">
+        <a href="tel:911" class="emergency-btn">Call 911</a>
+        <a href="tel:119" class="emergency-btn">Call 119</a>
+      </div>
+    </div>
+
+    <div class="footer-info">
+      <p>System automatically refreshes. Last checked: {{ currentTime | date:'shortTime' }}</p>
+      <button class="refresh-btn" (click)="refreshTime()">Check Connection</button>
+    </div>
+  </div>
+</div>

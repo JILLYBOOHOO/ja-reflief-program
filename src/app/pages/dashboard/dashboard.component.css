@@ -18,7 +18,21 @@ button {
 
 
 .signature-gradient {
-    background: linear-gradient(135deg, #006B25 0%, #008731 100%);
+    background: linear-gradient(135deg, #008731 0%, #39FF14 100%) !important;
+    position: relative;
+    overflow: hidden;
+    border: 2px solid #39FF14 !important;
+}
+
+.signature-gradient::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: 
+        conic-gradient(at 50% 25%, #0000 75%, rgba(255, 211, 26, 0.4) 0); /* Gold/Yellow subtle chevron layer */
+    background-size: 20px 40px;
+    opacity: 1;
+    pointer-events: none;
 }
 
 .glass-panel {
@@ -62,6 +76,10 @@ button {
     background-color: #f8faf8;
 }
 
+:host-context(.dark-theme) {
+    background-color: #000000 !important;
+}
+
 /* Custom Checkbox Styles */
 input[type="checkbox"]:checked {
     background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3e%3c/svg%3e");
@@ -70,4 +88,147 @@ input[type="checkbox"]:checked {
 header h1, .id-card-perspective h1 {
     white-space: normal !important;
     overflow-wrap: break-word !important;
+}
+
+/* High Contrast Dark Mode Overrides */
+:host-context(.dark-theme) main {
+    background-color: #000000 !important;
+}
+
+:host-context(.dark-theme) section:not(#tour-step-3) {
+    background-color: #000000 !important;
+    border: 2px solid #39FF14 !important;
+}
+
+:host-context(.dark-theme) .bg-white:not(.ja-gradient-border-inner):not(.ja-gradient-border-inner *),
+:host-context(.dark-theme) div[id="tour-step-1"],
+:host-context(.dark-theme) div[id="tour-step-2"] > div,
+:host-context(.dark-theme) .id-card-perspective div[id="tour-step-1"],
+:host-context(.dark-theme) .v-card-main,
+:host-context(.dark-theme) .bg-gradient-to-br,
+:host-context(.dark-theme) .bg-\[\#006b25\],
+:host-context(.dark-theme) header.bg-\[\#006b25\] {
+    background-color: #000000 !important;
+    background: #000000 !important;
+    background-image: none !important;
+    border: 2px solid #39FF14 !important;
+}
+
+/* Prevent dark-mode overrides from clobbering gradient border cards */
+:host-context(.dark-theme) .ja-gradient-border,
+:host-context(.dark-theme) .ja-gradient-border-inner,
+:host-context(.dark-theme) .ja-gradient-border-inner * {
+    border: none !important;
+    outline: none !important;
+}
+
+:host-context(.dark-theme) .header-gradient {
+    background: #000000 !important;
+}
+
+:host-context(.dark-theme) .text-\[\#62df74\],
+:host-context(.dark-theme) .text-\[\#ffd31a\],
+:host-context(.dark-theme) .text-slate-400 {
+    color: #ffffff !important;
+    opacity: 1 !important;
+}
+
+:host-context(.dark-theme) aside {
+    background-color: #000000 !important;
+    border-left: 2px solid #39FF14 !important;
+}
+
+:host-context(.dark-theme) aside h2 {
+    color: #39FF14 !important;
+}
+
+:host-context(.dark-theme) aside p,
+:host-context(.dark-theme) aside span {
+    color: #ffffff !important;
+}
+
+/* Custom High-Contrast Checkboxes */
+input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 1.25rem !important;
+    height: 1.25rem !important;
+    border: 2px solid #475569 !important;
+    border-radius: 4px;
+    background-color: #ffffff !important;
+    cursor: pointer;
+    position: relative;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+}
+
+input[type="checkbox"]:checked {
+    background-color: #008731 !important;
+    border-color: #008731 !important;
+}
+
+input[type="checkbox"]:checked::after {
+    content: '✔';
+    position: absolute;
+    color: #ffffff !important;
+    font-size: 0.8rem;
+    font-weight: 900;
+}
+
+:host-context(.dark-theme) input[type="checkbox"] {
+    border: 2px solid #39FF14 !important;
+    background-color: #000000 !important;
+}
+
+:host-context(.dark-theme) input[type="checkbox"]:checked {
+    background-color: #39FF14 !important;
+}
+
+:host-context(.dark-theme) input[type="checkbox"]:checked::after {
+    color: #000000 !important;
+}
+
+aside {
+    background-color: #ffffff !important;
+}
+
+:host-context(.dark-theme) aside {
+    background-color: #000000 !important;
+}
+
+.signature-font {
+    font-family: 'Dancing Script', cursive;
+    letter-spacing: normal;
+    text-transform: none;
+    font-weight: 700;
+}
+
+/* Jamaican Gradient Border for Pantry Cards */
+.ja-gradient-border {
+    position: relative;
+    border-radius: 2rem;
+    padding: 6px;
+    background: linear-gradient(135deg, #005c37 0%, #ffbb16 33%, #005c37 66%, #ffbb16 100%);
+    box-shadow: 0 8px 32px rgba(0, 92, 55, 0.30), 0 2px 8px rgba(255, 187, 22, 0.25);
+    transition: all 0.3s ease;
+    border: none !important;
+    outline: none !important;
+}
+
+.ja-gradient-border:hover {
+    background: linear-gradient(135deg, #007749 0%, #ffcc33 33%, #007749 66%, #ffcc33 100%);
+    box-shadow: 0 16px 48px rgba(0, 92, 55, 0.45), 0 4px 20px rgba(255, 187, 22, 0.35);
+    transform: scale(1.015);
+}
+
+.ja-gradient-border-inner {
+    border-radius: calc(2rem - 6px);
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background: #ffffff;
+    border: none !important;
 }

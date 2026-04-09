@@ -14,13 +14,16 @@ export class JwtInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     // Add auth header with jwt if user is logged in and request is to api url
-    const token = localStorage.getItem('access_token');
-    if (token) {
+    const token = localStorage.getItem('survivor_token');
+    if (token && token.trim() !== '' && token !== 'undefined' && token !== 'null') {
+      console.log(`[JwtInterceptor] Adding Authorization header for: ${request.url}`);
       request = request.clone({
         setHeaders: {
           Authorization: `Bearer ${token}`
         }
       });
+    } else {
+      console.warn(`[JwtInterceptor] No valid token found for: ${request.url}. Found:`, token);
     }
 
     return next.handle(request);

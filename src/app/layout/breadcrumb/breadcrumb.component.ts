@@ -76,7 +76,7 @@ export class BreadcrumbComponent implements OnInit {
       }
 
       const label = child.snapshot.data['breadcrumb'];
-      if (label) {
+      if (label && (!breadcrumbs.length || breadcrumbs[breadcrumbs.length - 1].label !== label)) {
         breadcrumbs.push({ label, url });
       }
 

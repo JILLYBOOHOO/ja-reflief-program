@@ -10,14 +10,21 @@ require('dotenv').config();
 
 const app = express();
 
-// Enable Gzip Compression
+// 🚀 [Vanguard Step 1]: Force Gzip Compression at the top level
 app.use(compression());
 
 // Security Middlewares
 app.use(helmet({
-  crossOriginResourcePolicy: false, // allow images from backend to be loaded if needed
+  crossOriginResourcePolicy: false,
+  contentSecurityPolicy: false // Relaxed for external SDKs used in emergency
 }));
-app.use(cors());
+
+app.use(cors({
+  origin: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
+  credentials: true
+}));
 app.use(express.json());
 
 // Serve uploads with 7 day cache
@@ -59,13 +66,22 @@ app.use('/api/donations', donationRoutes);
 app.use('/api/admin', adminStatsRoutes);
 app.use('/api/requests', requestRoutes);
 
-// Serve static files from the frontend build
-app.use(express.static(path.join(__dirname, '../dist/ja-relief')));
+// 🚀 [Vanguard Step 2]: Titan-Static Caching for all build assets
+app.use(express.static(path.join(__dirname, '../dist/ja-relief'), {
+  maxAge: '1y',
+  immutable: true,
+  index: false,
+  setHeaders: (res, path) => {
+    res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+  }
+}));
 
 // Catch all other routes to enable Angular router navigation (e.g. /register)
 app.get(/.*/, (req, res) => {
-  // Add cache control for the initial document as well, shorter age
-  res.set('Cache-Control', 'public, max-age=300');
+  // 🚨 [NUCLEAR CACHE BUSTER]: Force the browser to NEVER cache the shell
+  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+  res.setHeader('Pragma', 'no-cache');
+  res.setHeader('Expires', '0');
   res.sendFile(path.join(__dirname, '../dist/ja-relief/index.html'));
 });
 

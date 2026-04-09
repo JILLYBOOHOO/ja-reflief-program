@@ -17,29 +17,53 @@
                 access food, medication, and emergency support after hurricanes
                 and other natural disasters.
             </p>
-            <div class="actions-stack">
+            
+            <!-- Authenticated View -->
+            <div class="actions-stack" *ngIf="authService.currentUser$ | async as user; else notLoggedIn">
                 <a routerLink="/wifi-access" class="btn btn-7 wifi-primary" aria-label="Get Wi-Fi access voucher">
                     <span>GET WIFI</span>
                 </a>
                 <div class="btn-row">
-                    <a routerLink="/donate" class="btn btn-7 donate-secondary" aria-label="Donate to disaster relief">
-                        <span>Donate</span>
+                    <a [routerLink]="user.role === 'admin' ? '/admin' : '/dashboard'" 
+                       class="btn btn-7 dashboard-primary" 
+                       [attr.aria-label]="user.role === 'admin' ? 'Go to Admin Portal' : 'Request Aid Dashboard'">
+                        <span>{{ user.role === 'admin' ? 'Admin Portal' : 'Request Aid' }}</span>
                     </a>
-                    <a routerLink="/login" class="btn btn-7 login-secondary" aria-label="Login to your account">
-                        <span>Login</span>
-                    </a>
-                    <a routerLink="/login" class="btn btn-7 admin-btn" aria-label="Admin Login">
-                        <span>Admin Login</span>
+                    <a routerLink="/information" class="btn btn-7 info-secondary" aria-label="View more information">
+                        <span>Emergency Information</span>
                     </a>
                 </div>
-                <a routerLink="/information" class="btn btn-7 info-secondary" aria-label="View more information">
-                    <span>Emergency Information</span>
-                </a>
-                <a routerLink="/contact-us" class="btn btn-7 community-btn"
-                    aria-label="Learn how JA Relief helps communities">
-                    <span>How JA Relief Helps Communities</span>
-                </a>
             </div>
+
+            <!-- Public View -->
+            <ng-template #notLoggedIn>
+                <div class="actions-stack">
+                    <a routerLink="/wifi-access" class="btn btn-7 wifi-primary" aria-label="Get Wi-Fi access voucher">
+                        <span>GET WIFI</span>
+                    </a>
+                    <div class="btn-row">
+                        <a routerLink="/donate" class="btn btn-7 donate-secondary" style="background: #FFFFFF !important; color: #000000 !important; box-shadow: 6px 6px 0px #000000 !important;" aria-label="Donate to disaster relief">
+                            <span class="material-symbols-outlined mr-2">volunteer_activism</span>
+                            <span>Donate</span>
+                        </a>
+                        <a routerLink="/login" class="btn btn-7 login-secondary" aria-label="Login to your account">
+                            <span>Login</span>
+                        </a>
+                        <a routerLink="/login" class="btn btn-7 admin-btn" aria-label="Admin Login">
+                            <span>Admin Login</span>
+                        </a>
+                    </div>
+                    <div class="btn-row">
+                        <a routerLink="/information" class="btn btn-7 info-secondary" aria-label="View more information">
+                            <span>Emergency Information</span>
+                        </a>
+                        <a routerLink="/contact-us" class="btn btn-7 community-btn"
+                            aria-label="Learn how JA Relief helps communities">
+                            <span>How JA Relief Helps Communities</span>
+                        </a>
+                    </div>
+                </div>
+            </ng-template>
 
             <div class="features-grid" role="list">
                 <div class="feature-item" role="listitem" tabindex="0" aria-label="Feature: Find WiFi hotspots">
