@@ -4,7 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DonateComponent } from './donate.component';
 import { SharedModule } from '../../shared/shared.module';
-import { QRCodeModule } from 'angularx-qrcode';
+import { QRCodeComponent } from 'angularx-qrcode';
 import { GoogleSigninButtonModule } from '@abacritt/angularx-social-login';
 
 const routes: Routes = [{ path: '', component: DonateComponent }];
@@ -16,7 +16,7 @@ const routes: Routes = [{ path: '', component: DonateComponent }];
     FormsModule,
     ReactiveFormsModule,
     SharedModule,
-    QRCodeModule,
+    QRCodeComponent,
     GoogleSigninButtonModule,
     RouterModule.forChild(routes)
   ]
